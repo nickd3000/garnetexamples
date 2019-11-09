@@ -31,7 +31,7 @@ public class Boid {
 //        sb.add(Sprite2D.build(30, 30, 16, 16,
 //                16, 0).addAngle((int)a).addColor(x/100.0,y/100.0,(x*y)/100.0));
 
-        Sprite2D spr = Sprite2D.build((int) (x), (int) (y), 16, 16, 16, 0);
+        Sprite2D spr = Sprite2D.build((int) (x), (int) (y), 16, 16, 16, 0,16,16);
         spr.addAngle((float) -(a)+180);
 
 

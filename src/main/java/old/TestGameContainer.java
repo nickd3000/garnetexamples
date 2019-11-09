@@ -49,8 +49,8 @@ public class TestGameContainer implements GameContainer {
     }
 
     public void drawTestSpriteBuilder() {
-        spriteBatch.add(Sprite2D.build(10,60,16,16,0,0));
-        spriteBatch.add(Sprite2D.build(10,100,16,16,0,0).addAngle(angle));
+        spriteBatch.add(Sprite2D.build(10,60,16,16,0,0,16,16));
+        spriteBatch.add(Sprite2D.build(10,100,16,16,0,0,16,16).addAngle(angle));
     }
 
     public void drawTestSpinningGrid(float span, int columns, int rows) {
@@ -66,8 +66,8 @@ public class TestGameContainer implements GameContainer {
 //                        16, 0, 16, 16,
 //                        angle ));
 
-                spriteBatch.add(Sprite2D.build((int)(x*span), (int)(y*span), 16, 16,
-                        16, 0).addAngle(angle).addColor(x/10.0,y/10.0,(x*y)/10.0));
+                spriteBatch.add(Sprite2D.build((int)(x*span), (int)(y*span), 16*2, 16*2,
+                        16, 0,16,16).addAngle(angle).addColor(x/10.0,y/10.0,(x*y)/10.0));
 
 
             }
