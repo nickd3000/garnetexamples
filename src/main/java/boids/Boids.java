@@ -1,6 +1,7 @@
 package boids;
 
 import com.physmo.garnet.GameContainer;
+import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Texture;
 import com.physmo.garnet.spritebatch.SpriteBatch;
 
@@ -18,7 +19,7 @@ public class Boids implements GameContainer {
     SpriteBatch spriteBatch;
 
     @Override
-    public void init() {
+    public void init(Garnet garnet) {
         texture = Texture.loadTexture(fileName);
         spriteBatch = new SpriteBatch(texture);
 

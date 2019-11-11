@@ -1,4 +1,5 @@
 import com.physmo.garnet.GameContainer;
+import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Texture;
 import com.physmo.garnet.spritebatch.Sprite2D;
 import com.physmo.garnet.spritebatch.SpriteBatch;
@@ -6,23 +7,31 @@ import com.physmo.garnet.spritebatch.SpriteBatch;
 public class TestGameContainer implements GameContainer {
 
     static String fileName = "/Users/nick/Dev/java/garnettest/src/main/resources/space.PNG";
+    static int scrollX = 0;
+    static float angle = 0;
     Texture texture;
     SpriteBatch spriteBatch;
-    static int scrollX = 0;
 
     @Override
-    public void init() {
+    public void init(Garnet garnet) {
 
         texture = Texture.loadTexture(fileName);
         spriteBatch = new SpriteBatch(texture);
+
+        System.out.println("adding keyboard callback from game container");
+
+        garnet.addKeyboardCallback((key, scancode, action, mods) -> {
+            System.out.println("keyboard handler" + scancode + "  " + action);
+
+
+        });
+
     }
 
     @Override
     public void tick() {
 
     }
-
-    static float angle = 0;
 
     @Override
     public void draw() {
@@ -36,7 +45,7 @@ public class TestGameContainer implements GameContainer {
 
         scrollX += 1;
 
-        drawTestSpinningGrid(20,30,20);
+        drawTestSpinningGrid(20, 30, 20);
         drawTestSpriteBuilder();
 
         spriteBatch.render();
@@ -44,14 +53,14 @@ public class TestGameContainer implements GameContainer {
     }
 
     public void drawTestSpriteBuilder() {
-        spriteBatch.add(Sprite2D.build(10,60,16,16,0,0,16,16));
-        spriteBatch.add(Sprite2D.build(10,100,16,16,0,0,16,16).addAngle(angle));
+        spriteBatch.add(Sprite2D.build(10, 60, 16, 16, 0, 0, 16, 16));
+        spriteBatch.add(Sprite2D.build(10, 100, 16, 16, 0, 0, 16, 16).addAngle(angle));
     }
 
     public void drawTestSpinningGrid(float span, int columns, int rows) {
         //glColor3f(1.0f,0.0f,0.0f);
 
-        for (int y=0;y<columns;y++) {
+        for (int y = 0; y < columns; y++) {
             for (int x = 0; x < rows; x++) {
 
                 //glColor3f((float)Math.sin(x),(float)Math.sin(y),(float)Math.sin(x+y));
@@ -61,8 +70,8 @@ public class TestGameContainer implements GameContainer {
 //                        16, 0, 16, 16,
 //                        angle ));
 
-                spriteBatch.add(Sprite2D.build((int)(x*span), (int)(y*span), 16, 16,
-                        16, 0,16,16).addAngle(angle).addColor(x/10.0,y/10.0,(x*y)/10.0));
+                spriteBatch.add(Sprite2D.build((int) (x * span), (int) (y * span), 16, 16,
+                        16, 0, 16, 16).addAngle(angle).addColor(x / 10.0, y / 10.0, (x * y) / 10.0));
 
 
             }
