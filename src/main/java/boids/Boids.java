@@ -11,7 +11,7 @@ import java.util.List;
 public class Boids implements GameContainer {
     double width = 640;
     double height = 480;
-    int numBoids = 3;
+    int numBoids = 30;
     double startSpeed = 1;
     List<Boid> boids = new ArrayList<>();
     static String fileName = "/Users/nick/Dev/java/garnettest/src/main/resources/space.PNG";
@@ -77,7 +77,7 @@ public class Boids implements GameContainer {
 
     private static void doIt(Boid b1, Boid b2) {
         double dist = dist(b1, b2);
-        double nearFar = 10;
+        double nearFar = 30;
         double tooFar = 200;
         double blend1 = 0.1;
         double blend2 = 0.1;
