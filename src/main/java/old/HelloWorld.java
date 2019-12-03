@@ -17,11 +17,14 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class HelloWorld {
 
+    static String fileName = "/Users/nick/Dev/java/lwjgltest/src/main/resources/FG_Blocks.PNG";
+    Texture texture;
     // The window handle
     private long window;
 
-    static String fileName = "/Users/nick/Dev/java/lwjgltest/src/main/resources/FG_Blocks.PNG";
-    Texture texture;
+    public static void main(String[] args) {
+        new HelloWorld().run();
+    }
 
     public void run() {
         System.out.println("Hello LWJGL " + Version.getVersion() + "!");
@@ -99,7 +102,6 @@ public class HelloWorld {
 
     }
 
-
     private void loop() {
         // This line is critical for LWJGL's interoperation with GLFW's
         // OpenGL context, or any context that is managed externally.
@@ -130,10 +132,6 @@ public class HelloWorld {
             // invoked during this call.
             glfwPollEvents();
         }
-    }
-
-    public static void main(String[] args) {
-        new HelloWorld().run();
     }
 
     private void drawQuad() {
