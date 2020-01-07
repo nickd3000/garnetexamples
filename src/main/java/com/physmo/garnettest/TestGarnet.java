@@ -1,3 +1,5 @@
+package com.physmo.garnettest;
+
 import com.physmo.garnet.Garnet;
 import com.physmo.garnettest.ContainerSpriteSample;
 //import old.TestGameContainer;

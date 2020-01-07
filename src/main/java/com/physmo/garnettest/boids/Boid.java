@@ -1,4 +1,4 @@
-package boids;
+package com.physmo.garnettest.boids;
 
 import com.physmo.garnet.spritebatch.Sprite2D;
 import com.physmo.garnet.spritebatch.SpriteBatch;

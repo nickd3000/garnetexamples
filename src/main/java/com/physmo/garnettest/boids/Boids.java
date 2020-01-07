@@ -1,4 +1,4 @@
-package boids;
+package com.physmo.garnettest.boids;
 
 import com.physmo.garnet.GameContainer;
 import com.physmo.garnet.Garnet;

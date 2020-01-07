@@ -1,3 +1,5 @@
+package com.physmo.garnettest;
+
 import com.physmo.garnet.GameContainer;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.regularfont.RegularFont;

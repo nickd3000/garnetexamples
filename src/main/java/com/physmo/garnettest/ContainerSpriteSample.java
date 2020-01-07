@@ -1,3 +1,5 @@
+package com.physmo.garnettest;
+
 import com.physmo.garnet.GameContainer;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Texture;
@@ -6,6 +8,11 @@ import com.physmo.garnet.spritebatch.SpriteBatch;
 
 public class ContainerSpriteSample implements GameContainer {
 
+    public static void main(String[] args) {
+        Garnet garnet = new Garnet(new ContainerSpriteSample(), 640, 480);
+        garnet.init();
+        garnet.run();
+    }
 
     private static String fileName = "/Users/nick/Dev/java/garnettest/src/main/resources/space.PNG";
     private static float angle = 0;
