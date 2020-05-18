@@ -17,7 +17,9 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class HelloWorld {
 
-    static String fileName = "/Users/nick/Dev/java/lwjgltest/src/main/resources/FG_Blocks.PNG";
+    //static String fileName = "/Users/nick/Dev/java/lwjgltest/src/main/resources/FG_Blocks.PNG";
+    static String fileName = "/Users/nick/dev/java/garnettest/src/main/resources/FG_Blocks.png";
+
     Texture texture;
     // The window handle
     private long window;
