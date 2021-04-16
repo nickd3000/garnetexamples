@@ -8,16 +8,18 @@ import com.physmo.garnet.spritebatch.SpriteBatch;
 
 public class ContainerSpriteSample implements GameContainer {
 
+    private static String fileName = "/Users/nick/Dev/java/garnettest/src/main/resources/space.PNG";
+    private static float angle = 0;
+    private Texture texture;
+    private SpriteBatch spriteBatch;
+
+    double movementX;
+
     public static void main(String[] args) {
         Garnet garnet = new Garnet(new ContainerSpriteSample(), 640, 480);
         garnet.init();
         garnet.run();
     }
-
-    private static String fileName = "/Users/nick/Dev/java/garnettest/src/main/resources/space.PNG";
-    private static float angle = 0;
-    private Texture texture;
-    private SpriteBatch spriteBatch;
 
     @Override
     public void init(Garnet garnet) {
@@ -35,14 +37,15 @@ public class ContainerSpriteSample implements GameContainer {
     }
 
     @Override
-    public void tick() {
-
+    public void tick(double delta) {
+        angle += delta * 100f;
+        movementX += delta * 0.2;
+        while (movementX>1.0f) { movementX-=1.0f; }
     }
 
     @Override
     public void draw() {
 
-        angle += 1f;
 
         drawTestSpriteBuilder();
 
@@ -54,6 +57,10 @@ public class ContainerSpriteSample implements GameContainer {
     private void drawTestSpriteBuilder() {
         int space = 30;
         int x = 20;
+
+        // Moving
+        spriteBatch.add(Sprite2D.build(20+(int)(movementX*300), 20+40, 16, 16, 0, 0, 16, 16));
+
         // Unscaled
         spriteBatch.add(Sprite2D.build(x, 20, 16, 16, 0, 0, 16, 16));
         x += space;

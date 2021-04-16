@@ -18,6 +18,52 @@ public class Boids implements GameContainer {
     Texture texture;
     SpriteBatch spriteBatch;
 
+    @Override
+    public void init(Garnet garnet) {
+        texture = Texture.loadTexture(fileName);
+        spriteBatch = new SpriteBatch(texture);
+
+        for (int i = 0; i < numBoids; i++) {
+            Boid b = new Boid();
+            b.x = Math.random() * width;
+            b.y = Math.random() * height;
+            b.a = Math.random() * 360;
+// 0 = down?
+            b.dx = Math.sin(Math.toRadians(b.a));
+            b.dy = Math.cos(Math.toRadians(b.a));
+            boids.add(b);
+        }
+
+    }
+
+    @Override
+    public void tick(double delta) {
+        for (Boid b : boids) {
+            b.tick(0.4);
+            constrainBoid(b);
+        }
+
+        flock();
+    }
+
+    private void constrainBoid(Boid b) {
+        double pad = 50;
+        if (b.x < -pad) b.x = width + pad;
+        if (b.x > width + pad) b.x = -pad;
+        if (b.y < -pad) b.y = height + pad;
+        if (b.y > height + pad) b.y = -pad;
+    }
+
+    private void flock() {
+        for (Boid b1 : boids) {
+            for (Boid b2 : boids) {
+                if (b1 == b2) continue;
+                if (Math.random() > 0.1) continue;
+                doIt(b1, b2);
+            }
+        }
+    }
+
     private static void doIt(Boid b1, Boid b2) {
         double dist = dist(b1, b2);
         double nearFar = 30;
@@ -60,34 +106,6 @@ public class Boids implements GameContainer {
     }
 
     @Override
-    public void init(Garnet garnet) {
-        texture = Texture.loadTexture(fileName);
-        spriteBatch = new SpriteBatch(texture);
-
-        for (int i = 0; i < numBoids; i++) {
-            Boid b = new Boid();
-            b.x = Math.random() * width;
-            b.y = Math.random() * height;
-            b.a = Math.random() * 360;
-// 0 = down?
-            b.dx = Math.sin(Math.toRadians(b.a));
-            b.dy = Math.cos(Math.toRadians(b.a));
-            boids.add(b);
-        }
-
-    }
-
-    @Override
-    public void tick() {
-        for (Boid b : boids) {
-            b.tick(0.4);
-            constrainBoid(b);
-        }
-
-        flock();
-    }
-
-    @Override
     public void draw() {
         for (Boid b : boids) {
             b.draw(spriteBatch);
@@ -95,23 +113,5 @@ public class Boids implements GameContainer {
 
         spriteBatch.render();
         spriteBatch.clear();
-    }
-
-    private void constrainBoid(Boid b) {
-        double pad = 50;
-        if (b.x < -pad) b.x = width + pad;
-        if (b.x > width + pad) b.x = -pad;
-        if (b.y < -pad) b.y = height + pad;
-        if (b.y > height + pad) b.y = -pad;
-    }
-
-    private void flock() {
-        for (Boid b1 : boids) {
-            for (Boid b2 : boids) {
-                if (b1 == b2) continue;
-                if (Math.random() > 0.1) continue;
-                doIt(b1, b2);
-            }
-        }
     }
 }

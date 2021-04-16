@@ -16,7 +16,7 @@ public class ContainerRegularFontSample implements GameContainer {
     }
 
     @Override
-    public void tick() {
+    public void tick(double delta) {
     }
 
     @Override
