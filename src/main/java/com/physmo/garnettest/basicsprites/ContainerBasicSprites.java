@@ -1,4 +1,4 @@
-package com.physmo.garnettest;
+package com.physmo.garnettest.basicsprites;
 
 import com.physmo.garnet.GameContainer;
 import com.physmo.garnet.Garnet;
@@ -6,17 +6,17 @@ import com.physmo.garnet.Texture;
 import com.physmo.garnet.spritebatch.Sprite2D;
 import com.physmo.garnet.spritebatch.SpriteBatch;
 
-public class ContainerSpriteSample implements GameContainer {
+// NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
+public class ContainerBasicSprites implements GameContainer {
 
     private static String fileName = "/Users/nick/Dev/java/garnettest/src/main/resources/space.PNG";
     private static float angle = 0;
+    double movementX;
     private Texture texture;
     private SpriteBatch spriteBatch;
 
-    double movementX;
-
     public static void main(String[] args) {
-        Garnet garnet = new Garnet(new ContainerSpriteSample(), 640, 480);
+        Garnet garnet = new Garnet(new ContainerBasicSprites(), 640, 480);
         garnet.init();
         garnet.run();
     }
@@ -40,7 +40,9 @@ public class ContainerSpriteSample implements GameContainer {
     public void tick(double delta) {
         angle += delta * 100f;
         movementX += delta * 0.2;
-        while (movementX>1.0f) { movementX-=1.0f; }
+        while (movementX > 1.0f) {
+            movementX -= 1.0f;
+        }
     }
 
     @Override
@@ -59,7 +61,7 @@ public class ContainerSpriteSample implements GameContainer {
         int x = 20;
 
         // Moving
-        spriteBatch.add(Sprite2D.build(20+(int)(movementX*300), 20+40, 16, 16, 0, 0, 16, 16));
+        spriteBatch.add(Sprite2D.build(20 + (int) (movementX * 300), 20 + 40, 16, 16, 0, 0, 16, 16));
 
         // Unscaled
         spriteBatch.add(Sprite2D.build(x, 20, 16, 16, 0, 0, 16, 16));
