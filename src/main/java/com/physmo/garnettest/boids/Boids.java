@@ -1,6 +1,6 @@
 package com.physmo.garnettest.boids;
 
-import com.physmo.garnet.GameContainer;
+import com.physmo.garnet.GameState;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Texture;
 import com.physmo.garnet.spritebatch.SpriteBatch;
@@ -8,7 +8,7 @@ import com.physmo.garnet.spritebatch.SpriteBatch;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Boids implements GameContainer {
+public class Boids extends GameState {
     static String fileName = "/Users/nick/Dev/java/garnettest/src/main/resources/space.PNG";
     double width = 640;
     double height = 480;

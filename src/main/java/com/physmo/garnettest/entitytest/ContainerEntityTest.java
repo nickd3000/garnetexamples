@@ -1,6 +1,6 @@
 package com.physmo.garnettest.entitytest;
 
-import com.physmo.garnet.GameContainer;
+import com.physmo.garnet.GameState;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Texture;
 import com.physmo.garnet.entity.Entity;
@@ -9,12 +9,12 @@ import com.physmo.garnet.spritebatch.Sprite2D;
 import com.physmo.garnet.spritebatch.SpriteBatch;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
-public class ContainerEntityTest implements GameContainer {
+public class ContainerEntityTest extends GameState {
 
     private static String fileName = "/Users/nick/Dev/java/garnettest/src/main/resources/space.PNG";
     private static float angle = 0;
     double movementX;
-
+    int numEntites = 1000;
     private Texture texture;
     private SpriteBatch spriteBatch;
     private EntityGroup entityGroup;
@@ -37,10 +37,10 @@ public class ContainerEntityTest implements GameContainer {
         });
 
         entityGroup = new EntityGroup();
-        for (int i = 0; i < 20; i++) {
-            Entity e1 = new Entity();
-            e1.position.set(100, 100);
-            e1.velocity.set((Math.random() - 0.5) * 100.0, (Math.random() - 0.5) * 100.0);
+        for (int i = 0; i < numEntites; i++) {
+            Entity e1 = new Entity("test", this);
+            e1.position.set(100, 100, 0);
+            e1.velocity.set((Math.random() - 0.5) * 100.0, (Math.random() - 0.5) * 100.0, 0);
 
             e1.addComponent(new TestMovementComponent());
             e1.addComponent(new WallBounceComponent());
@@ -60,7 +60,7 @@ public class ContainerEntityTest implements GameContainer {
     public void draw() {
 
         //drawTestSpriteBuilder();
-        entityGroup.drawAll(spriteBatch);
+        entityGroup.drawAll();
         spriteBatch.render();
         spriteBatch.clear();
 

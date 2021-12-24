@@ -1,6 +1,6 @@
 package com.physmo.garnettest.tilegridtest;
 
-import com.physmo.garnet.GameContainer;
+import com.physmo.garnet.GameState;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Texture;
 import com.physmo.garnet.spritebatch.Sprite2D;
@@ -9,7 +9,7 @@ import com.physmo.garnet.tilegrid.TileGridData;
 import com.physmo.garnet.tilegrid.TileGridDrawer;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
-public class ContainerTileGridTest implements GameContainer {
+public class ContainerTileGridTest extends GameState {
 
     private static String fileName = "/Users/nick/Dev/java/garnettest/src/main/resources/space.PNG";
     private static float angle = 0;
@@ -44,9 +44,6 @@ public class ContainerTileGridTest implements GameContainer {
                 .setData(tileGridData)
                 .setSpriteBatch(spriteBatch)
                 .setWindowSize(40, 30);
-
-
-        System.out.println("adding keyboard callback from game container");
 
         garnet.addKeyboardCallback((key, scancode, action, mods) -> {
             System.out.println("keyboard handler" + scancode + "  " + action);

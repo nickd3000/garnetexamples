@@ -1,18 +1,27 @@
 package com.physmo.garnettest;
 
-import com.physmo.garnet.GameContainer;
+import com.physmo.garnet.GameState;
 import com.physmo.garnet.Garnet;
+import com.physmo.garnet.Utils;
 import com.physmo.garnet.regularfont.RegularFont;
 
-public class ContainerRegularFontSample implements GameContainer {
+public class ContainerRegularFontSample extends GameState {
 
-    public static final String fontFileName = "/Users/nick/Dev/java/garnettest/src/main/resources/8x8Font.png";
-    static int c = 0;
+    public static final String fontName = "/12x12Font.png";
+    //public static final String fontName = "/8x8Font.png";
+
     RegularFont regularFont;
+
+    public static void main(String[] args) {
+        Garnet garnet = new Garnet(new ContainerRegularFontSample(), 640, 480);
+        garnet.init();
+        garnet.run();
+    }
 
     @Override
     public void init(Garnet garnet) {
-        regularFont = new RegularFont(fontFileName, 8, 8);
+        String fontFileName = Utils.getPathForResource(this, fontName);
+        regularFont = new RegularFont(fontFileName, 12, 12);
     }
 
     @Override
@@ -21,7 +30,7 @@ public class ContainerRegularFontSample implements GameContainer {
 
     @Override
     public void draw() {
-        //regularFont.renderChar((char)(Math.random()*250.0),20,20,2);
+        regularFont.clearSpriteBatch();
         regularFont.renderChar('A', 20, 20, 1);
         regularFont.drawText("Abcdefg 12345", 20, 60, 2);
         regularFont.drawText("The quick brown fox", 20, 80, 2);

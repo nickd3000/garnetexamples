@@ -1,13 +1,13 @@
 package com.physmo.garnettest.basicsprites;
 
-import com.physmo.garnet.GameContainer;
+import com.physmo.garnet.GameState;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Texture;
 import com.physmo.garnet.spritebatch.Sprite2D;
 import com.physmo.garnet.spritebatch.SpriteBatch;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
-public class ContainerBasicSprites implements GameContainer {
+public class ContainerBasicSprites extends GameState {
 
     private static String fileName = "/Users/nick/Dev/java/garnettest/src/main/resources/space.PNG";
     private static float angle = 0;
