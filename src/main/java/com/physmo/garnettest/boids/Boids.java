@@ -111,7 +111,7 @@ public class Boids extends GameState {
             b.draw(spriteBatch);
         }
 
-        spriteBatch.render();
+        spriteBatch.render(1);
         spriteBatch.clear();
     }
 }

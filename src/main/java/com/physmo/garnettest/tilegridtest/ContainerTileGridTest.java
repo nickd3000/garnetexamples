@@ -81,7 +81,7 @@ public class ContainerTileGridTest extends GameState {
         tileGridDrawer.setScroll(movementX * 200, movementX * 200);
         tileGridDrawer.draw();
 
-        spriteBatch.render();
+        spriteBatch.render(1);
         spriteBatch.clear();
 
     }

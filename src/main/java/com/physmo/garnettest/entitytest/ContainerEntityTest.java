@@ -61,7 +61,7 @@ public class ContainerEntityTest extends GameState {
 
         //drawTestSpriteBuilder();
         entityGroup.drawAll();
-        spriteBatch.render();
+        spriteBatch.render(1);
         spriteBatch.clear();
 
     }

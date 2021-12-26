@@ -1,4 +1,4 @@
-package com.physmo.garnettest.invaders;
+package com.physmo.garnettest.invaders.renderers;
 
 import com.physmo.garnet.entity.RenderComponent;
 import com.physmo.garnet.spritebatch.Sprite2D;
@@ -14,6 +14,7 @@ public class RenderComponentPlayerMissile extends RenderComponent {
 
     @Override
     public void draw() {
-        spriteBatch.add(Sprite2D.build((int) (parent.position.x), (int) (parent.position.y), 16, 16, 0, 16, 16, 16));
+        if (parent.getActive()) // TODO: we should not need to do this
+        spriteBatch.add(Sprite2D.build((int) (parent.position.x), (int) (parent.position.y), 16, 16, 16*4, 32, 16, 16));
     }
 }

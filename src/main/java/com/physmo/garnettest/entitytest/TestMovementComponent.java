@@ -5,6 +5,11 @@ import com.physmo.garnet.entity.Component;
 public class TestMovementComponent extends Component {
 
 
+    @Override
+    public void init() {
+
+    }
+
     public void tick(double delta) {
 
         parent.position.x += parent.velocity.x * delta;

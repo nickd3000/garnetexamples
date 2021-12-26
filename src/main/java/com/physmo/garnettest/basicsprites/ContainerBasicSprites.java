@@ -51,7 +51,7 @@ public class ContainerBasicSprites extends GameState {
 
         drawTestSpriteBuilder();
 
-        spriteBatch.render();
+        spriteBatch.render(1);
         spriteBatch.clear();
 
     }

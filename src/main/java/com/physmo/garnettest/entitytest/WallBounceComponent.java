@@ -4,6 +4,11 @@ import com.physmo.garnet.entity.Component;
 
 public class WallBounceComponent extends Component {
 
+    @Override
+    public void init() {
+
+    }
+
     public void tick(double delta) {
         double width = 600;
         double height = 400;

@@ -1,6 +1,6 @@
-package com.physmo.garnettest.invaders;
+package com.physmo.garnettest.invaders.components;
 
-import com.physmo.garnet.Input;
+import com.physmo.garnet.input.Input;
 import com.physmo.garnet.entity.Component;
 import com.physmo.garnet.entity.Entity;
 
@@ -11,13 +11,23 @@ public class ComponentPlayer extends Component {
     double speed = 100;
     double bulletCooldown = 0;
 
+    double leftWall=0;
+    double rightWall=300;
+
+    @Override
+    public void init() {
+
+    }
+
     @Override
     public void tick(double delta) {
         if (Input.isPressed(Input.VirtualButton.RIGHT)) {
             parent.position.x += speed * delta;
+            if (parent.position.x>rightWall) parent.position.x=rightWall;
         }
         if (Input.isPressed(Input.VirtualButton.LEFT)) {
             parent.position.x -= speed * delta;
+            if (parent.position.x<leftWall) parent.position.x=leftWall;
         }
         if (Input.isPressed(Input.VirtualButton.FIRE1)) {
             fireMissile();
