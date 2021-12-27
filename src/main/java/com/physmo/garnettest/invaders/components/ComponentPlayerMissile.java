@@ -10,7 +10,7 @@ public class ComponentPlayerMissile extends Component {
     @Override
     public void init() {
         BoxCollider2D boxCollider2D = new BoxCollider2D();
-        boxCollider2D.setValues(parent, -5,-5,10,10);
+        boxCollider2D.setValues(parent, -2, -4, 4, 8);
         parent.addCollider(boxCollider2D);
     }
 

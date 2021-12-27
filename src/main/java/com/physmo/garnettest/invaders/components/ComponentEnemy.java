@@ -8,13 +8,22 @@ public class ComponentEnemy extends Component {
     @Override
     public void init() {
         BoxCollider2D boxCollider2D = new BoxCollider2D();
-        boxCollider2D.setValues(parent, -10,-10,20,20);
+        boxCollider2D.setValues(parent, -7, -7, 14, 14);
         parent.addCollider(boxCollider2D);
     }
 
     @Override
     public void tick(double delta) {
 
+        ComponentGameLogic gameLogic = getComponent(ComponentGameLogic.class);
+
+        if (gameLogic != null) {
+            if (gameLogic.dir) {
+                parent.position.x += 10 * delta;
+            } else {
+                parent.position.x -= 10 * delta;
+            }
+        }
     }
 
     @Override
