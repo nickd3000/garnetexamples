@@ -12,7 +12,7 @@ public class ComponentPlayer extends Component {
     double bulletCoolDown = 0;
 
     double leftWall = 8;
-    double rightWall = 300-8;
+    double rightWall = 300 - 8;
 
     @Override
     public void init() {
@@ -27,7 +27,10 @@ public class ComponentPlayer extends Component {
         }
         if (Input.isPressed(Input.VirtualButton.LEFT)) {
             parent.position.x -= speed * delta;
-            if (parent.position.x < leftWall) parent.position.x = leftWall;
+            if (parent.position.x < leftWall) {
+                parent.position.x = leftWall;
+                parent.garnet.switchActiveState("menu");
+            }
         }
         if (Input.isPressed(Input.VirtualButton.FIRE1)) {
             fireMissile();

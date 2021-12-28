@@ -32,7 +32,7 @@ public class ContainerRegularFontSample extends GameState {
     @Override
     public void draw() {
         regularFont.clearSpriteBatch();
-        regularFont.renderChar('A', 20, 20, 1);
+        //regularFont.renderChar('A', 20, 20, 1);
         regularFont.drawText("Abcdefg 12345", 20, 60, 2);
         regularFont.drawText("The quick brown fox", 20, 80, 2);
         regularFont.drawText("Regular font sample", 20, 100, 4);

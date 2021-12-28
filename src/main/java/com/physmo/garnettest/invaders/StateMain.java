@@ -7,14 +7,14 @@ import com.physmo.garnet.Vec3;
 import com.physmo.garnet.entity.Entity;
 import com.physmo.garnet.spritebatch.SpriteBatch;
 import com.physmo.garnettest.invaders.components.ComponentEnemy;
+import com.physmo.garnettest.invaders.components.ComponentEnemyMissile;
 import com.physmo.garnettest.invaders.components.ComponentGameLogic;
 import com.physmo.garnettest.invaders.components.ComponentPlayer;
 import com.physmo.garnettest.invaders.components.ComponentPlayerMissile;
 import com.physmo.garnettest.invaders.renderers.RenderComponentEnemy;
+import com.physmo.garnettest.invaders.renderers.RenderComponentHud;
 import com.physmo.garnettest.invaders.renderers.RenderComponentPlayer;
 import com.physmo.garnettest.invaders.renderers.RenderComponentPlayerMissile;
-
-import java.util.Map;
 
 public class StateMain extends GameState {
 
@@ -29,8 +29,11 @@ public class StateMain extends GameState {
         texture = Texture.loadTexture(spriteSheetFileName);
         spriteBatch = new SpriteBatch(texture);
 
+        GameData gameData = (GameData) garnet.getGlobalObject("game_data");
+        gameData.currentScore = 0;
+        gameData.lives = 3;
+
         createEntities();
-        garnet.addGlobalObject("high_score", 0);
     }
 
     public void createEntities() {
@@ -52,6 +55,16 @@ public class StateMain extends GameState {
             missile.addEntityDrawer(new RenderComponentPlayerMissile(spriteBatch));
             addEntity(missile);
         }
+        // Enemy missile pool.
+        for (int i = 0; i < 35; i++) {
+            Entity missile = new Entity("enemy_missile", this);
+            missile.addTag("enemy_missile");
+            missile.setActive(false);
+            missile.setVisible(true);
+            missile.addComponent(new ComponentEnemyMissile());
+            missile.addEntityDrawer(new RenderComponentPlayerMissile(spriteBatch));
+            addEntity(missile);
+        }
 
         for (int y = 0; y < 5; y++) {
             for (int x = 0; x < 9; x++) {
@@ -68,7 +81,9 @@ public class StateMain extends GameState {
         Entity gameLogic = new Entity("game_logic", this);
         gameLogic.addTag("game_logic");
         gameLogic.addComponent(new ComponentGameLogic());
+        gameLogic.addEntityDrawer(new RenderComponentHud());
         gameLogic.setActive(true);
+        gameLogic.setVisible(true);
         addEntity(gameLogic);
     }
 
