@@ -14,23 +14,23 @@ import com.physmo.garnettest.invaders.renderers.RenderComponentEnemy;
 import com.physmo.garnettest.invaders.renderers.RenderComponentPlayer;
 import com.physmo.garnettest.invaders.renderers.RenderComponentPlayerMissile;
 
+import java.util.Map;
+
 public class StateMain extends GameState {
 
     // TODO: Make this relative
     private static String spriteSheetFileName = "/Users/nick/Dev/java/garnettest/src/main/resources/space.PNG";
 
-    Garnet garnet;
     Texture texture;
     SpriteBatch spriteBatch;
 
-
     @Override
     public void init(Garnet garnet) {
-        this.garnet = garnet;
         texture = Texture.loadTexture(spriteSheetFileName);
         spriteBatch = new SpriteBatch(texture);
 
         createEntities();
+        garnet.addGlobalObject("high_score", 0);
     }
 
     public void createEntities() {

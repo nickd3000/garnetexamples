@@ -9,7 +9,8 @@ public class TestGarnet {
     public static void main(String[] args) {
         //Garnet garnet = new Garnet(new ContainerBasicSprites(), 640, 480);
         //Garnet garnet = new Garnet(new ContainerRegularFontSample(),640,480);
-        Garnet garnet = new Garnet(new Boids(), 640, 480);
+        Garnet garnet = new Garnet( 640, 480);
+        garnet.addState("boids", new Boids());
         garnet.init();
         garnet.run();
     }

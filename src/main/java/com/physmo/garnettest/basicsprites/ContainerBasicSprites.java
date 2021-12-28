@@ -16,7 +16,8 @@ public class ContainerBasicSprites extends GameState {
     private SpriteBatch spriteBatch;
 
     public static void main(String[] args) {
-        Garnet garnet = new Garnet(new ContainerBasicSprites(), 640, 480);
+        Garnet garnet = new Garnet( 640, 480);
+        garnet.addState("ContainerBasicSprites", new ContainerBasicSprites());
         garnet.init();
         garnet.run();
     }

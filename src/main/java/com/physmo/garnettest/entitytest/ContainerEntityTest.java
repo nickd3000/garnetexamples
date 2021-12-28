@@ -20,7 +20,8 @@ public class ContainerEntityTest extends GameState {
     private EntityGroup entityGroup;
 
     public static void main(String[] args) {
-        Garnet garnet = new Garnet(new ContainerEntityTest(), 640, 480);
+        Garnet garnet = new Garnet( 640, 480);
+        garnet.addState("ContainerEntityTest", new ContainerEntityTest());
         garnet.init();
         garnet.run();
     }

@@ -9,10 +9,10 @@ import java.util.List;
 public class ComponentPlayer extends Component {
 
     double speed = 100;
-    double bulletCooldown = 0;
+    double bulletCoolDown = 0;
 
-    double leftWall = 0;
-    double rightWall = 300;
+    double leftWall = 8;
+    double rightWall = 300-8;
 
     @Override
     public void init() {
@@ -33,11 +33,11 @@ public class ComponentPlayer extends Component {
             fireMissile();
         }
 
-        if (bulletCooldown > 0) bulletCooldown -= delta;
+        if (bulletCoolDown > 0) bulletCoolDown -= delta;
     }
 
     private void fireMissile() {
-        if (bulletCooldown > 0) return;
+        if (bulletCoolDown > 0) return;
 
         List<Entity> player_missiles = parent.getGameState().getEntitiesByTag("player_missile");
         for (Entity player_missile : player_missiles) {
@@ -45,7 +45,7 @@ public class ComponentPlayer extends Component {
                 player_missile.setActive(true);
                 player_missile.position.x = parent.position.x;
                 player_missile.position.y = parent.position.y;
-                bulletCooldown = 0.2;
+                bulletCoolDown = 0.2;
                 break;
             }
         }

@@ -20,7 +20,8 @@ public class ContainerTileGridTest extends GameState {
     private SpriteBatch spriteBatch;
 
     public static void main(String[] args) {
-        Garnet garnet = new Garnet(new ContainerTileGridTest(), 640, 480);
+        Garnet garnet = new Garnet(640, 480);
+        garnet.addState("ContainerTileGridTest", new ContainerTileGridTest());
         garnet.init();
         garnet.run();
     }
