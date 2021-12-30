@@ -20,8 +20,8 @@ public class RenderComponentHud extends RenderComponent {
     public void draw() {
         GameData gameData = (GameData) parent.garnet.getGlobalObject("game_data");
         //regularFont.clearSpriteBatch();
-        regularFont.drawText("Score:" + gameData.currentScore, 10, 10, 1);
-        regularFont.drawText("Lives:" + gameData.lives, 10 + 250, 10, 1);
+        regularFont.drawText("Score:" + gameData.currentScore, 10, 10, 2);
+        regularFont.drawText("Lives:" + gameData.lives, 10 + 250, 10, 2);
         regularFont.render();
     }
 }

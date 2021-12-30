@@ -3,6 +3,7 @@ package com.physmo.garnettest.invaders;
 import com.physmo.garnet.GameState;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Texture;
+import com.physmo.garnet.Utils;
 import com.physmo.garnet.Vec3;
 import com.physmo.garnet.entity.Entity;
 import com.physmo.garnet.spritebatch.SpriteBatch;
@@ -18,15 +19,16 @@ import com.physmo.garnettest.invaders.renderers.RenderComponentPlayerMissile;
 
 public class StateMain extends GameState {
 
-    // TODO: Make this relative
-    private static String spriteSheetFileName = "/Users/nick/Dev/java/garnettest/src/main/resources/space.PNG";
+    private static String spriteSheetFileName = "/space.PNg";
 
     Texture texture;
     SpriteBatch spriteBatch;
 
     @Override
     public void init(Garnet garnet) {
-        texture = Texture.loadTexture(spriteSheetFileName);
+        String spriteSheetFileNamePath = Utils.getPathForResource(this, spriteSheetFileName);
+
+        texture = Texture.loadTexture(spriteSheetFileNamePath);
         spriteBatch = new SpriteBatch(texture);
 
         GameData gameData = (GameData) garnet.getGlobalObject("game_data");
