@@ -21,18 +21,18 @@ public class ComponentPlayer extends Component {
 
     @Override
     public void tick(double delta) {
-        if (Input.isPressed(Input.VirtualButton.RIGHT)) {
+        if (parent.garnet.getInput().isPressed(Input.VirtualButton.RIGHT)) {
             parent.position.x += speed * delta;
             if (parent.position.x > rightWall) parent.position.x = rightWall;
         }
-        if (Input.isPressed(Input.VirtualButton.LEFT)) {
+        if (parent.garnet.getInput().isPressed(Input.VirtualButton.LEFT)) {
             parent.position.x -= speed * delta;
             if (parent.position.x < leftWall) {
                 parent.position.x = leftWall;
                 parent.garnet.switchActiveState("menu");
             }
         }
-        if (Input.isPressed(Input.VirtualButton.FIRE1)) {
+        if (parent.garnet.getInput().isPressed(Input.VirtualButton.FIRE1)) {
             fireMissile();
         }
 

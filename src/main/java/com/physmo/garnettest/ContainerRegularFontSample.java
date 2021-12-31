@@ -12,9 +12,13 @@ public class ContainerRegularFontSample extends GameState {
 
     RegularFont regularFont;
 
+    public ContainerRegularFontSample(Garnet garnet, String name) {
+        super(garnet, name);
+    }
+
     public static void main(String[] args) {
         Garnet garnet = new Garnet( 640, 480);
-        garnet.addState("thestate", new ContainerRegularFontSample());
+        garnet.addState(new ContainerRegularFontSample(garnet, "thestate"));
         garnet.init();
         garnet.run();
     }

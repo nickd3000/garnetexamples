@@ -19,9 +19,13 @@ public class ContainerEntityTest extends GameState {
     private SpriteBatch spriteBatch;
     private EntityGroup entityGroup;
 
+    public ContainerEntityTest(Garnet garnet, String name) {
+        super(garnet, name);
+    }
+
     public static void main(String[] args) {
         Garnet garnet = new Garnet( 640, 480);
-        garnet.addState("ContainerEntityTest", new ContainerEntityTest());
+        garnet.addState( new ContainerEntityTest(garnet, "ContainerEntityTest"));
         garnet.init();
         garnet.run();
     }

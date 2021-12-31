@@ -6,12 +6,14 @@ import com.physmo.garnet.Utils;
 import com.physmo.garnet.input.Input;
 import com.physmo.garnet.regularfont.RegularFont;
 
-public class StateMenu extends GameState {
+public class StatePause extends GameState {
 
     public static final String fontName = "/12x12Font.png";
     RegularFont regularFont;
 
-    public StateMenu(Garnet garnet, String name) {
+    double initialCooldown;
+
+    public StatePause(Garnet garnet, String name) {
         super(garnet, name);
     }
 
@@ -19,19 +21,25 @@ public class StateMenu extends GameState {
     public void init(Garnet garnet) {
         String fontFileName = Utils.getPathForResource(this, fontName);
         regularFont = new RegularFont(fontFileName, 12, 12);
+        initialCooldown=0.1;
     }
 
     @Override
     public void tick(double delta) {
-        if (garnet.getInput().isPressed(Input.VirtualButton.FIRE1)) {
-            garnet.switchActiveState("main");
+        if (initialCooldown>0) initialCooldown-=delta;
+
+        if (initialCooldown<=0) {
+            if (garnet.getInput().isFirstPress(Input.VirtualButton.MENU)) {
+                garnet.popSubState("pause");
+                //garnet.switchActiveState("main");
+            }
         }
     }
 
     @Override
     public void draw() {
         regularFont.clearSpriteBatch();
-        regularFont.drawText("Invaders", 20, 100, 3);
+        regularFont.drawText("PAUSED", 20, 100, 3);
         regularFont.render();
     }
 }

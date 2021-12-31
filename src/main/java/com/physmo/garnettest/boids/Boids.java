@@ -18,6 +18,10 @@ public class Boids extends GameState {
     Texture texture;
     SpriteBatch spriteBatch;
 
+    public Boids(Garnet garnet, String name) {
+        super(garnet, name);
+    }
+
     @Override
     public void init(Garnet garnet) {
         texture = Texture.loadTexture(fileName);

@@ -24,6 +24,10 @@ public class StateMain extends GameState {
     Texture texture;
     SpriteBatch spriteBatch;
 
+    public StateMain(Garnet garnet, String name) {
+        super(garnet, name);
+    }
+
     @Override
     public void init(Garnet garnet) {
         String spriteSheetFileNamePath = Utils.getPathForResource(this, spriteSheetFileName);

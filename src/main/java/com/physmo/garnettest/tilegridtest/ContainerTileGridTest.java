@@ -19,9 +19,13 @@ public class ContainerTileGridTest extends GameState {
     private Texture texture;
     private SpriteBatch spriteBatch;
 
+    public ContainerTileGridTest(Garnet garnet, String name) {
+        super(garnet, name);
+    }
+
     public static void main(String[] args) {
         Garnet garnet = new Garnet(640, 480);
-        garnet.addState("ContainerTileGridTest", new ContainerTileGridTest());
+        garnet.addState( new ContainerTileGridTest(garnet, "ContainerTileGridTest"));
         garnet.init();
         garnet.run();
     }
