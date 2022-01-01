@@ -28,12 +28,12 @@ public class StatePause extends GameState {
     public void tick(double delta) {
         if (initialCooldown>0) initialCooldown-=delta;
 
-        if (initialCooldown<=0) {
+        //if (initialCooldown<=0) {
             if (garnet.getInput().isFirstPress(Input.VirtualButton.MENU)) {
                 garnet.popSubState("pause");
                 //garnet.switchActiveState("main");
             }
-        }
+        //}
     }
 
     @Override

@@ -14,7 +14,6 @@ public class RenderComponentPlayerMissile extends RenderComponent {
 
     @Override
     public void draw() {
-        if (parent.getActive()) // TODO: we should not need to do this
             spriteBatch.add(Sprite2D.build(
                     (int) (parent.position.x) - 8,
                     (int) (parent.position.y) - 8,
