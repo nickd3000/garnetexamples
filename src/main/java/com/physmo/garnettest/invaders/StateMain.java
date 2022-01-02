@@ -35,6 +35,8 @@ public class StateMain extends GameState {
         texture = Texture.loadTexture(spriteSheetFileNamePath);
         spriteBatch = new SpriteBatch(texture);
 
+        getParticleManager().setSpriteBatch(spriteBatch);
+
         GameData gameData = (GameData) garnet.getGlobalObject("game_data");
         gameData.currentScore = 0;
         gameData.lives = 3;

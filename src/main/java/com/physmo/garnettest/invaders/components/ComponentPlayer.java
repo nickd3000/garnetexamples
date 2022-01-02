@@ -3,6 +3,7 @@ package com.physmo.garnettest.invaders.components;
 import com.physmo.garnet.entity.Component;
 import com.physmo.garnet.entity.Entity;
 import com.physmo.garnet.input.Input;
+import com.physmo.garnet.particle.Emitter;
 
 import java.util.List;
 
@@ -52,6 +53,7 @@ public class ComponentPlayer extends Component {
                 break;
             }
         }
+
 
     }
 

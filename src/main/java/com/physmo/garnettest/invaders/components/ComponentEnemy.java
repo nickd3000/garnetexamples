@@ -4,6 +4,7 @@ import com.physmo.garnet.collision.BoxCollider2D;
 import com.physmo.garnet.collision.CollisionPacket;
 import com.physmo.garnet.entity.Component;
 import com.physmo.garnet.entity.Entity;
+import com.physmo.garnet.particle.Emitter;
 import com.physmo.garnettest.invaders.GameData;
 
 import java.util.List;
@@ -54,6 +55,7 @@ public class ComponentEnemy extends Component {
         parent.setActive(false);
         gameData.currentScore++;
         System.out.println("current score: "+gameData.currentScore);
+        parentState.getParticleManager().addEmitter(new Emitter(parent.position, 0.2));
     }
 
     private void fireMissile() {
