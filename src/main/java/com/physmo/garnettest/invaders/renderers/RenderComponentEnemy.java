@@ -13,9 +13,11 @@ public class RenderComponentEnemy extends RenderComponent {
 
     @Override
     public void draw() {
-            spriteBatch.add(Sprite2D.build(
-                    (int) (parent.position.x) - 8,
-                    (int) (parent.position.y) - 8,
-                    16, 16, 32, 32, 16, 16));
+        Sprite2D spr = Sprite2D.build(
+                (int) (parent.position.x) - 8,
+                (int) (parent.position.y) - 8,
+                16, 16, 32, 32, 16, 16);
+        spr.addColor(0,1,0);
+        spriteBatch.add(spr);
     }
 }

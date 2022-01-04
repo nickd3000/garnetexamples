@@ -17,6 +17,6 @@ public class RenderComponentPlayer extends RenderComponent {
         spriteBatch.add(Sprite2D.build(
                 (int) (parent.position.x) - 8,
                 (int) (parent.position.y) - 8,
-                16, 16, 0, 32, 16, 16));
+                16, 16, 0, 32, 16, 16).addColor(1,0,1,1));
     }
 }

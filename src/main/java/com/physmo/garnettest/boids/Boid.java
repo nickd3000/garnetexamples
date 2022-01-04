@@ -35,7 +35,7 @@ public class Boid {
         spr.addAngle((float) -(a) + 180);
 
 
-        spr.addColor(x / 600.0, y / 400.0, (x * y) / 1500.0);
+        spr.addColor((float) (x / 600.0), (float) (y / 400.0), (float) ((x * y) / 1500.0));
 
         sb.add(spr);
     }
