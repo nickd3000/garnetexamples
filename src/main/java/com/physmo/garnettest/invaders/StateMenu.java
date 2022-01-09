@@ -27,9 +27,9 @@ public class StateMenu extends GameState {
         String fontFileName = Utils.getPathForResource(this, fontName);
         regularFont = new RegularFont(fontFileName, 12, 12);
 
-        bmfFontTexture = Texture.loadTexture(Utils.getPathForResource(this, "/defaultfont.png"));
+        bmfFontTexture = Texture.loadTexture(Utils.getPathForResource(this, "/ptmono16_0.png"));
         bmfFont = new BMFFont();
-        String pathForResource = Utils.getPathForResource(this, "/defaultfont.fnt");
+        String pathForResource = Utils.getPathForResource(this, "/ptmono16.fnt");
         try {
             bmfFont.init(pathForResource);
         } catch (IOException e) {
@@ -53,7 +53,7 @@ public class StateMenu extends GameState {
 
         // temp bmf font stuff
         bmfFontTexture.bind();
-        bmfFont.drawString(bmfFontTexture, "Hello World 123", 20, 20, 1);
+        bmfFont.drawString(bmfFontTexture, "Hello World 123 ", 20, 20, 1);
 
         ////////
     }
