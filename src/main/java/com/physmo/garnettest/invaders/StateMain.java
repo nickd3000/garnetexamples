@@ -24,6 +24,7 @@ public class StateMain extends GameState {
     Texture texture;
     SpriteBatch spriteBatch;
 
+
     public StateMain(Garnet garnet, String name) {
         super(garnet, name);
     }

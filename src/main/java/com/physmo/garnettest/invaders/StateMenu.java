@@ -2,21 +2,19 @@ package com.physmo.garnettest.invaders;
 
 import com.physmo.garnet.GameState;
 import com.physmo.garnet.Garnet;
-import com.physmo.garnet.Texture;
 import com.physmo.garnet.Utils;
-import com.physmo.garnet.bitmapfont.BMFFont;
 import com.physmo.garnet.input.Input;
 import com.physmo.garnet.regularfont.RegularFont;
-
-import java.io.IOException;
 
 public class StateMenu extends GameState {
 
     public static final String fontName = "/12x12Font.png";
     RegularFont regularFont;
 
-    BMFFont bmfFont;
-    Texture bmfFontTexture;
+//    BMFFont bmfFont;
+//    Texture bmfFontTexture;
+
+    Resources resources;
 
     public StateMenu(Garnet garnet, String name) {
         super(garnet, name);
@@ -27,15 +25,17 @@ public class StateMenu extends GameState {
         String fontFileName = Utils.getPathForResource(this, fontName);
         regularFont = new RegularFont(fontFileName, 12, 12);
 
-        bmfFontTexture = Texture.loadTexture(Utils.getPathForResource(this, "/ptmono16_0.png"));
-        bmfFont = new BMFFont();
-        String pathForResource = Utils.getPathForResource(this, "/ptmono16.fnt");
-        try {
-            bmfFont.init(pathForResource);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        bmfFontTexture = Texture.loadTexture(Utils.getPathForResource(this, "/ptmono16_0.png"));
+//        bmfFont = new BMFFont();
+//        String pathForResource = Utils.getPathForResource(this, "/ptmono16.fnt");
+//        try {
+//            bmfFont.init(pathForResource);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
+        resources = (Resources) garnet.getGlobalObject("Resources");
+        if (resources == null) System.out.println("resources is null");
     }
 
     @Override
@@ -52,8 +52,8 @@ public class StateMenu extends GameState {
         regularFont.render();
 
         // temp bmf font stuff
-        bmfFontTexture.bind();
-        bmfFont.drawString(bmfFontTexture, "Hello World 123 ", 20, 20, 1);
+        resources.bmfFontTexture.bind();
+        resources.bmfFont.drawString(resources.bmfFontTexture, "Hello World 123 ", 20, 20, 2);
 
         ////////
     }
