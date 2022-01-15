@@ -23,7 +23,7 @@ public class ComponentPlayerMissile extends Component {
 
     @Override
     public void onCollisionStart(CollisionPacket collisionPacket) {
-        System.out.println("player missile collision");
+        //System.out.println("player missile collision");
         parent.setActive(false);
     }
 }

@@ -2,9 +2,15 @@ package com.physmo.garnettest.invaders.components;
 
 import com.physmo.garnet.collision.BoxCollider2D;
 import com.physmo.garnet.collision.CollisionPacket;
+import com.physmo.garnet.color.Color;
+import com.physmo.garnet.color.ColorSupplierLinear;
+import com.physmo.garnet.curve.CurveType;
+import com.physmo.garnet.curve.StandardCurve;
 import com.physmo.garnet.entity.Component;
 import com.physmo.garnet.entity.Entity;
 import com.physmo.garnet.particle.Emitter;
+import com.physmo.garnet.particle.ParticleTemplate;
+import com.physmo.garnettest.invaders.EnemyType;
 import com.physmo.garnettest.invaders.GameData;
 
 import java.util.List;
@@ -13,6 +19,13 @@ public class ComponentEnemy extends Component {
 
     GameData gameData;
     double fireDelay;
+    public EnemyType enemyType;
+    double health;
+    ParticleTemplate explosionParticleTemplate;
+
+    public ComponentEnemy(EnemyType enemyType) {
+        this.enemyType = enemyType;
+    }
 
     @Override
     public void init() {
@@ -21,6 +34,14 @@ public class ComponentEnemy extends Component {
         parent.addCollider(boxCollider2D);
         gameData = (GameData) parent.garnet.getGlobalObject("game_data");
         resetFireDelay();
+        health = 1;
+
+        explosionParticleTemplate = new ParticleTemplate();
+        explosionParticleTemplate.setLifeTime(0.2, 3);
+        explosionParticleTemplate.setSpeed(10, 50);
+        explosionParticleTemplate.setPositionJitter(2.1);
+        explosionParticleTemplate.setColorSupplier(new ColorSupplierLinear(Color.YELLOW, new Color(1, 0, 0, 0)));
+        explosionParticleTemplate.setSpeedCurve(new StandardCurve(CurveType.LINE_DOWN));
     }
 
     public void resetFireDelay() {
@@ -41,9 +62,9 @@ public class ComponentEnemy extends Component {
             }
         }
 
-        fireDelay-=delta;
-        if (fireDelay<0) {
-            fireMissile();
+        fireDelay -= delta;
+        if (fireDelay < 0) {
+            if (enemyType == EnemyType.shooter) fireMissile();
             resetFireDelay();
         }
     }
@@ -51,15 +72,30 @@ public class ComponentEnemy extends Component {
     @Override
     public void onCollisionStart(CollisionPacket collisionPacket) {
         if (!collisionPacket.sourceEntity.hasTag("player_missile")) return;
-        System.out.println("enemy collision");
+        handleBulletHit(1);
+
+        // todo: spawn particle on bullet hit (not the same as the explosion)
+    }
+
+    private void handleBulletHit(double bulletDamage) {
+        double damageScale = 1;
+
+        if (enemyType == EnemyType.armoured) damageScale = 1.0f / 3.0f;
+
+        health -= bulletDamage * damageScale;
+        if (health <= 0) handleDying();
+    }
+
+    private void handleDying() {
         parent.setActive(false);
         gameData.currentScore++;
-        System.out.println("current score: "+gameData.currentScore);
-        parentState.getParticleManager().addEmitter(new Emitter(parent.position, 0.2));
+
+        Emitter emitter = new Emitter(parent.position, 0.2, explosionParticleTemplate);
+        emitter.setEmitPerSecond(1500);
+        parentState.getParticleManager().addEmitter(emitter);
     }
 
     private void fireMissile() {
-
         List<Entity> missiles = parent.getGameState().getEntitiesByTag("enemy_missile");
         for (Entity missile : missiles) {
             if (!missile.getActive()) {
@@ -67,10 +103,9 @@ public class ComponentEnemy extends Component {
                 missile.setVisible(true);
                 missile.position.x = parent.position.x;
                 missile.position.y = parent.position.y;
-
                 break;
             }
         }
-
     }
+
 }

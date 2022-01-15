@@ -78,7 +78,12 @@ public class StateMain extends GameState {
         for (int y = 0; y < 5; y++) {
             for (int x = 0; x < 9; x++) {
                 Entity enemy = new Entity("enemy", this);
-                enemy.addComponent(new ComponentEnemy());
+
+                EnemyType enemyType = EnemyType.basic;
+                if (Math.random() < 0.3) enemyType = EnemyType.armoured;
+                if (Math.random() < 0.3) enemyType = EnemyType.shooter;
+                enemy.addComponent(new ComponentEnemy(enemyType));
+
                 enemy.addEntityDrawer(new RenderComponentEnemy(spriteBatch));
                 enemy.position = new Vec3(60 + x * 30, 50 + y * 30, 0);
                 enemy.setActive(true);
