@@ -19,8 +19,6 @@ import com.physmo.garnettest.invaders.renderers.RenderComponentPlayerMissile;
 
 public class StateMain extends GameState {
 
-    private static String spriteSheetFileName = "/space.PNg";
-
     Texture texture;
     SpriteBatch spriteBatch;
 
@@ -31,6 +29,7 @@ public class StateMain extends GameState {
 
     @Override
     public void init(Garnet garnet) {
+        String spriteSheetFileName = "/space.PNg";
         String spriteSheetFileNamePath = Utils.getPathForResource(this, spriteSheetFileName);
 
         texture = Texture.loadTexture(spriteSheetFileNamePath);
@@ -41,6 +40,7 @@ public class StateMain extends GameState {
         GameData gameData = (GameData) garnet.getGlobalObject("game_data");
         gameData.currentScore = 0;
         gameData.lives = 3;
+
 
         createEntities();
     }
