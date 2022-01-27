@@ -1,6 +1,9 @@
 package com.physmo.garnettest.invaders;
 
 import com.physmo.garnet.Garnet;
+import com.physmo.garnettest.invaders.states.StateGame;
+import com.physmo.garnettest.invaders.states.StateMenu;
+import com.physmo.garnettest.invaders.states.StatePause;
 
 public class InvadersApp {
 
@@ -11,7 +14,7 @@ public class InvadersApp {
         garnet.addGlobalObject("Resources", new Resources().init());
 
         garnet.addState(new StateMenu(garnet, "menu"));
-        garnet.addState(new StateMain(garnet, "main"));
+        garnet.addState(new StateGame(garnet, "game"));
         garnet.addState(new StatePause(garnet, "pause"));
 
         garnet.switchActiveState("menu");

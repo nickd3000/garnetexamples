@@ -1,10 +1,11 @@
-package com.physmo.garnettest.invaders;
+package com.physmo.garnettest.invaders.states;
 
 import com.physmo.garnet.GameState;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
 import com.physmo.garnet.input.Input;
 import com.physmo.garnet.regularfont.RegularFont;
+import com.physmo.garnettest.invaders.Resources;
 
 public class StateMenu extends GameState {
 
@@ -41,7 +42,7 @@ public class StateMenu extends GameState {
     @Override
     public void tick(double delta) {
         if (garnet.getInput().isPressed(Input.VirtualButton.FIRE1)) {
-            garnet.switchActiveState("main");
+            garnet.switchActiveState("game");
         }
     }
 
@@ -53,7 +54,8 @@ public class StateMenu extends GameState {
 
         // temp bmf font stuff
         resources.bmfFontTexture.bind();
-        resources.bmfFont.drawString(resources.bmfFontTexture, "Hello World 123 ", 20, 20, 2);
+        garnet.getDisplay().bindTexture(resources.bmfFontTexture.getId());
+        resources.bmfFont.drawString(resources.bmfFontTexture, "Garnet Example Project", 20, 20, 2);
 
         ////////
     }

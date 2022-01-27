@@ -1,4 +1,4 @@
-package com.physmo.garnettest.invaders;
+package com.physmo.garnettest.invaders.states;
 
 import com.physmo.garnet.GameState;
 import com.physmo.garnet.Garnet;
@@ -7,6 +7,8 @@ import com.physmo.garnet.Utils;
 import com.physmo.garnet.Vec3;
 import com.physmo.garnet.entity.Entity;
 import com.physmo.garnet.spritebatch.SpriteBatch;
+import com.physmo.garnettest.invaders.EnemyType;
+import com.physmo.garnettest.invaders.GameData;
 import com.physmo.garnettest.invaders.components.ComponentEnemy;
 import com.physmo.garnettest.invaders.components.ComponentEnemyMissile;
 import com.physmo.garnettest.invaders.components.ComponentGameLogic;
@@ -17,18 +19,25 @@ import com.physmo.garnettest.invaders.renderers.RenderComponentHud;
 import com.physmo.garnettest.invaders.renderers.RenderComponentPlayer;
 import com.physmo.garnettest.invaders.renderers.RenderComponentPlayerMissile;
 
-public class StateMain extends GameState {
+public class StateGame extends GameState {
 
     Texture texture;
     SpriteBatch spriteBatch;
+    GameData gameData;
 
+    SubState subState;
+    double subStateTimer;
 
-    public StateMain(Garnet garnet, String name) {
+    public StateGame(Garnet garnet, String name) {
         super(garnet, name);
     }
 
+    ;
+
     @Override
     public void init(Garnet garnet) {
+
+
         String spriteSheetFileName = "/space.PNg";
         String spriteSheetFileNamePath = Utils.getPathForResource(this, spriteSheetFileName);
 
@@ -37,12 +46,25 @@ public class StateMain extends GameState {
 
         getParticleManager().setSpriteBatch(spriteBatch);
 
-        GameData gameData = (GameData) garnet.getGlobalObject("game_data");
+        gameData = (GameData) garnet.getGlobalObject("game_data");
         gameData.currentScore = 0;
         gameData.lives = 3;
 
+        // init substates
+        subState = SubState.GETREADY;
+        subStateTimer = 3;
+        gameData.showGetReady = true;
 
         createEntities();
+        setAllEntitiesPause(true);
+    }
+
+    public void setAllEntitiesPause(boolean pause) {
+        for (Entity entity : getEntitiesByTag("pausable")) {
+            entity.setPaused(pause);
+        }
+
+
     }
 
     public void createEntities() {
@@ -52,6 +74,7 @@ public class StateMain extends GameState {
         player.position = new Vec3(100, 200, 0);
         player.setActive(true);
         player.setVisible(true);
+        player.addTag("pausable");
         addEntity(player);
 
         // Player missile pool.
@@ -62,6 +85,7 @@ public class StateMain extends GameState {
             missile.setVisible(true);
             missile.addComponent(new ComponentPlayerMissile());
             missile.addEntityDrawer(new RenderComponentPlayerMissile(spriteBatch));
+            missile.addTag("pausable");
             addEntity(missile);
         }
         // Enemy missile pool.
@@ -72,6 +96,7 @@ public class StateMain extends GameState {
             missile.setVisible(true);
             missile.addComponent(new ComponentEnemyMissile());
             missile.addEntityDrawer(new RenderComponentPlayerMissile(spriteBatch));
+            missile.addTag("pausable");
             addEntity(missile);
         }
 
@@ -88,6 +113,7 @@ public class StateMain extends GameState {
                 enemy.position = new Vec3(60 + x * 30, 50 + y * 30, 0);
                 enemy.setActive(true);
                 enemy.setVisible(true);
+                enemy.addTag("pausable");
                 addEntity(enemy);
             }
         }
@@ -103,6 +129,23 @@ public class StateMain extends GameState {
 
     @Override
     public void tick(double delta) {
+        subStateTimer -= delta;
+        switch (subState) {
+            case GETREADY:
+                if (subStateTimer < 0) {
+                    subState = SubState.RUNNING;
+                    setAllEntitiesPause(false);
+                    System.out.println("switching state");
+                    gameData.showGetReady = false;
+                }
+                break;
+            case RUNNING:
+                break;
+        }
+    }
+
+    enum SubState {
+        GETREADY, RUNNING
     }
 
     @Override

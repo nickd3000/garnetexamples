@@ -1,4 +1,4 @@
-package com.physmo.garnettest.invaders;
+package com.physmo.garnettest.invaders.states;
 
 import com.physmo.garnet.GameState;
 import com.physmo.garnet.Garnet;

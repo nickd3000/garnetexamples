@@ -27,5 +27,9 @@ public class RenderComponentHud extends RenderComponent {
         resources.bmfFont.drawString(resources.bmfFontTexture, "Score:" + gameData.currentScore, 10, 10, 2);
         resources.bmfFont.drawString(resources.bmfFontTexture, "Lives:" + gameData.lives, 10 + 250, 10, 2);
 
+        if (gameData.showGetReady) {
+            resources.bmfFont.drawString(resources.bmfFontTexture, "Get Ready!", 640 / 9, 480 / 9, 4);
+        }
+
     }
 }
