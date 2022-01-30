@@ -12,12 +12,9 @@ import com.physmo.garnettest.invaders.GameData;
 import com.physmo.garnettest.invaders.components.ComponentEnemy;
 import com.physmo.garnettest.invaders.components.ComponentEnemyMissile;
 import com.physmo.garnettest.invaders.components.ComponentGameLogic;
+import com.physmo.garnettest.invaders.components.ComponentHud;
 import com.physmo.garnettest.invaders.components.ComponentPlayer;
 import com.physmo.garnettest.invaders.components.ComponentPlayerMissile;
-import com.physmo.garnettest.invaders.renderers.RenderComponentEnemy;
-import com.physmo.garnettest.invaders.renderers.RenderComponentHud;
-import com.physmo.garnettest.invaders.renderers.RenderComponentPlayer;
-import com.physmo.garnettest.invaders.renderers.RenderComponentPlayerMissile;
 
 public class StateGame extends GameState {
 
@@ -69,8 +66,8 @@ public class StateGame extends GameState {
 
     public void createEntities() {
         Entity player = new Entity("player", this);
-        player.addComponent(new ComponentPlayer());
-        player.addEntityDrawer(new RenderComponentPlayer(spriteBatch));
+        player.addComponent(new ComponentPlayer(spriteBatch));
+        //player.addEntityDrawer(new RenderComponentPlayer(spriteBatch));
         player.position = new Vec3(100, 200, 0);
         player.setActive(true);
         player.setVisible(true);
@@ -83,8 +80,8 @@ public class StateGame extends GameState {
             missile.addTag("player_missile");
             missile.setActive(false);
             missile.setVisible(true);
-            missile.addComponent(new ComponentPlayerMissile());
-            missile.addEntityDrawer(new RenderComponentPlayerMissile(spriteBatch));
+            missile.addComponent(new ComponentPlayerMissile(spriteBatch));
+            //missile.addEntityDrawer(new RenderComponentPlayerMissile(spriteBatch));
             missile.addTag("pausable");
             addEntity(missile);
         }
@@ -94,8 +91,8 @@ public class StateGame extends GameState {
             missile.addTag("enemy_missile");
             missile.setActive(false);
             missile.setVisible(true);
-            missile.addComponent(new ComponentEnemyMissile());
-            missile.addEntityDrawer(new RenderComponentPlayerMissile(spriteBatch));
+            missile.addComponent(new ComponentEnemyMissile(spriteBatch));
+            //missile.addEntityDrawer(new RenderComponentPlayerMissile(spriteBatch));
             missile.addTag("pausable");
             addEntity(missile);
         }
@@ -107,9 +104,9 @@ public class StateGame extends GameState {
                 EnemyType enemyType = EnemyType.basic;
                 if (Math.random() < 0.3) enemyType = EnemyType.armoured;
                 if (Math.random() < 0.3) enemyType = EnemyType.shooter;
-                enemy.addComponent(new ComponentEnemy(enemyType));
+                enemy.addComponent(new ComponentEnemy(enemyType, spriteBatch));
 
-                enemy.addEntityDrawer(new RenderComponentEnemy(spriteBatch));
+                //enemy.addEntityDrawer(new RenderComponentEnemy(spriteBatch));
                 enemy.position = new Vec3(60 + x * 30, 50 + y * 30, 0);
                 enemy.setActive(true);
                 enemy.setVisible(true);
@@ -121,7 +118,8 @@ public class StateGame extends GameState {
         Entity gameLogic = new Entity("game_logic", this);
         gameLogic.addTag("game_logic");
         gameLogic.addComponent(new ComponentGameLogic());
-        gameLogic.addEntityDrawer(new RenderComponentHud());
+
+        gameLogic.addComponent(new ComponentHud());
         gameLogic.setActive(true);
         gameLogic.setVisible(true);
         addEntity(gameLogic);
@@ -144,13 +142,13 @@ public class StateGame extends GameState {
         }
     }
 
-    enum SubState {
-        GETREADY, RUNNING
-    }
-
     @Override
     public void draw() {
         spriteBatch.render(2);
         spriteBatch.clear();
+    }
+
+    enum SubState {
+        GETREADY, RUNNING
     }
 }

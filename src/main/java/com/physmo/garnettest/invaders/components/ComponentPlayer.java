@@ -9,6 +9,8 @@ import com.physmo.garnet.entity.Entity;
 import com.physmo.garnet.input.Input;
 import com.physmo.garnet.particle.Emitter;
 import com.physmo.garnet.particle.ParticleTemplate;
+import com.physmo.garnet.spritebatch.Sprite2D;
+import com.physmo.garnet.spritebatch.SpriteBatch;
 
 import java.util.List;
 
@@ -20,6 +22,11 @@ public class ComponentPlayer extends Component {
     double leftWall = 8;
     double rightWall = 300 - 8;
     ParticleTemplate shootParticleTemplate;
+    SpriteBatch spriteBatch;
+
+    public ComponentPlayer(SpriteBatch spriteBatch) {
+        this.spriteBatch = spriteBatch;
+    }
 
     @Override
     public void init() {
@@ -73,4 +80,11 @@ public class ComponentPlayer extends Component {
 
     }
 
+    @Override
+    public void draw() {
+        spriteBatch.add(Sprite2D.build(
+                (int) (parent.position.x) - 8,
+                (int) (parent.position.y) - 8,
+                16, 16, 0, 32, 16, 16).addColor(1, 0, 1, 1));
+    }
 }

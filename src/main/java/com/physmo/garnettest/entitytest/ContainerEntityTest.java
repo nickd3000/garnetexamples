@@ -50,9 +50,9 @@ public class ContainerEntityTest extends GameState {
             e1.addComponent(new TestMovementComponent());
             e1.addComponent(new WallBounceComponent());
             e1.addComponent(new FrictionComponent());
+            e1.addComponent(new BasicEntityDrawer(spriteBatch));
             entityGroup.add(e1);
-            BasicEntityDrawer basicEntityDrawer = new BasicEntityDrawer();
-            e1.addEntityDrawer(basicEntityDrawer);
+
         }
     }
 

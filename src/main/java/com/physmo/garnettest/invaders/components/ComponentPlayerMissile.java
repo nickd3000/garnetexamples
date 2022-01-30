@@ -3,9 +3,18 @@ package com.physmo.garnettest.invaders.components;
 import com.physmo.garnet.collision.BoxCollider2D;
 import com.physmo.garnet.collision.CollisionPacket;
 import com.physmo.garnet.entity.Component;
+import com.physmo.garnet.spritebatch.Sprite2D;
+import com.physmo.garnet.spritebatch.SpriteBatch;
 
 public class ComponentPlayerMissile extends Component {
     double speed = 250;
+
+    SpriteBatch spriteBatch;
+
+    public ComponentPlayerMissile(SpriteBatch spriteBatch) {
+        this.spriteBatch = spriteBatch;
+    }
+
 
     @Override
     public void init() {
@@ -25,5 +34,13 @@ public class ComponentPlayerMissile extends Component {
     public void onCollisionStart(CollisionPacket collisionPacket) {
         //System.out.println("player missile collision");
         parent.setActive(false);
+    }
+
+    @Override
+    public void draw() {
+        spriteBatch.add(Sprite2D.build(
+                (int) (parent.position.x) - 8,
+                (int) (parent.position.y) - 8,
+                16, 16, 16 * 4, 32, 16, 16));
     }
 }
