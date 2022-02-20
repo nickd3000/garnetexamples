@@ -29,8 +29,6 @@ public class StateGame extends GameState {
         super(garnet, name);
     }
 
-    ;
-
     @Override
     public void init(Garnet garnet) {
 
@@ -43,7 +41,7 @@ public class StateGame extends GameState {
 
         getParticleManager().setSpriteBatch(spriteBatch);
 
-        gameData = (GameData) garnet.getGlobalObject("game_data");
+        gameData = (GameData) garnet.getSharedObject("game_data");
         gameData.currentScore = 0;
         gameData.lives = 3;
 

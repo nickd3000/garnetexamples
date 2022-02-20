@@ -24,6 +24,7 @@ public class BasicEntityDrawer extends Component {
 
     @Override
     public void draw() {
-        spriteBatch.add(Sprite2D.build((int) parent.position.x, (int) parent.position.y, 16, 16, 0, 0, 16, 16));
+        Sprite2D sprite2D = Sprite2D.build((int) parent.position.x, (int) parent.position.y, 16, 16, 0, 0, 16, 16);
+        spriteBatch.add(sprite2D);
     }
 }

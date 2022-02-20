@@ -5,7 +5,6 @@ import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Texture;
 import com.physmo.garnet.entity.Entity;
 import com.physmo.garnet.entity.EntityGroup;
-import com.physmo.garnet.spritebatch.Sprite2D;
 import com.physmo.garnet.spritebatch.SpriteBatch;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
@@ -51,7 +50,8 @@ public class ContainerEntityTest extends GameState {
             e1.addComponent(new WallBounceComponent());
             e1.addComponent(new FrictionComponent());
             e1.addComponent(new BasicEntityDrawer(spriteBatch));
-            entityGroup.add(e1);
+
+            addEntity(e1);
 
         }
     }
@@ -63,45 +63,8 @@ public class ContainerEntityTest extends GameState {
 
     @Override
     public void draw() {
-
-        //drawTestSpriteBuilder();
-        entityGroup.drawAll();
         spriteBatch.render(1);
         spriteBatch.clear();
-
     }
-
-    private void drawTestSpriteBuilder() {
-        int space = 30;
-        int x = 20;
-
-        // Moving
-        spriteBatch.add(Sprite2D.build(20 + (int) (movementX * 300), 20 + 40, 16, 16, 0, 0, 16, 16));
-
-        // Unscaled
-        spriteBatch.add(Sprite2D.build(x, 20, 16, 16, 0, 0, 16, 16));
-        x += space;
-
-        // Coloured
-        spriteBatch.add(Sprite2D.build(x, 20, 16, 16, 0, 0, 16, 16)
-                .addColor(1.0f, 0.5f, 0.25f));
-        x += space;
-
-        // Rotated
-        spriteBatch.add(Sprite2D.build(x, 20, 16, 16, 0, 0, 16, 16)
-                .addAngle(angle));
-        x += space;
-
-        // Scaled
-        spriteBatch.add(Sprite2D.build(x, 20, 16 * 2, 16 * 2, 0, 0, 16, 16));
-        x += space * 2;
-
-        // Tile setter
-        spriteBatch.add(Sprite2D.build(x, 20, 16 * 5, 16 * 5)
-                .setTile(6, 0, 16)
-                .addColor(0.25f, 0.5f, 1.0f));
-
-    }
-
 
 }

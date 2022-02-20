@@ -10,8 +10,8 @@ public class InvadersApp {
     public static void main(String[] args) {
         Garnet garnet = new Garnet(640, 480);
         garnet.init();
-        garnet.addGlobalObject("game_data", new GameData());
-        garnet.addGlobalObject("Resources", new Resources().init());
+        garnet.addSharedObject("game_data", new GameData());
+        garnet.addSharedObject("Resources", new Resources().init());
 
         garnet.addState(new StateMenu(garnet, "menu"));
         garnet.addState(new StateGame(garnet, "game"));

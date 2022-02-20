@@ -35,7 +35,7 @@ public class StateMenu extends GameState {
 //            e.printStackTrace();
 //        }
 
-        resources = (Resources) garnet.getGlobalObject("Resources");
+        resources = (Resources) garnet.getSharedObject("Resources");
         if (resources == null) System.out.println("resources is null");
     }
 
