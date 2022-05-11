@@ -16,7 +16,8 @@ public class ComponentHud extends Component {
     public void init() {
         String fontFileName = Utils.getPathForResource(this, fontName);
         regularFont = new RegularFont(fontFileName, 12, 12);
-        resources = (Resources) parent.garnet.getSharedObject("Resources");
+        //resources = (Resources) parent.garnet.getSharedObject("Resources");
+        resources = parent.garnet.getSharedObject(Resources.class);
     }
 
     @Override
@@ -26,7 +27,7 @@ public class ComponentHud extends Component {
 
     @Override
     public void draw() {
-        GameData gameData = (GameData) parent.garnet.getSharedObject("game_data");
+        GameData gameData = parent.garnet.getSharedObject(GameData.class);
 
         resources.bmfFontTexture.bind();
         resources.bmfFont.drawString(resources.bmfFontTexture, "Score:" + gameData.currentScore, 10, 10, 2);

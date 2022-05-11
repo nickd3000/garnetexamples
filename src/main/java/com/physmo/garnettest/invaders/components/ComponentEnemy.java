@@ -36,7 +36,9 @@ public class ComponentEnemy extends Component {
         BoxCollider2D boxCollider2D = new BoxCollider2D();
         boxCollider2D.setValues(parent, -7, -7, 14, 14);
         parent.addCollider(boxCollider2D);
-        gameData = (GameData) parent.garnet.getSharedObject("game_data");
+
+        gameData = parent.garnet.getSharedObject(GameData.class);
+
         resetFireDelay();
         health = 1;
 

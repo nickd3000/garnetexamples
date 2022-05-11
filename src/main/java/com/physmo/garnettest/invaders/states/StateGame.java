@@ -41,7 +41,7 @@ public class StateGame extends GameState {
 
         getParticleManager().setSpriteBatch(spriteBatch);
 
-        gameData = (GameData) garnet.getSharedObject("game_data");
+        gameData = garnet.getSharedObject(GameData.class);
         gameData.currentScore = 0;
         gameData.lives = 3;
 
