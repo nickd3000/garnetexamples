@@ -1,12 +1,7 @@
 package com.physmo.garnettest;
 
-import com.physmo.garnet.GameState;
-import com.physmo.garnet.Garnet;
-import com.physmo.garnet.Utils;
-import com.physmo.garnet.regularfont.RegularFont;
-
-public class ContainerRegularFontSample extends GameState {
-
+public class ContainerRegularFontSample { //extends GameState {
+/*
     public static final String fontName = "/12x12Font.png";
     //public static final String fontName = "/8x8Font.png";
 
@@ -42,5 +37,5 @@ public class ContainerRegularFontSample extends GameState {
         regularFont.drawText("Regular font sample", 20, 100, 4);
         regularFont.render();
     }
-
+*/
 }

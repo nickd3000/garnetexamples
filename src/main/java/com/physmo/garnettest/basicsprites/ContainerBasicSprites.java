@@ -1,13 +1,13 @@
 package com.physmo.garnettest.basicsprites;
 
-import com.physmo.garnet.GameState;
 import com.physmo.garnet.Garnet;
+import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.Texture;
 import com.physmo.garnet.spritebatch.Sprite2D;
 import com.physmo.garnet.spritebatch.SpriteBatch;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
-public class ContainerBasicSprites extends GameState {
+public class ContainerBasicSprites extends GarnetApp {
 
     private static String fileName = "/Users/nick/Dev/java/garnettest/src/main/resources/space.PNG";
     private static float angle = 0;
@@ -20,15 +20,17 @@ public class ContainerBasicSprites extends GameState {
     }
 
     public static void main(String[] args) {
-        Garnet garnet = new Garnet( 640, 480);
-        garnet.addState(new ContainerBasicSprites(garnet, "ContainerBasicSprites"));
+        Garnet garnet = new Garnet(640, 480);
+        GarnetApp app = new ContainerBasicSprites(garnet, "");
+
+        garnet.setApp(app);
+
         garnet.init();
         garnet.run();
     }
 
     @Override
     public void init(Garnet garnet) {
-
 
         texture = Texture.loadTexture(fileName);
         spriteBatch = new SpriteBatch(texture);

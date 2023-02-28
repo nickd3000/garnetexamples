@@ -1,11 +1,8 @@
 package com.physmo.garnettest.invaders.states;
 
-import com.physmo.garnet.GameState;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Texture;
 import com.physmo.garnet.Utils;
-import com.physmo.garnet.Vec3;
-import com.physmo.garnet.entity.Entity;
 import com.physmo.garnet.spritebatch.SpriteBatch;
 import com.physmo.garnettest.invaders.EnemyType;
 import com.physmo.garnettest.invaders.GameData;
@@ -15,8 +12,12 @@ import com.physmo.garnettest.invaders.components.ComponentGameLogic;
 import com.physmo.garnettest.invaders.components.ComponentHud;
 import com.physmo.garnettest.invaders.components.ComponentPlayer;
 import com.physmo.garnettest.invaders.components.ComponentPlayerMissile;
+import com.physmo.garnettoolkit.GameObject;
+import com.physmo.garnettoolkit.Scene;
+import com.physmo.garnettoolkit.Vector3;
+import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
-public class StateGame extends GameState {
+public class StateGame extends Scene {
 
     Texture texture;
     SpriteBatch spriteBatch;
@@ -24,13 +25,16 @@ public class StateGame extends GameState {
 
     SubState subState;
     double subStateTimer;
+    Garnet garnet;
 
-    public StateGame(Garnet garnet, String name) {
-        super(garnet, name);
+
+    public StateGame(String name, Garnet garnet) {
+        super(name);
+        this.garnet = garnet;
     }
 
     @Override
-    public void init(Garnet garnet) {
+    public void init() {
 
 
         String spriteSheetFileName = "/space.PNg";
@@ -39,111 +43,127 @@ public class StateGame extends GameState {
         texture = Texture.loadTexture(spriteSheetFileNamePath);
         spriteBatch = new SpriteBatch(texture);
 
-        getParticleManager().setSpriteBatch(spriteBatch);
+        //getParticleManager().setSpriteBatch(spriteBatch);
 
-        gameData = garnet.getSharedObject(GameData.class);
+        gameData = getSceneManager().getSharedContext().getObjectByType(GameData.class);
+        //gameData = garnet.getSharedObject(GameData.class);
         gameData.currentScore = 0;
         gameData.lives = 3;
 
         // init substates
         subState = SubState.GETREADY;
-        subStateTimer = 3;
+        subStateTimer = 1;
         gameData.showGetReady = true;
+
+        CollisionSystem collisionSystem = new CollisionSystem("collisionsystem");
+        context.add(collisionSystem);
 
         createEntities();
         setAllEntitiesPause(true);
     }
 
     public void setAllEntitiesPause(boolean pause) {
-        for (Entity entity : getEntitiesByTag("pausable")) {
-            entity.setPaused(pause);
-        }
+//        for (Entity entity : getEntitiesByTag("pausable")) {
+//            entity.setPaused(pause);
+//        }
 
 
     }
 
     public void createEntities() {
-        Entity player = new Entity("player", this);
-        player.addComponent(new ComponentPlayer(spriteBatch));
-        //player.addEntityDrawer(new RenderComponentPlayer(spriteBatch));
-        player.position = new Vec3(100, 200, 0);
+        GameObject player = new GameObject("player");
+        player.addComponent(new ComponentPlayer(spriteBatch, garnet, getSceneManager()));
+        player.setTransform(new Vector3(100, 200, 0));
         player.setActive(true);
         player.setVisible(true);
         player.addTag("pausable");
-        addEntity(player);
+        context.add(player);
 
         // Player missile pool.
         for (int i = 0; i < 20; i++) {
-            Entity missile = new Entity("player_missile", this);
+            GameObject missile = new GameObject("player_missile");
             missile.addTag("player_missile");
             missile.setActive(false);
             missile.setVisible(true);
             missile.addComponent(new ComponentPlayerMissile(spriteBatch));
-            //missile.addEntityDrawer(new RenderComponentPlayerMissile(spriteBatch));
             missile.addTag("pausable");
-            addEntity(missile);
+            context.add(missile);
         }
         // Enemy missile pool.
         for (int i = 0; i < 35; i++) {
-            Entity missile = new Entity("enemy_missile", this);
+            GameObject missile = new GameObject("enemy_missile");
             missile.addTag("enemy_missile");
             missile.setActive(false);
             missile.setVisible(true);
             missile.addComponent(new ComponentEnemyMissile(spriteBatch));
-            //missile.addEntityDrawer(new RenderComponentPlayerMissile(spriteBatch));
             missile.addTag("pausable");
-            addEntity(missile);
+            context.add(missile);
         }
 
         for (int y = 0; y < 5; y++) {
             for (int x = 0; x < 9; x++) {
-                Entity enemy = new Entity("enemy", this);
+                GameObject enemy = new GameObject("enemy");
 
                 EnemyType enemyType = EnemyType.basic;
                 if (Math.random() < 0.3) enemyType = EnemyType.armoured;
                 if (Math.random() < 0.3) enemyType = EnemyType.shooter;
                 enemy.addComponent(new ComponentEnemy(enemyType, spriteBatch));
 
-                //enemy.addEntityDrawer(new RenderComponentEnemy(spriteBatch));
-                enemy.position = new Vec3(60 + x * 30, 50 + y * 30, 0);
+                enemy.setTransform(new Vector3(60 + x * 30, 50 + y * 30, 0));
                 enemy.setActive(true);
                 enemy.setVisible(true);
                 enemy.addTag("pausable");
-                addEntity(enemy);
+                enemy.addTag("enemy");
+                context.add(enemy);
             }
         }
 
-        Entity gameLogic = new Entity("game_logic", this);
+        GameObject gameLogic = new GameObject("game_logic");
         gameLogic.addTag("game_logic");
-        gameLogic.addComponent(new ComponentGameLogic());
+        gameLogic.addComponent(new ComponentGameLogic(getSceneManager()));
+
 
         gameLogic.addComponent(new ComponentHud());
         gameLogic.setActive(true);
         gameLogic.setVisible(true);
-        addEntity(gameLogic);
+        context.add(gameLogic);
     }
+
 
     @Override
     public void tick(double delta) {
+
         subStateTimer -= delta;
         switch (subState) {
             case GETREADY:
                 if (subStateTimer < 0) {
                     subState = SubState.RUNNING;
                     setAllEntitiesPause(false);
-                    System.out.println("switching state");
+                    //System.out.println("switching state");
                     gameData.showGetReady = false;
                 }
                 break;
             case RUNNING:
+                //System.out.println("running");
                 break;
         }
     }
 
     @Override
     public void draw() {
+
         spriteBatch.render(2);
         spriteBatch.clear();
+    }
+
+    @Override
+    public void onMakeActive() {
+
+    }
+
+    @Override
+    public void onMakeInactive() {
+
     }
 
     enum SubState {

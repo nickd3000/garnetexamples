@@ -1,13 +1,13 @@
 package com.physmo.garnettest.invaders.states;
 
-import com.physmo.garnet.GameState;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
 import com.physmo.garnet.input.Input;
 import com.physmo.garnet.regularfont.RegularFont;
 import com.physmo.garnettest.invaders.Resources;
+import com.physmo.garnettoolkit.Scene;
 
-public class StateMenu extends GameState {
+public class StateMenu extends Scene {
 
     public static final String fontName = "/12x12Font.png";
     RegularFont regularFont;
@@ -16,13 +16,14 @@ public class StateMenu extends GameState {
 //    Texture bmfFontTexture;
 
     Resources resources;
+    Garnet garnet;
 
-    public StateMenu(Garnet garnet, String name) {
-        super(garnet, name);
+    public StateMenu(String name) {
+        super(name);
     }
 
     @Override
-    public void init(Garnet garnet) {
+    public void init() {
         String fontFileName = Utils.getPathForResource(this, fontName);
         regularFont = new RegularFont(fontFileName, 12, 12);
 
@@ -35,14 +36,17 @@ public class StateMenu extends GameState {
 //            e.printStackTrace();
 //        }
 
-        resources = garnet.getSharedObject(Resources.class);
+        garnet = getSceneManager().getSharedContext().getObjectByType(Garnet.class);
+        resources = getSceneManager().getSharedContext().getObjectByType(Resources.class);
+        //resources = garnet.getSharedObject(Resources.class);
         if (resources == null) System.out.println("resources is null");
     }
+
 
     @Override
     public void tick(double delta) {
         if (garnet.getInput().isPressed(Input.VirtualButton.FIRE1)) {
-            garnet.switchActiveState("game");
+            //garnet.switchActiveState("game");
         }
     }
 
@@ -58,5 +62,15 @@ public class StateMenu extends GameState {
         resources.bmfFont.drawString(resources.bmfFontTexture, "Garnet Example Project", 20, 20, 2);
 
         ////////
+    }
+
+    @Override
+    public void onMakeActive() {
+
+    }
+
+    @Override
+    public void onMakeInactive() {
+
     }
 }

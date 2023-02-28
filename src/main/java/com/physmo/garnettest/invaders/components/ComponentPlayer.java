@@ -1,16 +1,17 @@
 package com.physmo.garnettest.invaders.components;
 
+import com.physmo.garnet.Garnet;
 import com.physmo.garnet.color.Color;
 import com.physmo.garnet.color.ColorSupplierLinear;
 import com.physmo.garnet.curve.CurveType;
 import com.physmo.garnet.curve.StandardCurve;
-import com.physmo.garnet.entity.Component;
-import com.physmo.garnet.entity.Entity;
 import com.physmo.garnet.input.Input;
-import com.physmo.garnet.particle.Emitter;
 import com.physmo.garnet.particle.ParticleTemplate;
 import com.physmo.garnet.spritebatch.Sprite2D;
 import com.physmo.garnet.spritebatch.SpriteBatch;
+import com.physmo.garnettoolkit.Component;
+import com.physmo.garnettoolkit.GameObject;
+import com.physmo.garnettoolkit.SceneManager;
 
 import java.util.List;
 
@@ -23,9 +24,13 @@ public class ComponentPlayer extends Component {
     double rightWall = 300 - 8;
     ParticleTemplate shootParticleTemplate;
     SpriteBatch spriteBatch;
+    Garnet garnet;
+    SceneManager sceneManager;
 
-    public ComponentPlayer(SpriteBatch spriteBatch) {
+    public ComponentPlayer(SpriteBatch spriteBatch, Garnet garnet, SceneManager sceneManager) {
         this.spriteBatch = spriteBatch;
+        this.garnet = garnet;
+        this.sceneManager = sceneManager;
     }
 
     @Override
@@ -40,18 +45,19 @@ public class ComponentPlayer extends Component {
 
     @Override
     public void tick(double delta) {
-        if (parent.garnet.getInput().isPressed(Input.VirtualButton.RIGHT)) {
-            parent.position.x += speed * delta;
-            if (parent.position.x > rightWall) parent.position.x = rightWall;
+
+        if (garnet.getInput().isPressed(Input.VirtualButton.RIGHT)) {
+            parent.getTransform().x += speed * delta;
+            if (parent.getTransform().x > rightWall) parent.getTransform().x = rightWall;
         }
-        if (parent.garnet.getInput().isPressed(Input.VirtualButton.LEFT)) {
-            parent.position.x -= speed * delta;
-            if (parent.position.x < leftWall) {
-                parent.position.x = leftWall;
-                parent.garnet.switchActiveState("menu");
+        if (garnet.getInput().isPressed(Input.VirtualButton.LEFT)) {
+            parent.getTransform().x -= speed * delta;
+            if (parent.getTransform().x < leftWall) {
+                parent.getTransform().x = leftWall;
+                //sceneManager.setActiveScene("menu");
             }
         }
-        if (parent.garnet.getInput().isPressed(Input.VirtualButton.FIRE1)) {
+        if (garnet.getInput().isPressed(Input.VirtualButton.FIRE1)) {
             fireMissile();
         }
 
@@ -61,17 +67,17 @@ public class ComponentPlayer extends Component {
     private void fireMissile() {
         if (bulletCoolDown > 0) return;
 
-        List<Entity> player_missiles = parent.getGameState().getEntitiesByTag("player_missile");
-        for (Entity player_missile : player_missiles) {
-            if (!player_missile.getActive()) {
+        List<GameObject> player_missiles = parent.getContext().getObjectsByTag("player_missile");
+        for (GameObject player_missile : player_missiles) {
+            if (!player_missile.isActive()) {
                 player_missile.setActive(true);
-                player_missile.position.x = parent.position.x;
-                player_missile.position.y = parent.position.y;
+                player_missile.getTransform().x = parent.getTransform().x;
+                player_missile.getTransform().y = parent.getTransform().y;
                 bulletCoolDown = 0.2;
 
-                Emitter emitter = new Emitter(parent.position, 0.2, shootParticleTemplate);
-                emitter.setEmitPerSecond(150);
-                parentState.getParticleManager().addEmitter(emitter);
+                //Emitter emitter = new Emitter(parent.getTransform(), 0.2, shootParticleTemplate);
+                //emitter.setEmitPerSecond(150);
+                //parentState.getParticleManager().addEmitter(emitter);
 
                 break;
             }
@@ -82,9 +88,10 @@ public class ComponentPlayer extends Component {
 
     @Override
     public void draw() {
+        //System.out.println("draw player");
         spriteBatch.add(Sprite2D.build(
-                (int) (parent.position.x) - 8,
-                (int) (parent.position.y) - 8,
+                (int) (parent.getTransform().x) - 8,
+                (int) (parent.getTransform().y) - 8,
                 16, 16, 0, 32, 16, 16).addColor(1, 0, 1, 1));
     }
 }
