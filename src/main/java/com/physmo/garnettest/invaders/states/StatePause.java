@@ -6,6 +6,7 @@ import com.physmo.garnet.Utils;
 import com.physmo.garnet.input.Input;
 import com.physmo.garnet.regularfont.RegularFont;
 import com.physmo.garnettoolkit.Scene;
+import com.physmo.garnettoolkit.SceneManager;
 
 public class StatePause extends Scene {
 
@@ -22,7 +23,7 @@ public class StatePause extends Scene {
         String fontFileName = Utils.getPathForResource(this, fontName);
         regularFont = new RegularFont(fontFileName, 12, 12);
 
-        garnet = getSceneManager().getSharedContext().getObjectByType(Garnet.class);
+        garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
     }
 
     @Override

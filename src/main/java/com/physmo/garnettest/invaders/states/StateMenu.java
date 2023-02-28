@@ -6,6 +6,7 @@ import com.physmo.garnet.input.Input;
 import com.physmo.garnet.regularfont.RegularFont;
 import com.physmo.garnettest.invaders.Resources;
 import com.physmo.garnettoolkit.Scene;
+import com.physmo.garnettoolkit.SceneManager;
 
 public class StateMenu extends Scene {
 
@@ -36,8 +37,8 @@ public class StateMenu extends Scene {
 //            e.printStackTrace();
 //        }
 
-        garnet = getSceneManager().getSharedContext().getObjectByType(Garnet.class);
-        resources = getSceneManager().getSharedContext().getObjectByType(Resources.class);
+        garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
+        resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
         //resources = garnet.getSharedObject(Resources.class);
         if (resources == null) System.out.println("resources is null");
     }

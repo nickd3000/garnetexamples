@@ -14,6 +14,7 @@ import com.physmo.garnettest.invaders.components.ComponentPlayer;
 import com.physmo.garnettest.invaders.components.ComponentPlayerMissile;
 import com.physmo.garnettoolkit.GameObject;
 import com.physmo.garnettoolkit.Scene;
+import com.physmo.garnettoolkit.SceneManager;
 import com.physmo.garnettoolkit.Vector3;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
@@ -36,7 +37,6 @@ public class StateGame extends Scene {
     @Override
     public void init() {
 
-
         String spriteSheetFileName = "/space.PNg";
         String spriteSheetFileNamePath = Utils.getPathForResource(this, spriteSheetFileName);
 
@@ -45,7 +45,7 @@ public class StateGame extends Scene {
 
         //getParticleManager().setSpriteBatch(spriteBatch);
 
-        gameData = getSceneManager().getSharedContext().getObjectByType(GameData.class);
+        gameData = SceneManager.getSharedContext().getObjectByType(GameData.class);
         //gameData = garnet.getSharedObject(GameData.class);
         gameData.currentScore = 0;
         gameData.lives = 3;
@@ -72,7 +72,7 @@ public class StateGame extends Scene {
 
     public void createEntities() {
         GameObject player = new GameObject("player");
-        player.addComponent(new ComponentPlayer(spriteBatch, garnet, getSceneManager()));
+        player.addComponent(new ComponentPlayer(spriteBatch, garnet));
         player.setTransform(new Vector3(100, 200, 0));
         player.setActive(true);
         player.setVisible(true);
@@ -120,7 +120,7 @@ public class StateGame extends Scene {
 
         GameObject gameLogic = new GameObject("game_logic");
         gameLogic.addTag("game_logic");
-        gameLogic.addComponent(new ComponentGameLogic(getSceneManager()));
+        gameLogic.addComponent(new ComponentGameLogic());
 
 
         gameLogic.addComponent(new ComponentHud());

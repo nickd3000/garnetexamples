@@ -11,7 +11,6 @@ import com.physmo.garnet.spritebatch.Sprite2D;
 import com.physmo.garnet.spritebatch.SpriteBatch;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.SceneManager;
 
 import java.util.List;
 
@@ -25,12 +24,12 @@ public class ComponentPlayer extends Component {
     ParticleTemplate shootParticleTemplate;
     SpriteBatch spriteBatch;
     Garnet garnet;
-    SceneManager sceneManager;
 
-    public ComponentPlayer(SpriteBatch spriteBatch, Garnet garnet, SceneManager sceneManager) {
+
+    public ComponentPlayer(SpriteBatch spriteBatch, Garnet garnet) {
         this.spriteBatch = spriteBatch;
         this.garnet = garnet;
-        this.sceneManager = sceneManager;
+
     }
 
     @Override

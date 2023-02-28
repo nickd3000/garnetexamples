@@ -10,11 +10,9 @@ public class ComponentGameLogic extends Component {
     public boolean dir = false;
     double timer = 0;
 
-    SceneManager sceneManager;
     Garnet garnet;
 
-    public ComponentGameLogic(SceneManager sceneManager) {
-        this.sceneManager = sceneManager;
+    public ComponentGameLogic() {
     }
 
     @Override
@@ -32,7 +30,7 @@ public class ComponentGameLogic extends Component {
         }
 
         if (garnet.getInput().isFirstPress(Input.VirtualButton.MENU)) {
-            sceneManager.pushSubScene("pause");
+            SceneManager.pushSubScene("pause");
         }
     }
 
