@@ -4,7 +4,6 @@ package com.physmo.garnettest.invaders.components;
 import com.physmo.garnet.spritebatch.Sprite2D;
 import com.physmo.garnet.spritebatch.SpriteBatch;
 import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.simplecollision.BoxCollider2D;
 import com.physmo.garnettoolkit.simplecollision.CollisionPacket;
 
 public class ComponentEnemyMissile extends Component {
@@ -19,8 +18,8 @@ public class ComponentEnemyMissile extends Component {
 
     @Override
     public void init() {
-        BoxCollider2D boxCollider2D = new BoxCollider2D();
-        boxCollider2D.setValues(parent, -2, -4, 4, 8);
+        //BoxCollider2D boxCollider2D = new BoxCollider2D();
+        //boxCollider2D.setValues(parent, -2, -4, 4, 8);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.physmo.garnettest.invaders.states;
+package com.physmo.garnettest.invaders.scenes;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
@@ -8,18 +8,15 @@ import com.physmo.garnettest.invaders.Resources;
 import com.physmo.garnettoolkit.Scene;
 import com.physmo.garnettoolkit.SceneManager;
 
-public class StateMenu extends Scene {
+public class SceneMenu extends Scene {
 
     public static final String fontName = "/12x12Font.png";
     RegularFont regularFont;
 
-//    BMFFont bmfFont;
-//    Texture bmfFontTexture;
-
     Resources resources;
     Garnet garnet;
 
-    public StateMenu(String name) {
+    public SceneMenu(String name) {
         super(name);
     }
 
@@ -28,18 +25,9 @@ public class StateMenu extends Scene {
         String fontFileName = Utils.getPathForResource(this, fontName);
         regularFont = new RegularFont(fontFileName, 12, 12);
 
-//        bmfFontTexture = Texture.loadTexture(Utils.getPathForResource(this, "/ptmono16_0.png"));
-//        bmfFont = new BMFFont();
-//        String pathForResource = Utils.getPathForResource(this, "/ptmono16.fnt");
-//        try {
-//            bmfFont.init(pathForResource);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
         resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
-        //resources = garnet.getSharedObject(Resources.class);
+
         if (resources == null) System.out.println("resources is null");
     }
 
@@ -47,7 +35,7 @@ public class StateMenu extends Scene {
     @Override
     public void tick(double delta) {
         if (garnet.getInput().isPressed(Input.VirtualButton.FIRE1)) {
-            //garnet.switchActiveState("game");
+            SceneManager.setActiveScene("game");
         }
     }
 

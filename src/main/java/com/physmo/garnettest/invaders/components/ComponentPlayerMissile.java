@@ -3,10 +3,10 @@ package com.physmo.garnettest.invaders.components;
 
 import com.physmo.garnet.spritebatch.Sprite2D;
 import com.physmo.garnet.spritebatch.SpriteBatch;
+import com.physmo.garnettest.invaders.Constants;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
 import com.physmo.garnettoolkit.Rect;
-import com.physmo.garnettoolkit.simplecollision.BoxCollider2D;
 import com.physmo.garnettoolkit.simplecollision.Collidable;
 import com.physmo.garnettoolkit.simplecollision.CollisionPacket;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
@@ -23,13 +23,14 @@ public class ComponentPlayerMissile extends Component implements Collidable {
 
     @Override
     public void init() {
-        BoxCollider2D boxCollider2D = new BoxCollider2D();
-        boxCollider2D.setValues(parent, -2, -4, 4, 8);
+        //BoxCollider2D boxCollider2D = new BoxCollider2D();
+        //boxCollider2D.setValues(parent, -2, -4, 4, 8);
         //parent.addCollider(boxCollider2D);
 
         CollisionSystem collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
         collisionSystem.addCollidable(this);
 
+        parent.addTag(Constants.PLAYER_MISSILE);
     }
 
     @Override

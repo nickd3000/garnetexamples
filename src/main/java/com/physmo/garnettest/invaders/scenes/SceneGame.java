@@ -1,4 +1,4 @@
-package com.physmo.garnettest.invaders.states;
+package com.physmo.garnettest.invaders.scenes;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Texture;
@@ -18,7 +18,7 @@ import com.physmo.garnettoolkit.SceneManager;
 import com.physmo.garnettoolkit.Vector3;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
-public class StateGame extends Scene {
+public class SceneGame extends Scene {
 
     Texture texture;
     SpriteBatch spriteBatch;
@@ -29,9 +29,8 @@ public class StateGame extends Scene {
     Garnet garnet;
 
 
-    public StateGame(String name, Garnet garnet) {
+    public SceneGame(String name) {
         super(name);
-        this.garnet = garnet;
     }
 
     @Override
@@ -44,6 +43,8 @@ public class StateGame extends Scene {
         spriteBatch = new SpriteBatch(texture);
 
         //getParticleManager().setSpriteBatch(spriteBatch);
+
+        garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
 
         gameData = SceneManager.getSharedContext().getObjectByType(GameData.class);
         //gameData = garnet.getSharedObject(GameData.class);
@@ -82,7 +83,7 @@ public class StateGame extends Scene {
         // Player missile pool.
         for (int i = 0; i < 20; i++) {
             GameObject missile = new GameObject("player_missile");
-            missile.addTag("player_missile");
+            //missile.addTag("player_missile");
             missile.setActive(false);
             missile.setVisible(true);
             missile.addComponent(new ComponentPlayerMissile(spriteBatch));
@@ -113,7 +114,7 @@ public class StateGame extends Scene {
                 enemy.setActive(true);
                 enemy.setVisible(true);
                 enemy.addTag("pausable");
-                enemy.addTag("enemy");
+                //enemy.addTag("enemy");
                 context.add(enemy);
             }
         }

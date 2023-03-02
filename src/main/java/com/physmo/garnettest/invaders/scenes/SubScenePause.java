@@ -1,4 +1,4 @@
-package com.physmo.garnettest.invaders.states;
+package com.physmo.garnettest.invaders.scenes;
 
 
 import com.physmo.garnet.Garnet;
@@ -8,18 +8,20 @@ import com.physmo.garnet.regularfont.RegularFont;
 import com.physmo.garnettoolkit.Scene;
 import com.physmo.garnettoolkit.SceneManager;
 
-public class StatePause extends Scene {
+public class SubScenePause extends Scene {
 
     public static final String fontName = "/12x12Font.png";
     RegularFont regularFont;
     Garnet garnet;
 
-    public StatePause(String name) {
+    public SubScenePause(String name) {
         super(name);
     }
 
     @Override
     public void init() {
+        System.out.println("init state pause");
+
         String fontFileName = Utils.getPathForResource(this, fontName);
         regularFont = new RegularFont(fontFileName, 12, 12);
 
@@ -30,7 +32,7 @@ public class StatePause extends Scene {
     public void tick(double delta) {
 
         if (garnet.getInput().isFirstPress(Input.VirtualButton.MENU)) {
-            //garnet.popSubState("pause");
+            SceneManager.popSubScene("pause");
         }
 
     }

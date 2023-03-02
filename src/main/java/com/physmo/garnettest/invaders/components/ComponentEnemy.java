@@ -8,6 +8,7 @@ import com.physmo.garnet.curve.StandardCurve;
 import com.physmo.garnet.particle.ParticleTemplate;
 import com.physmo.garnet.spritebatch.Sprite2D;
 import com.physmo.garnet.spritebatch.SpriteBatch;
+import com.physmo.garnettest.invaders.Constants;
 import com.physmo.garnettest.invaders.EnemyType;
 import com.physmo.garnettest.invaders.GameData;
 import com.physmo.garnettoolkit.Component;
@@ -51,6 +52,8 @@ public class ComponentEnemy extends Component implements Collidable {
         explosionParticleTemplate.setPositionJitter(2.1);
         explosionParticleTemplate.setColorSupplier(new ColorSupplierLinear(Color.YELLOW, new Color(1, 0, 0, 0)));
         explosionParticleTemplate.setSpeedCurve(new StandardCurve(CurveType.LINE_DOWN));
+
+        parent.addTag("enemy");
     }
 
     public void resetFireDelay() {
@@ -80,7 +83,7 @@ public class ComponentEnemy extends Component implements Collidable {
 
     private void fireMissile() {
 
-        List<GameObject> missiles = parent.getContext().getObjectsByTag("enemy_missile");
+        List<GameObject> missiles = parent.getContext().getObjectsByTag(Constants.ENEMY_MISSILE);
         for (GameObject missile : missiles) {
             if (!missile.isActive()) {
                 missile.setActive(true);
@@ -90,25 +93,6 @@ public class ComponentEnemy extends Component implements Collidable {
                 break;
             }
         }
-    }
-
-
-    private void handleBulletHit(double bulletDamage) {
-        double damageScale = 1;
-
-        if (enemyType == EnemyType.armoured) damageScale = 1.0f / 3.0f;
-
-        health -= bulletDamage * damageScale;
-        if (health <= 0) handleDying();
-    }
-
-    private void handleDying() {
-        parent.setActive(false);
-        gameData.currentScore++;
-
-        //Emitter emitter = new Emitter(parent.position, 0.2, explosionParticleTemplate);
-        //emitter.setEmitPerSecond(1500);
-        //parentState.getParticleManager().addEmitter(emitter);
     }
 
     @Override
@@ -139,10 +123,28 @@ public class ComponentEnemy extends Component implements Collidable {
     public void collisionCallback(CollisionPacket collisionPacket) {
         GameObject otherObject = collisionPacket.targetEntity.collisionGetGameObject();
 
-        if (otherObject.getTags().contains("player_missile")) {
+        if (otherObject.getTags().contains(Constants.PLAYER_MISSILE)) {
             System.out.println("missile hit");
             handleBulletHit(1);
         }
+    }
+
+    private void handleBulletHit(double bulletDamage) {
+        double damageScale = 1;
+
+        if (enemyType == EnemyType.armoured) damageScale = 1.0f / 3.0f;
+
+        health -= bulletDamage * damageScale;
+        if (health <= 0) handleDying();
+    }
+
+    private void handleDying() {
+        parent.setActive(false);
+        gameData.currentScore++;
+
+        //Emitter emitter = new Emitter(parent.position, 0.2, explosionParticleTemplate);
+        //emitter.setEmitPerSecond(1500);
+        //parentState.getParticleManager().addEmitter(emitter);
     }
 
     @Override
