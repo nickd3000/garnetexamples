@@ -1,30 +1,33 @@
 package com.physmo.garnettest.invaders.components;
 
 import com.physmo.garnet.Garnet;
-import com.physmo.garnet.color.Color;
-import com.physmo.garnet.color.ColorSupplierLinear;
-import com.physmo.garnet.curve.CurveType;
-import com.physmo.garnet.curve.StandardCurve;
+import com.physmo.garnet.Utils;
 import com.physmo.garnet.input.Input;
-import com.physmo.garnet.particle.ParticleTemplate;
 import com.physmo.garnet.spritebatch.Sprite2D;
 import com.physmo.garnet.spritebatch.SpriteBatch;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
+import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorSupplierLinear;
+import com.physmo.garnettoolkit.curve.CurveType;
+import com.physmo.garnettoolkit.curve.StandardCurve;
+import com.physmo.garnettoolkit.particle.Emitter;
+import com.physmo.garnettoolkit.particle.ParticleManager;
+import com.physmo.garnettoolkit.particle.ParticleTemplate;
 
 import java.util.List;
 
 public class ComponentPlayer extends Component {
 
+    static int playerColor = Utils.floatToRgb(0.3f, 1f, 0.2f, 1f);
     double speed = 100;
     double bulletCoolDown = 0;
-
     double leftWall = 8;
     double rightWall = 300 - 8;
     ParticleTemplate shootParticleTemplate;
     SpriteBatch spriteBatch;
     Garnet garnet;
-
+    ParticleManager particleManager;
 
     public ComponentPlayer(SpriteBatch spriteBatch, Garnet garnet) {
         this.spriteBatch = spriteBatch;
@@ -38,8 +41,10 @@ public class ComponentPlayer extends Component {
         shootParticleTemplate.setLifeTime(0.2, 0.8);
         shootParticleTemplate.setSpeed(10, 50);
         shootParticleTemplate.setPositionJitter(1.1);
-        shootParticleTemplate.setColorSupplier(new ColorSupplierLinear(new Color(1, 1, 1, 0.5f), new Color(1, 1, 1, 0)));
+        shootParticleTemplate.setColorSupplier(new ColorSupplierLinear(new Color(1, 0, 1, 0.5f), new Color(0, 1, 1, 0)));
         shootParticleTemplate.setSpeedCurve(new StandardCurve(CurveType.LINE_DOWN));
+
+        particleManager = parent.getContext().getObjectByType(ParticleManager.class);
     }
 
     @Override
@@ -53,7 +58,6 @@ public class ComponentPlayer extends Component {
             parent.getTransform().x -= speed * delta;
             if (parent.getTransform().x < leftWall) {
                 parent.getTransform().x = leftWall;
-                //sceneManager.setActiveScene("menu");
             }
         }
         if (garnet.getInput().isPressed(Input.VirtualButton.FIRE1)) {
@@ -74,9 +78,9 @@ public class ComponentPlayer extends Component {
                 player_missile.getTransform().y = parent.getTransform().y;
                 bulletCoolDown = 0.2;
 
-                //Emitter emitter = new Emitter(parent.getTransform(), 0.2, shootParticleTemplate);
-                //emitter.setEmitPerSecond(150);
-                //parentState.getParticleManager().addEmitter(emitter);
+                Emitter emitter = new Emitter(parent.getTransform(), 0.2, shootParticleTemplate);
+                emitter.setEmitPerSecond(150);
+                particleManager.addEmitter(emitter);
 
                 break;
             }
@@ -91,6 +95,6 @@ public class ComponentPlayer extends Component {
         spriteBatch.add(Sprite2D.build(
                 (int) (parent.getTransform().x) - 8,
                 (int) (parent.getTransform().y) - 8,
-                16, 16, 0, 32, 16, 16).addColor(1, 0, 1, 1));
+                16, 16, 0, 32, 16, 16).addColor(playerColor));
     }
 }

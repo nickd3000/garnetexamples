@@ -15,6 +15,7 @@ public class SceneMenu extends Scene {
 
     Resources resources;
     Garnet garnet;
+    int textColor = Utils.rgb(255, 255, 255, 255);
 
     public SceneMenu(String name) {
         super(name);
@@ -41,6 +42,9 @@ public class SceneMenu extends Scene {
 
     @Override
     public void draw() {
+        System.out.println("scene draw");
+        garnet.setDrawColor(textColor);
+
         regularFont.clearSpriteBatch();
         regularFont.drawText("Invaders", 20, 100, 3);
         regularFont.render();

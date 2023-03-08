@@ -3,6 +3,7 @@ package com.physmo.garnettest.invaders.scenes;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Texture;
 import com.physmo.garnet.Utils;
+import com.physmo.garnet.spritebatch.Sprite2D;
 import com.physmo.garnet.spritebatch.SpriteBatch;
 import com.physmo.garnettest.invaders.EnemyType;
 import com.physmo.garnettest.invaders.GameData;
@@ -16,6 +17,7 @@ import com.physmo.garnettoolkit.GameObject;
 import com.physmo.garnettoolkit.Scene;
 import com.physmo.garnettoolkit.SceneManager;
 import com.physmo.garnettoolkit.Vector3;
+import com.physmo.garnettoolkit.particle.ParticleManager;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 public class SceneGame extends Scene {
@@ -39,8 +41,10 @@ public class SceneGame extends Scene {
         String spriteSheetFileName = "/space.PNg";
         String spriteSheetFileNamePath = Utils.getPathForResource(this, spriteSheetFileName);
 
+
         texture = Texture.loadTexture(spriteSheetFileNamePath);
         spriteBatch = new SpriteBatch(texture);
+
 
         //getParticleManager().setSpriteBatch(spriteBatch);
 
@@ -59,8 +63,29 @@ public class SceneGame extends Scene {
         CollisionSystem collisionSystem = new CollisionSystem("collisionsystem");
         context.add(collisionSystem);
 
+
         createEntities();
         setAllEntitiesPause(true);
+        initParticleManager();
+    }
+
+    public void initParticleManager() {
+        ParticleManager particleManager = new ParticleManager(100);
+        particleManager.setParticleDrawer(p -> {
+
+            Sprite2D spr = Sprite2D.build(
+                    (int) (p.position.x) - 8,
+                    (int) (p.position.y) - 8,
+                    16, 16, 16 * 3, 0, 16, 16);
+
+            float pAge = (float) (p.age / p.lifeTime);
+
+            spr.addColor(p.colorSupplier.getColor(pAge).toArray());
+
+            spriteBatch.add(spr);
+        });
+
+        context.add(particleManager);
     }
 
     public void setAllEntitiesPause(boolean pause) {

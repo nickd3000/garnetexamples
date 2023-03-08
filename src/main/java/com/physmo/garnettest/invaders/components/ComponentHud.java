@@ -1,5 +1,6 @@
 package com.physmo.garnettest.invaders.components;
 
+import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
 import com.physmo.garnet.regularfont.RegularFont;
 import com.physmo.garnettest.invaders.GameData;
@@ -13,6 +14,9 @@ public class ComponentHud extends Component {
     RegularFont regularFont;
     Resources resources;
     GameData gameData;
+    Garnet garnet;
+
+    int textColor = Utils.rgb(255, 255, 255, 255);
 
     public ComponentHud() {
 
@@ -22,9 +26,11 @@ public class ComponentHud extends Component {
     public void init() {
         gameData = SceneManager.getSharedContext().getObjectByType(GameData.class);
         resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
+        garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
 
         String fontFileName = Utils.getPathForResource(this, fontName);
         regularFont = new RegularFont(fontFileName, 12, 12);
+
     }
 
     @Override
@@ -34,6 +40,7 @@ public class ComponentHud extends Component {
 
     @Override
     public void draw() {
+        garnet.setDrawColor(textColor);
         resources.bmfFontTexture.bind();
         resources.bmfFont.drawString(resources.bmfFontTexture, "Score:" + gameData.currentScore, 10, 10, 2);
         resources.bmfFont.drawString(resources.bmfFontTexture, "Lives:" + gameData.lives, 10 + 250, 10, 2);

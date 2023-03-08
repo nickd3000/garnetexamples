@@ -1,11 +1,6 @@
 package com.physmo.garnettest.invaders.components;
 
 
-import com.physmo.garnet.color.Color;
-import com.physmo.garnet.color.ColorSupplierLinear;
-import com.physmo.garnet.curve.CurveType;
-import com.physmo.garnet.curve.StandardCurve;
-import com.physmo.garnet.particle.ParticleTemplate;
 import com.physmo.garnet.spritebatch.Sprite2D;
 import com.physmo.garnet.spritebatch.SpriteBatch;
 import com.physmo.garnettest.invaders.Constants;
@@ -15,6 +10,13 @@ import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
 import com.physmo.garnettoolkit.Rect;
 import com.physmo.garnettoolkit.SceneManager;
+import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorSupplierLinear;
+import com.physmo.garnettoolkit.curve.CurveType;
+import com.physmo.garnettoolkit.curve.StandardCurve;
+import com.physmo.garnettoolkit.particle.Emitter;
+import com.physmo.garnettoolkit.particle.ParticleManager;
+import com.physmo.garnettoolkit.particle.ParticleTemplate;
 import com.physmo.garnettoolkit.simplecollision.Collidable;
 import com.physmo.garnettoolkit.simplecollision.CollisionPacket;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
@@ -53,7 +55,7 @@ public class ComponentEnemy extends Component implements Collidable {
         explosionParticleTemplate.setColorSupplier(new ColorSupplierLinear(Color.YELLOW, new Color(1, 0, 0, 0)));
         explosionParticleTemplate.setSpeedCurve(new StandardCurve(CurveType.LINE_DOWN));
 
-        parent.addTag("enemy");
+        parent.addTag(Constants.ENEMY);
     }
 
     public void resetFireDelay() {
@@ -66,12 +68,21 @@ public class ComponentEnemy extends Component implements Collidable {
 
         ComponentGameLogic gameLogic = parent.getContext().getComponent(ComponentGameLogic.class);
 
+        double speed = gameLogic.moveSpeed * delta;
+
         if (gameLogic != null) {
             if (gameLogic.dir) {
-                parent.getTransform().x += 10 * delta;
+                parent.getTransform().x += speed;
             } else {
-                parent.getTransform().x -= 10 * delta;
+                parent.getTransform().x -= speed;
             }
+        }
+
+        if (parent.getTransform().x > 320 - 16) {
+            gameLogic.dir = false;
+        }
+        if (parent.getTransform().x < 16) {
+            gameLogic.dir = true;
         }
 
         fireDelay -= delta;
@@ -142,9 +153,10 @@ public class ComponentEnemy extends Component implements Collidable {
         parent.setActive(false);
         gameData.currentScore++;
 
-        //Emitter emitter = new Emitter(parent.position, 0.2, explosionParticleTemplate);
-        //emitter.setEmitPerSecond(1500);
+        Emitter emitter = new Emitter(parent.getTransform(), 0.2, explosionParticleTemplate);
+        emitter.setEmitPerSecond(1500);
         //parentState.getParticleManager().addEmitter(emitter);
+        parent.getContext().getObjectByType(ParticleManager.class).addEmitter(emitter);
     }
 
     @Override

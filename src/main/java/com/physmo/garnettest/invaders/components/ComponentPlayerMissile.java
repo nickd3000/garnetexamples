@@ -47,7 +47,7 @@ public class ComponentPlayerMissile extends Component implements Collidable {
         spriteBatch.add(Sprite2D.build(
                 (int) (parent.getTransform().x) - 8,
                 (int) (parent.getTransform().y) - 8,
-                16, 16, 16 * 4, 32, 16, 16));
+                16, 16, 16 * 4, 32, 16, 16).addColor(1, 0, 1, 1));
     }
 
     @Override
