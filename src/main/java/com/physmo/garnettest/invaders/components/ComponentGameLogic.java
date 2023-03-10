@@ -12,13 +12,18 @@ import com.physmo.garnettoolkit.SceneManager;
 import java.util.List;
 
 public class ComponentGameLogic extends Component {
-    public boolean dir = false;
+    public int enemyDir = 1;
     double timer = 0;
     double moveSpeed = 20;
 
     Garnet garnet;
+    private int pendingEnemyDir;
 
     public ComponentGameLogic() {
+    }
+
+    public void changeEnemyDir(int newDir) {
+        pendingEnemyDir = newDir;
     }
 
     @Override
@@ -29,11 +34,10 @@ public class ComponentGameLogic extends Component {
     @Override
     public void tick(double delta) {
         timer += delta;
-//        if (timer > 5) {
-//            timer = 0;
-//            if (dir == false) dir = true;
-//            else dir = false;
-//        }
+
+        if (pendingEnemyDir != enemyDir) {
+            enemyDir = pendingEnemyDir;
+        }
 
         calculateEnemySpeed();
 

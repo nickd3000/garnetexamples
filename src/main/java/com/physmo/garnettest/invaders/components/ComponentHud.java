@@ -40,6 +40,7 @@ public class ComponentHud extends Component {
 
     @Override
     public void draw() {
+        garnet.setDrawModeNormal2D();
         garnet.setDrawColor(textColor);
         resources.bmfFontTexture.bind();
         resources.bmfFont.drawString(resources.bmfFontTexture, "Score:" + gameData.currentScore, 10, 10, 2);

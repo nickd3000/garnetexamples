@@ -32,9 +32,8 @@ public class ComponentEnemy extends Component implements Collidable {
     ParticleTemplate explosionParticleTemplate;
     SpriteBatch spriteBatch;
 
-    public ComponentEnemy(EnemyType enemyType, SpriteBatch spriteBatch) {
+    public ComponentEnemy(EnemyType enemyType) {
         this.enemyType = enemyType;
-        this.spriteBatch = spriteBatch;
     }
 
     @Override
@@ -56,6 +55,8 @@ public class ComponentEnemy extends Component implements Collidable {
         explosionParticleTemplate.setSpeedCurve(new StandardCurve(CurveType.LINE_DOWN));
 
         parent.addTag(Constants.ENEMY);
+
+        spriteBatch = parent.getContext().getObjectByType(SpriteBatch.class);
     }
 
     public void resetFireDelay() {
@@ -71,7 +72,7 @@ public class ComponentEnemy extends Component implements Collidable {
         double speed = gameLogic.moveSpeed * delta;
 
         if (gameLogic != null) {
-            if (gameLogic.dir) {
+            if (gameLogic.enemyDir == 1) {
                 parent.getTransform().x += speed;
             } else {
                 parent.getTransform().x -= speed;
@@ -79,10 +80,10 @@ public class ComponentEnemy extends Component implements Collidable {
         }
 
         if (parent.getTransform().x > 320 - 16) {
-            gameLogic.dir = false;
+            gameLogic.changeEnemyDir(-1);
         }
         if (parent.getTransform().x < 16) {
-            gameLogic.dir = true;
+            gameLogic.changeEnemyDir(1);
         }
 
         fireDelay -= delta;
@@ -93,14 +94,12 @@ public class ComponentEnemy extends Component implements Collidable {
     }
 
     private void fireMissile() {
-
         List<GameObject> missiles = parent.getContext().getObjectsByTag(Constants.ENEMY_MISSILE);
         for (GameObject missile : missiles) {
             if (!missile.isActive()) {
                 missile.setActive(true);
                 missile.setVisible(true);
-                missile.getTransform().x = parent.getTransform().x;
-                missile.getTransform().y = parent.getTransform().y;
+                missile.getTransform().set(parent.getTransform());
                 break;
             }
         }
@@ -135,7 +134,6 @@ public class ComponentEnemy extends Component implements Collidable {
         GameObject otherObject = collisionPacket.targetEntity.collisionGetGameObject();
 
         if (otherObject.getTags().contains(Constants.PLAYER_MISSILE)) {
-            System.out.println("missile hit");
             handleBulletHit(1);
         }
     }

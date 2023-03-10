@@ -45,6 +45,8 @@ public class SceneGame extends Scene {
         texture = Texture.loadTexture(spriteSheetFileNamePath);
         spriteBatch = new SpriteBatch(texture);
 
+        context.add(spriteBatch);
+
 
         //getParticleManager().setSpriteBatch(spriteBatch);
 
@@ -98,7 +100,7 @@ public class SceneGame extends Scene {
 
     public void createEntities() {
         GameObject player = new GameObject("player");
-        player.addComponent(new ComponentPlayer(spriteBatch, garnet));
+        player.addComponent(new ComponentPlayer());
         player.setTransform(new Vector3(100, 200, 0));
         player.setActive(true);
         player.setVisible(true);
@@ -111,7 +113,7 @@ public class SceneGame extends Scene {
             //missile.addTag("player_missile");
             missile.setActive(false);
             missile.setVisible(true);
-            missile.addComponent(new ComponentPlayerMissile(spriteBatch));
+            missile.addComponent(new ComponentPlayerMissile());
             missile.addTag("pausable");
             context.add(missile);
         }
@@ -120,8 +122,8 @@ public class SceneGame extends Scene {
             GameObject missile = new GameObject("enemy_missile");
             missile.addTag("enemy_missile");
             missile.setActive(false);
-            missile.setVisible(true);
-            missile.addComponent(new ComponentEnemyMissile(spriteBatch));
+            missile.setVisible(false);
+            missile.addComponent(new ComponentEnemyMissile());
             missile.addTag("pausable");
             context.add(missile);
         }
@@ -133,7 +135,7 @@ public class SceneGame extends Scene {
                 EnemyType enemyType = EnemyType.basic;
                 if (Math.random() < 0.3) enemyType = EnemyType.armoured;
                 if (Math.random() < 0.3) enemyType = EnemyType.shooter;
-                enemy.addComponent(new ComponentEnemy(enemyType, spriteBatch));
+                enemy.addComponent(new ComponentEnemy(enemyType));
 
                 enemy.setTransform(new Vector3(60 + x * 30, 50 + y * 30, 0));
                 enemy.setActive(true);

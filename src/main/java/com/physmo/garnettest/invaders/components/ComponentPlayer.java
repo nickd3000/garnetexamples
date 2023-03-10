@@ -7,6 +7,7 @@ import com.physmo.garnet.spritebatch.Sprite2D;
 import com.physmo.garnet.spritebatch.SpriteBatch;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
+import com.physmo.garnettoolkit.SceneManager;
 import com.physmo.garnettoolkit.color.Color;
 import com.physmo.garnettoolkit.color.ColorSupplierLinear;
 import com.physmo.garnettoolkit.curve.CurveType;
@@ -29,10 +30,7 @@ public class ComponentPlayer extends Component {
     Garnet garnet;
     ParticleManager particleManager;
 
-    public ComponentPlayer(SpriteBatch spriteBatch, Garnet garnet) {
-        this.spriteBatch = spriteBatch;
-        this.garnet = garnet;
-
+    public ComponentPlayer() {
     }
 
     @Override
@@ -45,6 +43,9 @@ public class ComponentPlayer extends Component {
         shootParticleTemplate.setSpeedCurve(new StandardCurve(CurveType.LINE_DOWN));
 
         particleManager = parent.getContext().getObjectByType(ParticleManager.class);
+
+        spriteBatch = parent.getContext().getObjectByType(SpriteBatch.class);
+        garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
     }
 
     @Override

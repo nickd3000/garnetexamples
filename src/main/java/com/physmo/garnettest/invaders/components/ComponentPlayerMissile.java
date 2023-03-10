@@ -16,21 +16,17 @@ public class ComponentPlayerMissile extends Component implements Collidable {
 
     SpriteBatch spriteBatch;
 
-    public ComponentPlayerMissile(SpriteBatch spriteBatch) {
-        this.spriteBatch = spriteBatch;
+    public ComponentPlayerMissile() {
     }
 
 
     @Override
     public void init() {
-        //BoxCollider2D boxCollider2D = new BoxCollider2D();
-        //boxCollider2D.setValues(parent, -2, -4, 4, 8);
-        //parent.addCollider(boxCollider2D);
-
         CollisionSystem collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
         collisionSystem.addCollidable(this);
 
         parent.addTag(Constants.PLAYER_MISSILE);
+        spriteBatch = parent.getContext().getObjectByType(SpriteBatch.class);
     }
 
     @Override
@@ -61,7 +57,6 @@ public class ComponentPlayerMissile extends Component implements Collidable {
         GameObject otherObject = collisionPacket.targetEntity.collisionGetGameObject();
 
         if (otherObject.getTags().contains("enemy")) {
-            System.out.println("missile hit");
             parent.setActive(false);
         }
     }
