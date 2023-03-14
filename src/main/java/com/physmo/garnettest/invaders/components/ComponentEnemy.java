@@ -54,7 +54,7 @@ public class ComponentEnemy extends Component implements Collidable {
         explosionParticleTemplate.setColorSupplier(new ColorSupplierLinear(Color.YELLOW, new Color(1, 0, 0, 0)));
         explosionParticleTemplate.setSpeedCurve(new StandardCurve(CurveType.LINE_DOWN));
 
-        parent.addTag(Constants.ENEMY);
+        parent.addTag(Constants.ENEMY_TAG);
 
         spriteBatch = parent.getContext().getObjectByType(SpriteBatch.class);
     }
@@ -88,7 +88,7 @@ public class ComponentEnemy extends Component implements Collidable {
 
         fireDelay -= delta;
         if (fireDelay < 0) {
-            if (enemyType == EnemyType.shooter) fireMissile();
+            if (enemyType == EnemyType.shooter && gameLogic.enemiesCanShoot()) fireMissile();
             resetFireDelay();
         }
     }

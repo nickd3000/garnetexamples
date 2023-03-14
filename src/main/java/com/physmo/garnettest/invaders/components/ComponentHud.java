@@ -7,6 +7,7 @@ import com.physmo.garnettest.invaders.GameData;
 import com.physmo.garnettest.invaders.Resources;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.SceneManager;
+import com.physmo.garnettoolkit.color.Color;
 
 public class ComponentHud extends Component {
 
@@ -16,7 +17,7 @@ public class ComponentHud extends Component {
     GameData gameData;
     Garnet garnet;
 
-    int textColor = Utils.rgb(255, 255, 255, 255);
+    int textColor = Color.YELLOW.toInt(); //Utils.rgb(255, 255, 255, 255);
 
     public ComponentHud() {
 

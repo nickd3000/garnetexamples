@@ -5,8 +5,10 @@ import com.physmo.garnet.Utils;
 import com.physmo.garnet.input.Input;
 import com.physmo.garnet.spritebatch.Sprite2D;
 import com.physmo.garnet.spritebatch.SpriteBatch;
+import com.physmo.garnettest.invaders.Constants;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
+import com.physmo.garnettoolkit.Rect;
 import com.physmo.garnettoolkit.SceneManager;
 import com.physmo.garnettoolkit.color.Color;
 import com.physmo.garnettoolkit.color.ColorSupplierLinear;
@@ -15,12 +17,18 @@ import com.physmo.garnettoolkit.curve.StandardCurve;
 import com.physmo.garnettoolkit.particle.Emitter;
 import com.physmo.garnettoolkit.particle.ParticleManager;
 import com.physmo.garnettoolkit.particle.ParticleTemplate;
+import com.physmo.garnettoolkit.simplecollision.Collidable;
+import com.physmo.garnettoolkit.simplecollision.CollisionPacket;
+import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 import java.util.List;
 
-public class ComponentPlayer extends Component {
+
+public class ComponentPlayer extends Component implements Collidable {
 
     static int playerColor = Utils.floatToRgb(0.3f, 1f, 0.2f, 1f);
+    static int playerColorB = Utils.floatToRgb(1f, 0.2f, 1f, 1f);
+
     double speed = 100;
     double bulletCoolDown = 0;
     double leftWall = 8;
@@ -30,7 +38,13 @@ public class ComponentPlayer extends Component {
     Garnet garnet;
     ParticleManager particleManager;
 
+    double flashTimer = 0;
+    boolean flashOn = false;
+
+    ComponentGameLogic gameLogic;
+
     public ComponentPlayer() {
+
     }
 
     @Override
@@ -46,26 +60,46 @@ public class ComponentPlayer extends Component {
 
         spriteBatch = parent.getContext().getObjectByType(SpriteBatch.class);
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
+
+        parent.addTag(Constants.PLAYER_TAG);
+
+        CollisionSystem collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
+        collisionSystem.addCollidable(this);
+
+        gameLogic = parent.getContext().getComponent(ComponentGameLogic.class);
+
     }
 
     @Override
     public void tick(double delta) {
 
-        if (garnet.getInput().isPressed(Input.VirtualButton.RIGHT)) {
+        boolean canMove = gameLogic.playerCanMove();
+
+        if (canMove && garnet.getInput().isPressed(Input.VirtualButton.RIGHT)) {
             parent.getTransform().x += speed * delta;
             if (parent.getTransform().x > rightWall) parent.getTransform().x = rightWall;
         }
-        if (garnet.getInput().isPressed(Input.VirtualButton.LEFT)) {
+        if (canMove && garnet.getInput().isPressed(Input.VirtualButton.LEFT)) {
             parent.getTransform().x -= speed * delta;
             if (parent.getTransform().x < leftWall) {
                 parent.getTransform().x = leftWall;
             }
         }
-        if (garnet.getInput().isPressed(Input.VirtualButton.FIRE1)) {
+        if (canMove && garnet.getInput().isPressed(Input.VirtualButton.FIRE1)) {
             fireMissile();
         }
 
         if (bulletCoolDown > 0) bulletCoolDown -= delta;
+
+        flashTimer += delta;
+        if (flashTimer > 0.3) {
+            flashTimer = 0;
+            if (flashOn == true) {
+                flashOn = false;
+            } else {
+                flashOn = true;
+            }
+        }
     }
 
     private void fireMissile() {
@@ -75,8 +109,7 @@ public class ComponentPlayer extends Component {
         for (GameObject player_missile : player_missiles) {
             if (!player_missile.isActive()) {
                 player_missile.setActive(true);
-                player_missile.getTransform().x = parent.getTransform().x;
-                player_missile.getTransform().y = parent.getTransform().y;
+                player_missile.getTransform().set(parent.getTransform());
                 bulletCoolDown = 0.2;
 
                 Emitter emitter = new Emitter(parent.getTransform(), 0.2, shootParticleTemplate);
@@ -92,10 +125,34 @@ public class ComponentPlayer extends Component {
 
     @Override
     public void draw() {
-        //System.out.println("draw player");
+
+        int drawCol = playerColor;
+        boolean invincible = gameLogic.playerIsInvincible() | gameLogic.playerIsInvincible();
+        if (flashOn && invincible) drawCol = playerColorB;
+
         spriteBatch.add(Sprite2D.build(
                 (int) (parent.getTransform().x) - 8,
                 (int) (parent.getTransform().y) - 8,
-                16, 16, 0, 32, 16, 16).addColor(playerColor));
+                16, 16, 0, 32, 16, 16).addColor(drawCol));
+    }
+
+    @Override
+    public Rect collisionGetRegion() {
+        Rect rect = new Rect(parent.getTransform().x - 5, parent.getTransform().y - 5, 10, 10);
+        return rect;
+    }
+
+    @Override
+    public void collisionCallback(CollisionPacket collisionPacket) {
+        GameObject otherObject = collisionPacket.targetEntity.collisionGetGameObject();
+
+        if (otherObject.getTags().contains(Constants.ENEMY_MISSILE)) {
+            gameLogic.playerGotHit();
+        }
+    }
+
+    @Override
+    public GameObject collisionGetGameObject() {
+        return parent;
     }
 }

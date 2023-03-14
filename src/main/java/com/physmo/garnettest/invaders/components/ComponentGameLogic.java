@@ -5,9 +5,11 @@ import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
 import com.physmo.garnet.input.Input;
 import com.physmo.garnettest.invaders.Constants;
+import com.physmo.garnettest.invaders.GameData;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
 import com.physmo.garnettoolkit.SceneManager;
+import com.physmo.garnettoolkit.stateMachine.StateMachine;
 
 import java.util.List;
 
@@ -17,7 +19,14 @@ public class ComponentGameLogic extends Component {
     double moveSpeed = 20;
 
     Garnet garnet;
+    StateMachine levelState;
+    String levelStateStart = "1";
+    String levelStateRunning = "2";
+    String levelStatePlayerHit = "3";
+    String levelStateGameOver = "4";
+    double stateTimer = 0;
     private int pendingEnemyDir;
+    GameData gameData;
 
     public ComponentGameLogic() {
     }
@@ -29,11 +38,45 @@ public class ComponentGameLogic extends Component {
     @Override
     public void init() {
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
+        gameData = SceneManager.getSharedContext().getObjectByType(GameData.class);
+
+        initLevelStateMachine();
+    }
+
+    public void initLevelStateMachine() {
+
+        levelState = new StateMachine();
+        levelState.addState(levelStateStart, t -> {
+            stateTimer += t;
+            if (stateTimer > 3) {
+                stateTimer = 0;
+                levelState.changeState(levelStateRunning);
+            }
+        });
+        levelState.addState(levelStateRunning, t -> {
+        });
+        levelState.addState(levelStatePlayerHit, t -> {
+            stateTimer += t;
+            if (stateTimer > 3) {
+                stateTimer = 0;
+                if (gameData.lives > 0) {
+                    levelState.changeState(levelStateRunning);
+                } else {
+                    levelState.changeState(levelStateGameOver);
+                }
+            }
+        });
+        levelState.addState(levelStateGameOver, t -> {
+            System.out.println("game over state");
+        });
+        levelState.changeState(levelStateStart);
     }
 
     @Override
     public void tick(double delta) {
         timer += delta;
+
+        levelState.tick(delta);
 
         if (pendingEnemyDir != enemyDir) {
             enemyDir = pendingEnemyDir;
@@ -49,7 +92,7 @@ public class ComponentGameLogic extends Component {
 
     private void calculateEnemySpeed() {
 
-        List<GameObject> enemies = parent.getContext().getObjectsByTag(Constants.ENEMY);
+        List<GameObject> enemies = parent.getContext().getObjectsByTag(Constants.ENEMY_TAG);
         int numEnemies = 0;
         for (GameObject enemy : enemies) {
             if (enemy.isActive()) numEnemies++;
@@ -64,4 +107,33 @@ public class ComponentGameLogic extends Component {
         moveSpeed = Utils.lerp(20, 50, nspeed);
     }
 
+    public boolean enemiesCanShoot() {
+        return levelState.getCurrentStateName().equals(levelStateRunning);
+    }
+
+    public boolean playerCanMove() {
+        String currentStateName = levelState.getCurrentStateName();
+        return currentStateName.equals(levelStateRunning) | currentStateName.equals(levelStateStart);
+    }
+
+    public boolean playerIsFlashing() {
+        return levelState.getCurrentStateName().equals(levelStateStart);
+    }
+
+    public boolean playerCanShoot() {
+        return levelState.getCurrentStateName().equals(levelStateRunning);
+    }
+
+    public boolean playerIsInvincible() {
+        return levelState.getCurrentStateName().equals(levelStateStart);
+    }
+
+    public void playerGotHit() {
+
+
+        gameData.lives--;
+
+        levelState.changeState(levelStatePlayerHit);
+
+    }
 }

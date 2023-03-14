@@ -56,7 +56,7 @@ public class ComponentPlayerMissile extends Component implements Collidable {
     public void collisionCallback(CollisionPacket collisionPacket) {
         GameObject otherObject = collisionPacket.targetEntity.collisionGetGameObject();
 
-        if (otherObject.getTags().contains("enemy")) {
+        if (otherObject.getTags().contains(Constants.ENEMY_TAG)) {
             parent.setActive(false);
         }
     }

@@ -14,6 +14,7 @@ import com.physmo.garnettest.invaders.components.ComponentHud;
 import com.physmo.garnettest.invaders.components.ComponentPlayer;
 import com.physmo.garnettest.invaders.components.ComponentPlayerMissile;
 import com.physmo.garnettoolkit.GameObject;
+import com.physmo.garnettoolkit.Rect;
 import com.physmo.garnettoolkit.Scene;
 import com.physmo.garnettoolkit.SceneManager;
 import com.physmo.garnettoolkit.Vector3;
@@ -64,7 +65,18 @@ public class SceneGame extends Scene {
 
         CollisionSystem collisionSystem = new CollisionSystem("collisionsystem");
         context.add(collisionSystem);
-
+        collisionSystem.setCollisionDrawingCallback(collidable -> {
+            garnet.setDrawModeWireframe();
+            Rect rect = collidable.collisionGetRegion();
+            float x = (float) rect.x;
+            float y = (float) rect.y;
+            float w = (float) rect.w;
+            float h = (float) rect.h;
+            garnet.getDisplay().drawLine(x, y, x + w, y);
+            garnet.getDisplay().drawLine(x + w, y, x + w, y + h);
+            garnet.getDisplay().drawLine(x + w, y + h, x, y + h);
+            garnet.getDisplay().drawLine(x, y + h, x, y);
+        });
 
         createEntities();
         setAllEntitiesPause(true);
