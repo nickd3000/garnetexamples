@@ -25,8 +25,8 @@ public class ComponentGameLogic extends Component {
     String levelStatePlayerHit = "3";
     String levelStateGameOver = "4";
     double stateTimer = 0;
-    private int pendingEnemyDir;
     GameData gameData;
+    private int pendingEnemyDir;
 
     public ComponentGameLogic() {
     }
@@ -49,10 +49,18 @@ public class ComponentGameLogic extends Component {
         levelState.addState(levelStateStart, t -> {
             stateTimer += t;
             if (stateTimer > 3) {
-                stateTimer = 0;
                 levelState.changeState(levelStateRunning);
             }
         });
+
+        levelState.addTransition(StateMachine.ANY_STATE, StateMachine.ANY_STATE, t -> {
+            System.out.println("any to any");
+        });
+
+        levelState.addTransition("", levelStateRunning, t -> {
+            stateTimer = 0;
+        });
+
         levelState.addState(levelStateRunning, t -> {
         });
         levelState.addState(levelStatePlayerHit, t -> {
