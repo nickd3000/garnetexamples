@@ -1,12 +1,14 @@
 package com.physmo.garnettest.invaders.components;
 
 
-import com.physmo.garnet.spritebatch.DrawableBatch;
-import com.physmo.garnet.spritebatch.Sprite2D;
+import com.physmo.garnet.Garnet;
+import com.physmo.garnet.Utils;
+import com.physmo.garnet.spritebatch.TileSheet;
 import com.physmo.garnettest.invaders.Constants;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
 import com.physmo.garnettoolkit.Rect;
+import com.physmo.garnettoolkit.SceneManager;
 import com.physmo.garnettoolkit.simplecollision.Collidable;
 import com.physmo.garnettoolkit.simplecollision.CollisionPacket;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
@@ -14,20 +16,12 @@ import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 public class ComponentPlayerMissile extends Component implements Collidable {
     double speed = 250;
 
-    DrawableBatch spriteBatch;
+    TileSheet tileSheet;
+    Garnet garnet;
 
     public ComponentPlayerMissile() {
     }
-
-
-    @Override
-    public void init() {
-        CollisionSystem collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
-        collisionSystem.addCollidable(this);
-
-        parent.addTag(Constants.PLAYER_MISSILE);
-        spriteBatch = parent.getContext().getObjectByType(DrawableBatch.class);
-    }
+    int color = Utils.floatToRgb(1, 0, 1, 1);
 
     @Override
     public void tick(double delta) {
@@ -36,14 +30,25 @@ public class ComponentPlayerMissile extends Component implements Collidable {
         if (parent.getTransform().y < 0) parent.setActive(false);
     }
 
+    @Override
+    public void init() {
+        CollisionSystem collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
+        collisionSystem.addCollidable(this);
+
+        parent.addTag(Constants.PLAYER_MISSILE);
+
+        tileSheet = parent.getContext().getObjectByType(TileSheet.class);
+        garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
+    }
 
     @Override
     public void draw() {
         if (!parent.isActive()) return;
-        spriteBatch.add(Sprite2D.build(
-                (int) (parent.getTransform().x) - 8,
-                (int) (parent.getTransform().y) - 8,
-                16, 16, 16 * 4, 32, 16, 16).addColor(1, 0, 1, 1));
+
+        garnet.getGraphics().setColor(color);
+        garnet.getGraphics().drawImage(tileSheet, (int) (parent.getTransform().x) - 8,
+                (int) (parent.getTransform().y) - 8, 4, 2);
+
     }
 
     @Override

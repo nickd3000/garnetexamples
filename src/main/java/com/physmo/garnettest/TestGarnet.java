@@ -1,8 +1,6 @@
 package com.physmo.garnettest;
 
 import com.physmo.garnet.Garnet;
-//import com.physmo.garnettest.boids.Boids;
-//import old.TestGameContainer;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class TestGarnet {

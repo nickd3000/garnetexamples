@@ -3,8 +3,7 @@ package com.physmo.garnettest.invaders.components;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
 import com.physmo.garnet.input.Input;
-import com.physmo.garnet.spritebatch.DrawableBatch;
-import com.physmo.garnet.spritebatch.Sprite2D;
+import com.physmo.garnet.spritebatch.TileSheet;
 import com.physmo.garnettest.invaders.Constants;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
@@ -34,7 +33,7 @@ public class ComponentPlayer extends Component implements Collidable {
     double leftWall = 8;
     double rightWall = 300 - 8;
     ParticleTemplate shootParticleTemplate;
-    DrawableBatch spriteBatch;
+
     Garnet garnet;
     ParticleManager particleManager;
 
@@ -42,6 +41,7 @@ public class ComponentPlayer extends Component implements Collidable {
     boolean flashOn = false;
 
     ComponentGameLogic gameLogic;
+    TileSheet tileSheet;
 
     public ComponentPlayer() {
 
@@ -58,15 +58,15 @@ public class ComponentPlayer extends Component implements Collidable {
 
         particleManager = parent.getContext().getObjectByType(ParticleManager.class);
 
-        spriteBatch = parent.getContext().getObjectByType(DrawableBatch.class);
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
 
         parent.addTag(Constants.PLAYER_TAG);
 
         CollisionSystem collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
         collisionSystem.addCollidable(this);
-
+        tileSheet = parent.getContext().getObjectByType(TileSheet.class);
         gameLogic = parent.getContext().getComponent(ComponentGameLogic.class);
+
 
     }
 
@@ -130,10 +130,9 @@ public class ComponentPlayer extends Component implements Collidable {
         boolean invincible = gameLogic.playerIsInvincible() | gameLogic.playerIsInvincible();
         if (flashOn && invincible) drawCol = playerColorB;
 
-        spriteBatch.add(Sprite2D.build(
-                (int) (parent.getTransform().x) - 8,
-                (int) (parent.getTransform().y) - 8,
-                16, 16, 0, 32, 16, 16).addColor(drawCol));
+        garnet.getGraphics().setColor(drawCol);
+        garnet.getGraphics().drawImage(tileSheet, (int) (parent.getTransform().x) - 8,
+                (int) (parent.getTransform().y) - 8, 0, 2);
     }
 
     @Override

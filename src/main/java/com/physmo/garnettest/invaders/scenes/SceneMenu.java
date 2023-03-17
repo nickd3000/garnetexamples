@@ -6,7 +6,6 @@ import com.physmo.garnet.input.Input;
 import com.physmo.garnettest.invaders.Resources;
 import com.physmo.garnettoolkit.Scene;
 import com.physmo.garnettoolkit.SceneManager;
-import com.physmo.garnettoolkit.color.Color;
 
 public class SceneMenu extends Scene {
 
@@ -34,19 +33,11 @@ public class SceneMenu extends Scene {
 
     @Override
     public void draw() {
-        garnet.setDrawModeWireframe();
-        garnet.getDisplay().drawLine(-100, -100, 100, 100);
 
-        garnet.setDrawModeNormal2D();
-
-        garnet.setDrawColor(textColor);
-        resources.bmfFontTexture.bind();
-
-        resources.bmfFont.drawString(resources.bmfFontTexture, "Garnet Example Project", 20, 20, 2);
-        resources.bmfFont.drawString(resources.bmfFontTexture, "Invaders", 20, 100, 3);
-
-        garnet.setDrawColor(Color.WHITE.toInt());
-
+        garnet.getGraphics().setColor(textColor);
+        garnet.getGraphics().setScale(2);
+        resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, "Garnet Example Project", 20, 20);
+        resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, "Invaders", 20, 100);
 
     }
 

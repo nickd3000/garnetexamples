@@ -1,8 +1,9 @@
 package com.physmo.garnettest.invaders.components;
 
 
-import com.physmo.garnet.spritebatch.DrawableBatch;
-import com.physmo.garnet.spritebatch.Sprite2D;
+import com.physmo.garnet.Garnet;
+import com.physmo.garnet.Utils;
+import com.physmo.garnet.spritebatch.TileSheet;
 import com.physmo.garnettest.invaders.Constants;
 import com.physmo.garnettest.invaders.EnemyType;
 import com.physmo.garnettest.invaders.GameData;
@@ -30,34 +31,14 @@ public class ComponentEnemy extends Component implements Collidable {
     double fireDelay;
     double health;
     ParticleTemplate explosionParticleTemplate;
-    DrawableBatch spriteBatch;
+
+    TileSheet tileSheet;
+    Garnet garnet;
 
     public ComponentEnemy(EnemyType enemyType) {
         this.enemyType = enemyType;
     }
-
-    @Override
-    public void init() {
-
-        CollisionSystem collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
-        collisionSystem.addCollidable(this);
-
-        gameData = SceneManager.getSharedContext().getObjectByType(GameData.class);
-
-        resetFireDelay();
-        health = 1;
-
-        explosionParticleTemplate = new ParticleTemplate();
-        explosionParticleTemplate.setLifeTime(0.2, 3);
-        explosionParticleTemplate.setSpeed(10, 50);
-        explosionParticleTemplate.setPositionJitter(2.1);
-        explosionParticleTemplate.setColorSupplier(new ColorSupplierLinear(Color.YELLOW, new Color(1, 0, 0, 0)));
-        explosionParticleTemplate.setSpeedCurve(new StandardCurve(CurveType.LINE_DOWN));
-
-        parent.addTag(Constants.ENEMY_TAG);
-
-        spriteBatch = parent.getContext().getObjectByType(DrawableBatch.class);
-    }
+    int basicCol = Utils.floatToRgb(0, 1, 0, 1);
 
     public void resetFireDelay() {
         fireDelay = 2 + Math.random() * 4;
@@ -104,22 +85,46 @@ public class ComponentEnemy extends Component implements Collidable {
             }
         }
     }
+    int armoredCol = Utils.floatToRgb(0.5f, 0.6f, 0.7f, 1);
+    int shooterCol = Utils.floatToRgb(1, 0.5f, 0, 1);
+
+    @Override
+    public void init() {
+
+        CollisionSystem collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
+        collisionSystem.addCollidable(this);
+
+        gameData = SceneManager.getSharedContext().getObjectByType(GameData.class);
+
+        resetFireDelay();
+        health = 1;
+
+        explosionParticleTemplate = new ParticleTemplate();
+        explosionParticleTemplate.setLifeTime(0.2, 3);
+        explosionParticleTemplate.setSpeed(10, 50);
+        explosionParticleTemplate.setPositionJitter(2.1);
+        explosionParticleTemplate.setColorSupplier(new ColorSupplierLinear(Color.YELLOW, new Color(1, 0, 0, 0)));
+        explosionParticleTemplate.setSpeedCurve(new StandardCurve(CurveType.LINE_DOWN));
+
+        parent.addTag(Constants.ENEMY_TAG);
+
+        garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
+        tileSheet = parent.getContext().getObjectByType(TileSheet.class);
+    }
 
     @Override
     public void draw() {
         if (!parent.isActive()) return;
 
-        Sprite2D spr = Sprite2D.build(
-                (int) (parent.getTransform().x) - 8,
-                (int) (parent.getTransform().y) - 8,
-                16, 16, 32, 32, 16, 16);
 
         ComponentEnemy component = parent.getComponent(ComponentEnemy.class);
+        if (component.enemyType == EnemyType.basic) garnet.getGraphics().setColor(basicCol);
+        if (component.enemyType == EnemyType.armoured) garnet.getGraphics().setColor(armoredCol);
+        if (component.enemyType == EnemyType.shooter) garnet.getGraphics().setColor(shooterCol);
+        garnet.getGraphics().setScale(2);
+        garnet.getGraphics().drawImage(tileSheet, (int) (parent.getTransform().x) - 8,
+                (int) (parent.getTransform().y) - 8, 2, 2);
 
-        if (component.enemyType == EnemyType.basic) spr.addColor(0, 1, 0);
-        if (component.enemyType == EnemyType.armoured) spr.addColor(0.5f, 0.6f, 0.7f);
-        if (component.enemyType == EnemyType.shooter) spr.addColor(1, 0.5f, 0);
-        spriteBatch.add(spr);
     }
 
     @Override
@@ -153,7 +158,7 @@ public class ComponentEnemy extends Component implements Collidable {
 
         Emitter emitter = new Emitter(parent.getTransform(), 0.2, explosionParticleTemplate);
         emitter.setEmitPerSecond(1500);
-        //parentState.getParticleManager().addEmitter(emitter);
+
         parent.getContext().getObjectByType(ParticleManager.class).addEmitter(emitter);
     }
 

@@ -3,8 +3,7 @@ package com.physmo.garnettest.invaders.scenes;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Texture;
 import com.physmo.garnet.Utils;
-import com.physmo.garnet.spritebatch.DrawableBatch;
-import com.physmo.garnet.spritebatch.Sprite2D;
+import com.physmo.garnet.spritebatch.TileSheet;
 import com.physmo.garnettest.invaders.EnemyType;
 import com.physmo.garnettest.invaders.GameData;
 import com.physmo.garnettest.invaders.components.ComponentEnemy;
@@ -24,7 +23,7 @@ import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 public class SceneGame extends Scene {
 
     Texture texture;
-    DrawableBatch spriteBatch;
+
     GameData gameData;
 
     SubState subState;
@@ -36,25 +35,24 @@ public class SceneGame extends Scene {
         super(name);
     }
 
+    TileSheet tileSheet;
     @Override
     public void init() {
+        garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
 
         String spriteSheetFileName = "/space.PNg";
         String spriteSheetFileNamePath = Utils.getPathForResource(this, spriteSheetFileName);
 
-
         texture = Texture.loadTexture(spriteSheetFileNamePath);
-        spriteBatch = new DrawableBatch();
+        garnet.getGraphics().addTexture(texture);
 
-        context.add(spriteBatch);
+        tileSheet = new TileSheet(texture, 16, 16);
 
 
-        //getParticleManager().setSpriteBatch(spriteBatch);
-
-        garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
+        context.add(tileSheet);
 
         gameData = SceneManager.getSharedContext().getObjectByType(GameData.class);
-        //gameData = garnet.getSharedObject(GameData.class);
+
         gameData.currentScore = 0;
         gameData.lives = 3;
 
@@ -87,26 +85,20 @@ public class SceneGame extends Scene {
         ParticleManager particleManager = new ParticleManager(100);
         particleManager.setParticleDrawer(p -> {
 
-            Sprite2D spr = Sprite2D.build(
-                    (int) (p.position.x) - 8,
-                    (int) (p.position.y) - 8,
-                    16, 16, 16 * 3, 0, 16, 16);
 
             float pAge = (float) (p.age / p.lifeTime);
 
-            spr.addColor(p.colorSupplier.getColor(pAge).toArray());
+            garnet.getGraphics().setColor(p.colorSupplier.getColor(pAge).toInt());
+            garnet.getGraphics().drawImage(tileSheet, (int) (p.position.x) - 8,
+                    (int) (p.position.y) - 8, 3, 0);
 
-            spriteBatch.add(spr);
+
         });
 
         context.add(particleManager);
     }
 
     public void setAllEntitiesPause(boolean pause) {
-//        for (Entity entity : getEntitiesByTag("pausable")) {
-//            entity.setPaused(pause);
-//        }
-
 
     }
 
