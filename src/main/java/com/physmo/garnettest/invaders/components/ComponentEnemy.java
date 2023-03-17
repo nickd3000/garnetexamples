@@ -1,8 +1,8 @@
 package com.physmo.garnettest.invaders.components;
 
 
+import com.physmo.garnet.spritebatch.DrawableBatch;
 import com.physmo.garnet.spritebatch.Sprite2D;
-import com.physmo.garnet.spritebatch.SpriteBatch;
 import com.physmo.garnettest.invaders.Constants;
 import com.physmo.garnettest.invaders.EnemyType;
 import com.physmo.garnettest.invaders.GameData;
@@ -30,7 +30,7 @@ public class ComponentEnemy extends Component implements Collidable {
     double fireDelay;
     double health;
     ParticleTemplate explosionParticleTemplate;
-    SpriteBatch spriteBatch;
+    DrawableBatch spriteBatch;
 
     public ComponentEnemy(EnemyType enemyType) {
         this.enemyType = enemyType;
@@ -56,7 +56,7 @@ public class ComponentEnemy extends Component implements Collidable {
 
         parent.addTag(Constants.ENEMY_TAG);
 
-        spriteBatch = parent.getContext().getObjectByType(SpriteBatch.class);
+        spriteBatch = parent.getContext().getObjectByType(DrawableBatch.class);
     }
 
     public void resetFireDelay() {

@@ -3,8 +3,8 @@ package com.physmo.garnettest.invaders.scenes;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Texture;
 import com.physmo.garnet.Utils;
+import com.physmo.garnet.spritebatch.DrawableBatch;
 import com.physmo.garnet.spritebatch.Sprite2D;
-import com.physmo.garnet.spritebatch.SpriteBatch;
 import com.physmo.garnettest.invaders.EnemyType;
 import com.physmo.garnettest.invaders.GameData;
 import com.physmo.garnettest.invaders.components.ComponentEnemy;
@@ -24,7 +24,7 @@ import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 public class SceneGame extends Scene {
 
     Texture texture;
-    SpriteBatch spriteBatch;
+    DrawableBatch spriteBatch;
     GameData gameData;
 
     SubState subState;
@@ -44,7 +44,7 @@ public class SceneGame extends Scene {
 
 
         texture = Texture.loadTexture(spriteSheetFileNamePath);
-        spriteBatch = new SpriteBatch(texture);
+        spriteBatch = new DrawableBatch();
 
         context.add(spriteBatch);
 
@@ -192,8 +192,8 @@ public class SceneGame extends Scene {
     @Override
     public void draw() {
 
-        spriteBatch.render(2);
-        spriteBatch.clear();
+//        spriteBatch.render();
+//        spriteBatch.clear();
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.physmo.garnettest.invaders.components;
 
 
+import com.physmo.garnet.spritebatch.DrawableBatch;
 import com.physmo.garnet.spritebatch.Sprite2D;
-import com.physmo.garnet.spritebatch.SpriteBatch;
 import com.physmo.garnettest.invaders.Constants;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
@@ -14,7 +14,7 @@ import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 public class ComponentPlayerMissile extends Component implements Collidable {
     double speed = 250;
 
-    SpriteBatch spriteBatch;
+    DrawableBatch spriteBatch;
 
     public ComponentPlayerMissile() {
     }
@@ -26,7 +26,7 @@ public class ComponentPlayerMissile extends Component implements Collidable {
         collisionSystem.addCollidable(this);
 
         parent.addTag(Constants.PLAYER_MISSILE);
-        spriteBatch = parent.getContext().getObjectByType(SpriteBatch.class);
+        spriteBatch = parent.getContext().getObjectByType(DrawableBatch.class);
     }
 
     @Override

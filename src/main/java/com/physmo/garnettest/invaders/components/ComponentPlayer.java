@@ -3,8 +3,8 @@ package com.physmo.garnettest.invaders.components;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
 import com.physmo.garnet.input.Input;
+import com.physmo.garnet.spritebatch.DrawableBatch;
 import com.physmo.garnet.spritebatch.Sprite2D;
-import com.physmo.garnet.spritebatch.SpriteBatch;
 import com.physmo.garnettest.invaders.Constants;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
@@ -34,7 +34,7 @@ public class ComponentPlayer extends Component implements Collidable {
     double leftWall = 8;
     double rightWall = 300 - 8;
     ParticleTemplate shootParticleTemplate;
-    SpriteBatch spriteBatch;
+    DrawableBatch spriteBatch;
     Garnet garnet;
     ParticleManager particleManager;
 
@@ -58,7 +58,7 @@ public class ComponentPlayer extends Component implements Collidable {
 
         particleManager = parent.getContext().getObjectByType(ParticleManager.class);
 
-        spriteBatch = parent.getContext().getObjectByType(SpriteBatch.class);
+        spriteBatch = parent.getContext().getObjectByType(DrawableBatch.class);
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
 
         parent.addTag(Constants.PLAYER_TAG);
