@@ -17,6 +17,7 @@ import com.physmo.garnettoolkit.Rect;
 import com.physmo.garnettoolkit.Scene;
 import com.physmo.garnettoolkit.SceneManager;
 import com.physmo.garnettoolkit.Vector3;
+import com.physmo.garnettoolkit.color.Color;
 import com.physmo.garnettoolkit.particle.ParticleManager;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
@@ -58,7 +59,7 @@ public class SceneGame extends Scene {
 
         initParticleManager();
 
-
+        garnet.getGraphics().setBackgroundColor(Color.SUNSET_BLUE.toInt());
     }
 
     public void injectCollisionDrawer(CollisionSystem collisionSystem) {

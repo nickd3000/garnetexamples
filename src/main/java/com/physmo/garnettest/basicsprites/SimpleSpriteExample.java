@@ -4,6 +4,7 @@ import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.Texture;
 import com.physmo.garnet.Utils;
+import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.spritebatch.TileSheet;
 import com.physmo.garnettoolkit.color.Color;
 
@@ -13,6 +14,7 @@ public class SimpleSpriteExample extends GarnetApp {
     String imageFileName = "space.png";
     TileSheet tileSheet;
     Texture texture;
+    Graphics graphics;
     double x = 0;
 
     public SimpleSpriteExample(Garnet garnet, String name) {
@@ -33,7 +35,8 @@ public class SimpleSpriteExample extends GarnetApp {
     public void init(Garnet garnet) {
         texture = Texture.loadTexture(Utils.getPathForResource(this, imageFileName));
         tileSheet = new TileSheet(texture, 16, 16);
-        garnet.getGraphics().addTexture(texture);
+        graphics = garnet.getGraphics();
+        graphics.addTexture(texture);
     }
 
     @Override
@@ -44,10 +47,10 @@ public class SimpleSpriteExample extends GarnetApp {
 
     @Override
     public void draw() {
-        garnet.getGraphics().setColor(Color.GREEN.toInt());
-        garnet.getGraphics().setScale(5);
-        garnet.getGraphics().drawImage(tileSheet, (int) x, 5, 2, 2);
-        garnet.getGraphics().render();
+        graphics.setColor(Color.GREEN.toInt());
+        graphics.setScale(5);
+        graphics.drawImage(tileSheet, (int) x, 5, 2, 2);
+        graphics.render();
     }
 
 }

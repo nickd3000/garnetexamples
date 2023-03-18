@@ -1,8 +1,6 @@
 package com.physmo.garnettest.invaders.components;
 
 import com.physmo.garnet.Garnet;
-import com.physmo.garnet.Utils;
-import com.physmo.garnet.regularfont.RegularFont;
 import com.physmo.garnet.spritebatch.TileSheet;
 import com.physmo.garnettest.invaders.GameData;
 import com.physmo.garnettest.invaders.Resources;
@@ -12,10 +10,6 @@ import com.physmo.garnettoolkit.color.Color;
 
 public class ComponentHud extends Component {
 
-    //public static final String fontName = "/12x12Font.png";
-    public static final String fontName = "5x5_0_b.png";
-
-    RegularFont regularFont;
     Resources resources;
     GameData gameData;
     Garnet garnet;
@@ -34,8 +28,6 @@ public class ComponentHud extends Component {
         resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
 
-        String fontFileName = Utils.getPathForResource(this, fontName);
-        regularFont = new RegularFont(fontFileName, 12, 12);
         tileSheet = parent.getContext().getObjectByType(TileSheet.class);
         gameLogic = parent.getContext().getComponent(ComponentGameLogic.class);
     }
@@ -65,10 +57,8 @@ public class ComponentHud extends Component {
             int textX = (windowWidth / 2) - (stringWidth / 2);
 
 
-            if (((int) (textFlash * 10)) % 2 == 0)
-                garnet.getGraphics().setColor(Color.RED.toInt());
-            else
-                garnet.getGraphics().setColor(Color.BLUE.toInt());
+            if (((int) (textFlash * 10)) % 2 == 0) garnet.getGraphics().setColor(Color.RED.toInt());
+            else garnet.getGraphics().setColor(Color.BLUE.toInt());
 
             resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, textGetReady, textX, 480 / 9);
             garnet.getGraphics().setScale(prevScale);

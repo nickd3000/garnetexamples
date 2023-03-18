@@ -39,9 +39,9 @@ public class SubScenePause extends Scene {
 
     @Override
     public void draw() {
-        regularFont.clearSpriteBatch();
-        regularFont.drawText("PAUSED", 20, 100, 3);
-        regularFont.render();
+//        regularFont.clearSpriteBatch();
+//        regularFont.drawText("PAUSED", 20, 100, 3);
+//        regularFont.render();
     }
 
     @Override

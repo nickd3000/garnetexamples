@@ -9,7 +9,7 @@ import com.physmo.garnet.spritebatch.TileSheet;
 import com.physmo.garnettoolkit.color.Color;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
-public class ContainerBasicSprites extends GarnetApp {
+public class SpriteDrawingExample extends GarnetApp {
 
     // TODO: make relative
     private static String fileName1 = "space.PNG";
@@ -26,13 +26,13 @@ public class ContainerBasicSprites extends GarnetApp {
     private Texture texture2;
 
 
-    public ContainerBasicSprites(Garnet garnet, String name) {
+    public SpriteDrawingExample(Garnet garnet, String name) {
         super(garnet, name);
     }
 
     public static void main(String[] args) {
         Garnet garnet = new Garnet(640, 480);
-        GarnetApp app = new ContainerBasicSprites(garnet, "");
+        GarnetApp app = new SpriteDrawingExample(garnet, "");
 
         garnet.setApp(app);
 
