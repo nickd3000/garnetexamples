@@ -14,9 +14,9 @@ public class Resources {
     public RegularFont regularFont;
 
     public Resources init() {
-        bmfFontTexture = Texture.loadTexture(Utils.getPathForResource(this, "/ptmono16_0.png"));
+        bmfFontTexture = Texture.loadTexture(Utils.getPathForResource(this, "ptmono16_0.png"));
         bmfFont = new BMFFont();
-        String pathForResource = Utils.getPathForResource(this, "/ptmono16.fnt");
+        String pathForResource = Utils.getPathForResource(this, "ptmono16.fnt");
         try {
             bmfFont.init(pathForResource);
         } catch (IOException e) {
@@ -24,7 +24,7 @@ public class Resources {
         }
 
         // Regular font
-        String fontName = "/12x12Font.png";
+        String fontName = "12x12Font.png";
         String fontFileName = Utils.getPathForResource(this, fontName);
         regularFont = new RegularFont(fontFileName, 12, 12);
 

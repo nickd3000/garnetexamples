@@ -74,6 +74,7 @@ public class ComponentPlayer extends Component implements Collidable {
     public void tick(double delta) {
 
         boolean canMove = gameLogic.playerCanMove();
+        boolean canShoot = gameLogic.playerCanShoot();
 
         if (canMove && garnet.getInput().isPressed(Input.VirtualButton.RIGHT)) {
             parent.getTransform().x += speed * delta;
@@ -85,7 +86,7 @@ public class ComponentPlayer extends Component implements Collidable {
                 parent.getTransform().x = leftWall;
             }
         }
-        if (canMove && garnet.getInput().isPressed(Input.VirtualButton.FIRE1)) {
+        if (canShoot && garnet.getInput().isPressed(Input.VirtualButton.FIRE1)) {
             fireMissile();
         }
 
@@ -125,7 +126,6 @@ public class ComponentPlayer extends Component implements Collidable {
 
     @Override
     public void draw() {
-
         int drawCol = playerColor;
         boolean invincible = gameLogic.playerIsInvincible() | gameLogic.playerIsInvincible();
         if (flashOn && invincible) drawCol = playerColorB;
@@ -137,7 +137,7 @@ public class ComponentPlayer extends Component implements Collidable {
 
     @Override
     public Rect collisionGetRegion() {
-        Rect rect = new Rect(parent.getTransform().x - 5, parent.getTransform().y - 5, 10, 10);
+        Rect rect = new Rect(parent.getTransform().x - 8, parent.getTransform().y, 16, 10);
         return rect;
     }
 

@@ -23,7 +23,6 @@ public class SceneMenu extends Scene {
         resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
     }
 
-
     @Override
     public void tick(double delta) {
         if (garnet.getInput().isPressed(Input.VirtualButton.FIRE1)) {
@@ -33,12 +32,10 @@ public class SceneMenu extends Scene {
 
     @Override
     public void draw() {
-
         garnet.getGraphics().setColor(textColor);
         garnet.getGraphics().setScale(2);
         resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, "Garnet Example Project", 20, 20);
         resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, "Invaders", 20, 100);
-
     }
 
     @Override

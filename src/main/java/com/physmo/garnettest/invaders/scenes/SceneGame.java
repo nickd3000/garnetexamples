@@ -23,46 +23,45 @@ import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 public class SceneGame extends Scene {
 
     Texture texture;
-
     GameData gameData;
-
-    SubState subState;
-    double subStateTimer;
     Garnet garnet;
-
+    TileSheet tileSheet;
+    boolean showCollisionInfo = false;
 
     public SceneGame(String name) {
         super(name);
     }
 
-    TileSheet tileSheet;
     @Override
     public void init() {
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
 
-        String spriteSheetFileName = "/space.PNg";
+        String spriteSheetFileName = "space.png";
         String spriteSheetFileNamePath = Utils.getPathForResource(this, spriteSheetFileName);
 
         texture = Texture.loadTexture(spriteSheetFileNamePath);
         garnet.getGraphics().addTexture(texture);
 
         tileSheet = new TileSheet(texture, 16, 16);
-
-
         context.add(tileSheet);
 
         gameData = SceneManager.getSharedContext().getObjectByType(GameData.class);
-
         gameData.currentScore = 0;
         gameData.lives = 3;
 
-        // init substates
-        subState = SubState.GETREADY;
-        subStateTimer = 1;
-        gameData.showGetReady = true;
-
         CollisionSystem collisionSystem = new CollisionSystem("collisionsystem");
         context.add(collisionSystem);
+
+        if (showCollisionInfo) injectCollisionDrawer(collisionSystem);
+
+        createEntities();
+
+        initParticleManager();
+
+
+    }
+
+    public void injectCollisionDrawer(CollisionSystem collisionSystem) {
         collisionSystem.setCollisionDrawingCallback(collidable -> {
             garnet.setDrawModeWireframe();
             Rect rect = collidable.collisionGetRegion();
@@ -75,32 +74,20 @@ public class SceneGame extends Scene {
             garnet.getDisplay().drawLine(x + w, y + h, x, y + h);
             garnet.getDisplay().drawLine(x, y + h, x, y);
         });
-
-        createEntities();
-        setAllEntitiesPause(true);
-        initParticleManager();
     }
 
     public void initParticleManager() {
         ParticleManager particleManager = new ParticleManager(100);
         particleManager.setParticleDrawer(p -> {
-
-
             float pAge = (float) (p.age / p.lifeTime);
-
             garnet.getGraphics().setColor(p.colorSupplier.getColor(pAge).toInt());
             garnet.getGraphics().drawImage(tileSheet, (int) (p.position.x) - 8,
                     (int) (p.position.y) - 8, 3, 0);
-
-
         });
 
         context.add(particleManager);
     }
 
-    public void setAllEntitiesPause(boolean pause) {
-
-    }
 
     public void createEntities() {
         GameObject player = new GameObject("player");
@@ -165,27 +152,11 @@ public class SceneGame extends Scene {
     @Override
     public void tick(double delta) {
 
-        subStateTimer -= delta;
-        switch (subState) {
-            case GETREADY:
-                if (subStateTimer < 0) {
-                    subState = SubState.RUNNING;
-                    setAllEntitiesPause(false);
-                    //System.out.println("switching state");
-                    gameData.showGetReady = false;
-                }
-                break;
-            case RUNNING:
-                //System.out.println("running");
-                break;
-        }
     }
 
     @Override
     public void draw() {
 
-//        spriteBatch.render();
-//        spriteBatch.clear();
     }
 
     @Override
@@ -198,7 +169,4 @@ public class SceneGame extends Scene {
 
     }
 
-    enum SubState {
-        GETREADY, RUNNING
-    }
 }

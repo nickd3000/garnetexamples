@@ -48,7 +48,7 @@ public class ComponentGameLogic extends Component {
         levelState = new StateMachine();
         levelState.addState(levelStateStart, t -> {
             stateTimer += t;
-            if (stateTimer > 3) {
+            if (stateTimer > 8) {
                 levelState.changeState(levelStateRunning);
             }
         });
@@ -75,7 +75,7 @@ public class ComponentGameLogic extends Component {
             }
         });
         levelState.addState(levelStateGameOver, t -> {
-            System.out.println("game over state");
+
         });
         levelState.changeState(levelStateStart);
     }
@@ -143,5 +143,9 @@ public class ComponentGameLogic extends Component {
 
         levelState.changeState(levelStatePlayerHit);
 
+    }
+
+    public boolean showGetReady() {
+        return levelState.getCurrentStateName().equals(levelStateStart);
     }
 }

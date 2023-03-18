@@ -3,6 +3,7 @@ package com.physmo.garnettest.basicsprites;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.Texture;
+import com.physmo.garnet.Utils;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.spritebatch.TileSheet;
 import com.physmo.garnettoolkit.color.Color;
@@ -11,17 +12,19 @@ import com.physmo.garnettoolkit.color.Color;
 public class ContainerBasicSprites extends GarnetApp {
 
     // TODO: make relative
-    private static String fileName1 = "/Users/nick/Dev/java/garnettest/src/main/resources/space.PNG";
-    private static String fileName2 = "/Users/nick/Dev/java/garnettest/src/main/resources/prototypeArt.PNG";
+    private static String fileName1 = "space.PNG";
+    private static String fileName2 = "prototypeArt.PNG";
 
-    private static float angle = 0;
-    double movementX;
-    private static int FOREGROUND_LAYER = 2;
-    private static int BACKGROUND_LAYER = 1;
+    float time = 0;
+    int FOREGROUND_LAYER = 2;
+    int BACKGROUND_LAYER = 1;
+
     TileSheet tileSheet1;
     TileSheet tileSheet2;
+
     private Texture texture1;
     private Texture texture2;
+
 
     public ContainerBasicSprites(Garnet garnet, String name) {
         super(garnet, name);
@@ -40,11 +43,11 @@ public class ContainerBasicSprites extends GarnetApp {
     @Override
     public void init(Garnet garnet) {
 
-        texture1 = Texture.loadTexture(fileName1);
+        texture1 = Texture.loadTexture(Utils.getPathForResource(this, fileName1));
         tileSheet1 = new TileSheet(texture1, 16, 16);
         garnet.getGraphics().addTexture(texture1);
 
-        texture2 = Texture.loadTexture(fileName2);
+        texture2 = Texture.loadTexture(Utils.getPathForResource(this, fileName2));
         tileSheet2 = new TileSheet(texture2, 16, 16);
         garnet.getGraphics().addTexture(texture2);
 
@@ -58,11 +61,7 @@ public class ContainerBasicSprites extends GarnetApp {
 
     @Override
     public void tick(double delta) {
-        angle += delta * 100f;
-        movementX += delta * 0.2;
-        while (movementX > 1.0f) {
-            movementX -= 1.0f;
-        }
+        time += delta;
     }
 
     @Override
@@ -75,8 +74,8 @@ public class ContainerBasicSprites extends GarnetApp {
     }
 
     private void drawTestSpriteBuilder() {
-        int space = 30;
-        int x = 20;
+
+        int bounceOffset = (int) (Math.sin(time * 7) * 4);
 
         Graphics graphics = garnet.getGraphics();
 
@@ -110,36 +109,17 @@ public class ContainerBasicSprites extends GarnetApp {
         graphics.setDrawOrder(BACKGROUND_LAYER);
         graphics.drawImage(tileSheet2, 0, 70, 5, 2);
         graphics.setDrawOrder(FOREGROUND_LAYER);
-        graphics.drawImage(tileSheet2, 0 + 4, 70 + 4, 0, 3);
+        graphics.drawImage(tileSheet2, 0 + 4, 70 + 4 + bounceOffset, 0, 3);
 
         graphics.setDrawOrder(FOREGROUND_LAYER);
         graphics.drawImage(tileSheet2, 30, 70, 5, 2);
         graphics.setDrawOrder(BACKGROUND_LAYER);
-        graphics.drawImage(tileSheet2, 30 + 4, 70 + 4, 0, 3);
+        graphics.drawImage(tileSheet2, 30 + 4, 70 + 4 + bounceOffset, 0, 3);
 
+        graphics.drawLine(0, 0, 100, 100);
 
-        // Moving
-        //spriteBatch.add(Sprite2D.build(20 + (int) (movementX * 300), 20 + 40, 16, 16, 0, 0, 16, 16));
-
-        // Unscaled
-        //spriteBatch.add(Sprite2D.build(x, 20, 16, 16, 0, 0, 16, 16));
-        x += space;
-
-        // Coloured
-        //spriteBatch.add(Sprite2D.build(x, 20, 16, 16, 0, 0, 16, 16).addColor(1.0f, 0.5f, 0.25f));
-        x += space;
-
-        // Rotated
-        //spriteBatch.add(Sprite2D.build(x, 20, 16, 16, 0, 0, 16, 16).addAngle(angle));
-        x += space;
-
-        // Scaled
-        //spriteBatch.add(Sprite2D.build(x, 20, 16 * 2, 16 * 2, 0, 0, 16, 16));
-        x += space * 2;
-
-        // Tile setter
-        //spriteBatch.add(Sprite2D.build(x, 20, 16 * 5, 16 * 5).setTile(6, 0, 16).addColor(0.25f, 0.5f, 1.0f));
-
+        graphics.setColor(Color.GREEN.toInt());
+        graphics.drawRect(30, 30, 30, 30);
     }
 
     private void drawNew() {
