@@ -46,6 +46,13 @@ public class ComponentHud extends Component {
         resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, "Score:" + gameData.currentScore, 10, 10);
         resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, "Lives:" + gameData.lives, 10 + 250, 10);
 
+
+        double fps = garnet.getGameClock().getFps();
+        double lps = garnet.getGameClock().getLps();
+        String clock = "fps:" + fps + "  lps:" + lps;
+        resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, clock, 10, 26);
+
+
         String textGetReady = "Get Ready!";
 
         if (gameLogic.showGetReady()) {
