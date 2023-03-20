@@ -29,6 +29,7 @@ public class StressTest extends GarnetApp {
         super(garnet, name);
     }
 
+
     public static void main(String[] args) {
         Garnet garnet = new Garnet(640, 480);
         GarnetApp app = new StressTest(garnet, "");
