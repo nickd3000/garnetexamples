@@ -35,6 +35,8 @@ public class SceneGame extends Scene {
 
     @Override
     public void init() {
+        context.reset();
+
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
 
         String spriteSheetFileName = "space.png";

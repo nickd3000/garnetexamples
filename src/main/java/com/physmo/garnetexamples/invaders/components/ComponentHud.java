@@ -54,7 +54,7 @@ public class ComponentHud extends Component {
 
 
         String textGetReady = "Get Ready!";
-
+        String textGameOver = "GAME OVER";
         if (gameLogic.showGetReady()) {
             int scale = 4;
             double prevScale = garnet.getGraphics().getScale();
@@ -68,6 +68,22 @@ public class ComponentHud extends Component {
             else garnet.getGraphics().setColor(Color.BLUE.toInt());
 
             resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, textGetReady, textX, 480 / 9);
+            garnet.getGraphics().setScale(prevScale);
+        }
+
+        if (gameLogic.showGameOver()) {
+            int scale = 4;
+            double prevScale = garnet.getGraphics().getScale();
+            garnet.getGraphics().setScale(scale);
+            int stringWidth = resources.bmfFont.getStringWidth(textGameOver);
+            int windowWidth = garnet.getDisplay().getWindowWidth() / scale;
+            int textX = (windowWidth / 2) - (stringWidth / 2);
+
+
+            if (((int) (textFlash * 10)) % 2 == 0) garnet.getGraphics().setColor(Color.RED.toInt());
+            else garnet.getGraphics().setColor(Color.BLUE.toInt());
+
+            resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, textGameOver, textX, 480 / 9);
             garnet.getGraphics().setScale(prevScale);
         }
     }
