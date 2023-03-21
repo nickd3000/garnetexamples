@@ -43,6 +43,11 @@ public class ComponentGameLogic extends Component {
         initLevelStateMachine();
     }
 
+    @Override
+    public void draw() {
+
+    }
+
     public void initLevelStateMachine() {
 
         levelState = new StateMachine();
@@ -54,12 +59,10 @@ public class ComponentGameLogic extends Component {
         });
 
         levelState.addTransition(StateMachine.ANY_STATE, StateMachine.ANY_STATE, t -> {
-            System.out.println("any to any");
-        });
-
-        levelState.addTransition("", levelStateRunning, t -> {
+            // Reset state timer when making any change in state.
             stateTimer = 0;
         });
+
 
         levelState.addState(levelStateRunning, t -> {
         });
@@ -75,7 +78,11 @@ public class ComponentGameLogic extends Component {
             }
         });
         levelState.addState(levelStateGameOver, t -> {
-
+            stateTimer += t;
+            if (stateTimer > 3) {
+                //levelState.changeState(levelStateRunning);
+                SceneManager.setActiveScene("menu");
+            }
         });
         levelState.changeState(levelStateStart);
     }
@@ -147,5 +154,9 @@ public class ComponentGameLogic extends Component {
 
     public boolean showGetReady() {
         return levelState.getCurrentStateName().equals(levelStateStart);
+    }
+
+    public boolean showGameOver() {
+        return levelState.getCurrentStateName().equals(levelStateGameOver);
     }
 }
