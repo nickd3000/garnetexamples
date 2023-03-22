@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.physmo.garnettest</groupId>
-    <artifactId>garnettest</artifactId>
+    <artifactId>garnetexamples</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
@@ -15,12 +15,18 @@
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.jbox2d/jbox2d-library -->
         <dependency>
-            <groupId>org.jbox2d</groupId>
-            <artifactId>jbox2d-library</artifactId>
-            <version>2.2.1.1</version>
+            <groupId>com.physmo</groupId>
+            <artifactId>garnettoolkit</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jbox2d/jbox2d-library -->
+        <!--        <dependency>-->
+        <!--            <groupId>org.jbox2d</groupId>-->
+        <!--            <artifactId>jbox2d-library</artifactId>-->
+        <!--            <version>2.2.1.1</version>-->
+        <!--        </dependency>-->
     </dependencies>
 
     <build>
