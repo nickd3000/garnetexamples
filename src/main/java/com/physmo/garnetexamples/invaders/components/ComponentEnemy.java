@@ -91,11 +91,11 @@ public class ComponentEnemy extends Component implements Collidable {
         missile.addTag("pausable");
         return missile;
     }
-
+    CollisionSystem collisionSystem;
     @Override
     public void init() {
 
-        CollisionSystem collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
+        collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
         collisionSystem.addCollidable(this);
 
         gameData = SceneManager.getSharedContext().getObjectByType(GameData.class);
@@ -161,7 +161,9 @@ public class ComponentEnemy extends Component implements Collidable {
     }
 
     private void handleDying() {
-        parent.setActive(false);
+        collisionSystem.removeCollidable(this);
+        parent.destroy();
+
         gameData.currentScore++;
 
         Emitter emitter = new Emitter(parent.getTransform(), 0.2, explosionParticleTemplate);

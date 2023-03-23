@@ -18,24 +18,30 @@ public class ComponentPlayerMissile extends Component implements Collidable {
 
     TileSheet tileSheet;
     Garnet garnet;
+    int color = Utils.floatToRgb(1, 0, 1, 1);
+    CollisionSystem collisionSystem;
 
     public ComponentPlayerMissile() {
     }
-    int color = Utils.floatToRgb(1, 0, 1, 1);
 
     @Override
     public void tick(double delta) {
         parent.getTransform().y -= speed * delta;
 
         if (parent.getTransform().y < 0) {
-            //parent.setActive(false);
-            parent.destroy();
+            killMe();
         }
+    }
+
+    public void killMe() {
+        collisionSystem.removeCollidable(this);
+        parent.destroy();
     }
 
     @Override
     public void init() {
-        CollisionSystem collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
+
+        collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
         collisionSystem.addCollidable(this);
 
         parent.addTag(Constants.PLAYER_MISSILE);
@@ -65,7 +71,7 @@ public class ComponentPlayerMissile extends Component implements Collidable {
         GameObject otherObject = collisionPacket.targetEntity.collisionGetGameObject();
 
         if (otherObject.getTags().contains(Constants.ENEMY_TAG)) {
-            parent.setActive(false);
+            killMe();
         }
     }
 
