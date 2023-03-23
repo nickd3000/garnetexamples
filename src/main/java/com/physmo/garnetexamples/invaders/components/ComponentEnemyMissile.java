@@ -28,12 +28,11 @@ public class ComponentEnemyMissile extends Component implements Collidable {
     @Override
     public void tick(double delta) {
         parent.getTransform().y += speed * delta;
-        if (parent.getTransform().y > 480) parent.setActive(false);
+        if (parent.getTransform().y > 480) parent.destroy();
     }
 
     @Override
     public void init() {
-
         CollisionSystem collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
         collisionSystem.addCollidable(this);
         tileSheet = parent.getContext().getObjectByType(TileSheet.class);

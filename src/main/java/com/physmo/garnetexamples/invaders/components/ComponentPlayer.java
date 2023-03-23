@@ -20,8 +20,6 @@ import com.physmo.garnettoolkit.simplecollision.Collidable;
 import com.physmo.garnettoolkit.simplecollision.CollisionPacket;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
-import java.util.List;
-
 
 public class ComponentPlayer extends Component implements Collidable {
 
@@ -102,22 +100,29 @@ public class ComponentPlayer extends Component implements Collidable {
     private void fireMissile() {
         if (bulletCoolDown > 0) return;
 
-        List<GameObject> player_missiles = parent.getContext().getObjectsByTag("player_missile");
-        for (GameObject player_missile : player_missiles) {
-            if (!player_missile.isActive()) {
-                player_missile.setActive(true);
-                player_missile.getTransform().set(parent.getTransform());
-                bulletCoolDown = 0.2;
+        //List<GameObject> player_missiles = parent.getContext().getObjectsByTag("player_missile");
 
-                Emitter emitter = new Emitter(parent.getTransform(), 0.2, shootParticleTemplate);
-                emitter.setEmitPerSecond(150);
-                particleManager.addEmitter(emitter);
+        GameObject playerMissile = playerMissileFactory();
+        parent.getContext().add(playerMissile);
+        if (playerMissile != null) {
+            playerMissile.setActive(true);
+            playerMissile.getTransform().set(parent.getTransform());
+            bulletCoolDown = 0.2;
 
-                break;
-            }
+            Emitter emitter = new Emitter(parent.getTransform(), 0.2, shootParticleTemplate);
+            emitter.setEmitPerSecond(150);
+            particleManager.addEmitter(emitter);
         }
+    }
 
-
+    public GameObject playerMissileFactory() {
+        GameObject missile = new GameObject("player_missile");
+        missile.setActive(false);
+        missile.setVisible(true);
+        missile.addComponent(new ComponentPlayerMissile());
+        missile.addTag("pausable");
+        //context.add(missile);
+        return missile;
     }
 
     @Override

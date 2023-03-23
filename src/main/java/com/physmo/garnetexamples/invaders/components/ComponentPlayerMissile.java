@@ -27,7 +27,10 @@ public class ComponentPlayerMissile extends Component implements Collidable {
     public void tick(double delta) {
         parent.getTransform().y -= speed * delta;
 
-        if (parent.getTransform().y < 0) parent.setActive(false);
+        if (parent.getTransform().y < 0) {
+            //parent.setActive(false);
+            parent.destroy();
+        }
     }
 
     @Override
