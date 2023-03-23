@@ -23,6 +23,7 @@ import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 public class ComponentPlayer extends Component implements Collidable {
 
+    public static final double BULLET_COOL_DOWN = 0.2;
     static int playerColor = Utils.floatToRgb(0.3f, 1f, 0.2f, 1f);
     static int playerColorB = Utils.floatToRgb(1f, 0.2f, 1f, 1f);
 
@@ -100,14 +101,13 @@ public class ComponentPlayer extends Component implements Collidable {
     private void fireMissile() {
         if (bulletCoolDown > 0) return;
 
-        //List<GameObject> player_missiles = parent.getContext().getObjectsByTag("player_missile");
-
         GameObject playerMissile = playerMissileFactory();
-        parent.getContext().add(playerMissile);
+
         if (playerMissile != null) {
+            parent.getContext().add(playerMissile);
             playerMissile.setActive(true);
             playerMissile.getTransform().set(parent.getTransform());
-            bulletCoolDown = 0.2;
+            bulletCoolDown = BULLET_COOL_DOWN;
 
             Emitter emitter = new Emitter(parent.getTransform(), 0.2, shootParticleTemplate);
             emitter.setEmitPerSecond(150);
@@ -131,6 +131,7 @@ public class ComponentPlayer extends Component implements Collidable {
         boolean invincible = gameLogic.playerIsInvincible() | gameLogic.playerIsInvincible();
         if (flashOn && invincible) drawCol = playerColorB;
 
+        garnet.getGraphics().setScale(2);
         garnet.getGraphics().setColor(drawCol);
         garnet.getGraphics().drawImage(tileSheet, (int) (parent.getTransform().x) - 8,
                 (int) (parent.getTransform().y) - 8, 0, 2);

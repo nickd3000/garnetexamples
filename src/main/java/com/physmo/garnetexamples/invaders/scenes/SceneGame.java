@@ -101,7 +101,7 @@ public class SceneGame extends Scene {
 
 
         for (int y = 0; y < 5; y++) {
-            for (int x = 0; x < 9; x++) {
+            for (int x = 0; x < 8; x++) { //9
                 GameObject enemy = new GameObject("enemy");
 
                 EnemyType enemyType = EnemyType.basic;

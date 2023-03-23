@@ -7,6 +7,7 @@ import com.physmo.garnetexamples.invaders.Resources;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.SceneManager;
 import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 public class ComponentHud extends Component {
 
@@ -17,7 +18,7 @@ public class ComponentHud extends Component {
     int textColor = Color.YELLOW.toInt();
     double textFlash = 0;
     ComponentGameLogic gameLogic;
-
+    CollisionSystem collisionSystem;
     public ComponentHud() {
 
     }
@@ -30,6 +31,7 @@ public class ComponentHud extends Component {
 
         tileSheet = parent.getContext().getObjectByType(TileSheet.class);
         gameLogic = parent.getContext().getComponent(ComponentGameLogic.class);
+        collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
     }
 
     @Override
@@ -41,23 +43,19 @@ public class ComponentHud extends Component {
     @Override
     public void draw() {
 
+        double prevScale = garnet.getGraphics().getScale();
+
         garnet.getGraphics().setColor(textColor);
         garnet.getGraphics().setScale(2);
         resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, "Score:" + gameData.currentScore, 10, 10);
         resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, "Lives:" + gameData.lives, 10 + 250, 10);
 
 
-        double fps = garnet.getGameClock().getFps();
-        double lps = garnet.getGameClock().getLps();
-        String clock = "fps:" + fps + "  lps:" + lps + " objects:" + parent.getContext().getObjectCount();
-        resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, clock, 10, 26);
-
-
         String textGetReady = "Get Ready!";
         String textGameOver = "GAME OVER";
         if (gameLogic.showGetReady()) {
             int scale = 4;
-            double prevScale = garnet.getGraphics().getScale();
+
             garnet.getGraphics().setScale(scale);
             int stringWidth = resources.bmfFont.getStringWidth(textGetReady);
             int windowWidth = garnet.getDisplay().getWindowWidth() / scale;
@@ -73,7 +71,7 @@ public class ComponentHud extends Component {
 
         if (gameLogic.showGameOver()) {
             int scale = 4;
-            double prevScale = garnet.getGraphics().getScale();
+
             garnet.getGraphics().setScale(scale);
             int stringWidth = resources.bmfFont.getStringWidth(textGameOver);
             int windowWidth = garnet.getDisplay().getWindowWidth() / scale;
@@ -86,5 +84,16 @@ public class ComponentHud extends Component {
             resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, textGameOver, textX, 480 / 9);
             garnet.getGraphics().setScale(prevScale);
         }
+
+        garnet.getGraphics().setScale(1);
+        garnet.getGraphics().setColor(textColor);
+        double fps = garnet.getGameClock().getFps();
+        double lps = garnet.getGameClock().getLps();
+        String clock = "fps:" + fps + "  lps:" + lps + " objects:" + parent.getContext().getObjectCount();
+        clock += " colliders:" + collisionSystem.getSize();
+        garnet.getGraphics().setScale(1);
+        resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, clock, 10, 26 + 20);
+
+        garnet.getGraphics().setScale(prevScale);
     }
 }
