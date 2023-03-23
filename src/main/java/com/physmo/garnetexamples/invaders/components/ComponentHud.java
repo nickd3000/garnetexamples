@@ -49,7 +49,7 @@ public class ComponentHud extends Component {
 
         double fps = garnet.getGameClock().getFps();
         double lps = garnet.getGameClock().getLps();
-        String clock = "fps:" + fps + "  lps:" + lps;
+        String clock = "fps:" + fps + "  lps:" + lps + " objects:" + parent.getContext().getObjectCount();
         resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, clock, 10, 26);
 
 
