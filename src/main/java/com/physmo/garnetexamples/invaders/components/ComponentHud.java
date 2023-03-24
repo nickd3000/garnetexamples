@@ -1,6 +1,7 @@
 package com.physmo.garnetexamples.invaders.components;
 
 import com.physmo.garnet.Garnet;
+import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.spritebatch.TileSheet;
 import com.physmo.garnetexamples.invaders.GameData;
 import com.physmo.garnetexamples.invaders.Resources;
@@ -53,36 +54,15 @@ public class ComponentHud extends Component {
 
         String textGetReady = "Get Ready!";
         String textGameOver = "GAME OVER";
+
         if (gameLogic.showGetReady()) {
-            int scale = 4;
-
-            garnet.getGraphics().setScale(scale);
-            int stringWidth = resources.bmfFont.getStringWidth(textGetReady);
-            int windowWidth = garnet.getDisplay().getWindowWidth() / scale;
-            int textX = (windowWidth / 2) - (stringWidth / 2);
-
-
-            if (((int) (textFlash * 10)) % 2 == 0) garnet.getGraphics().setColor(Color.RED.toInt());
-            else garnet.getGraphics().setColor(Color.BLUE.toInt());
-
-            resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, textGetReady, textX, 480 / 9);
-            garnet.getGraphics().setScale(prevScale);
+            drawBanner(textGetReady, 6);
         }
-
         if (gameLogic.showGameOver()) {
-            int scale = 4;
-
-            garnet.getGraphics().setScale(scale);
-            int stringWidth = resources.bmfFont.getStringWidth(textGameOver);
-            int windowWidth = garnet.getDisplay().getWindowWidth() / scale;
-            int textX = (windowWidth / 2) - (stringWidth / 2);
-
-
-            if (((int) (textFlash * 10)) % 2 == 0) garnet.getGraphics().setColor(Color.RED.toInt());
-            else garnet.getGraphics().setColor(Color.BLUE.toInt());
-
-            resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, textGameOver, textX, 480 / 9);
-            garnet.getGraphics().setScale(prevScale);
+            drawBanner(textGameOver, 6);
+        }
+        if (gameLogic.showLevelComplete()) {
+            drawBanner("level complete", 5);
         }
 
         garnet.getGraphics().setScale(1);
@@ -95,5 +75,22 @@ public class ComponentHud extends Component {
         resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, clock, 10, 26 + 20);
 
         garnet.getGraphics().setScale(prevScale);
+    }
+
+    private void drawBanner(String text, double scale) {
+        Graphics graphics = garnet.getGraphics();
+        double prevScale = graphics.getScale();
+        graphics.setScale(scale);
+        int stringWidth = resources.bmfFont.getStringWidth(text);
+        int windowWidth = (int) (garnet.getDisplay().getWindowWidth() / scale);
+        int windowHeight = (int) (garnet.getDisplay().getWindowHeight() / scale);
+        int textX = (windowWidth / 2) - (stringWidth / 2);
+        int textY = (windowHeight / 2) - (16 / 2);
+
+        if (((int) (textFlash * 10)) % 2 == 0) graphics.setColor(Color.RED.toInt());
+        else graphics.setColor(Color.BLUE.toInt());
+
+        resources.bmfFont.drawString(graphics, resources.bmfFontTexture, text, textX, textY);
+        graphics.setScale(prevScale);
     }
 }
