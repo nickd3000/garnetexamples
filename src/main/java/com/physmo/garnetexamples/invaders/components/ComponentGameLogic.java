@@ -24,6 +24,7 @@ public class ComponentGameLogic extends Component {
     String levelStateRunning = "2";
     String levelStatePlayerHit = "3";
     String levelStateGameOver = "4";
+    String levelStateLevelComplete = "5";
     double stateTimer = 0;
     GameData gameData;
     private int pendingEnemyDir;
@@ -84,6 +85,13 @@ public class ComponentGameLogic extends Component {
                 SceneManager.setActiveScene("menu");
             }
         });
+        levelState.addState(levelStateLevelComplete, t -> {
+            stateTimer += t;
+            if (stateTimer > 5) {
+                //levelState.changeState(levelStateRunning);
+                SceneManager.setActiveScene("menu");
+            }
+        });
         levelState.changeState(levelStateStart);
     }
 
@@ -98,6 +106,13 @@ public class ComponentGameLogic extends Component {
         }
 
         calculateEnemySpeed();
+
+        List<GameObject> enemies = parent.getContext().getObjectsByTag(Constants.ENEMY_TAG);
+        if (enemies.size() == 0) {
+            if (levelState.isCurrentState(levelStateRunning)) {
+                levelState.changeState(levelStateLevelComplete);
+            }
+        }
 
         if (garnet.getInput().isFirstPress(Input.VirtualButton.MENU)) {
             System.out.println("MENU");
@@ -158,5 +173,9 @@ public class ComponentGameLogic extends Component {
 
     public boolean showGameOver() {
         return levelState.getCurrentStateName().equals(levelStateGameOver);
+    }
+
+    public boolean showLevelComplete() {
+        return levelState.getCurrentStateName().equals(levelStateLevelComplete);
     }
 }
