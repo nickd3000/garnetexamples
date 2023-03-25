@@ -48,8 +48,8 @@ public class ComponentHud extends Component {
 
         garnet.getGraphics().setColor(textColor);
         garnet.getGraphics().setScale(2);
-        resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, "Score:" + gameData.currentScore, 10, 10);
-        resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, "Lives:" + gameData.lives, 10 + 250, 10);
+        resources.getBitmapFont().drawString(garnet.getGraphics(), "Score:" + gameData.currentScore, 10, 10);
+        resources.getBitmapFont().drawString(garnet.getGraphics(), "Lives:" + gameData.lives, 10 + 250, 10);
 
 
         String textGetReady = "Get Ready!";
@@ -62,7 +62,7 @@ public class ComponentHud extends Component {
             drawBanner(textGameOver, 6);
         }
         if (gameLogic.showLevelComplete()) {
-            drawBanner("level complete", 5);
+            drawBanner("Level complete!", 5);
         }
 
         garnet.getGraphics().setScale(1);
@@ -72,7 +72,7 @@ public class ComponentHud extends Component {
         String clock = "fps:" + fps + "  lps:" + lps + " objects:" + parent.getContext().getObjectCount();
         clock += " colliders:" + collisionSystem.getSize();
         garnet.getGraphics().setScale(1);
-        resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, clock, 10, 26 + 20);
+        resources.getBitmapFont().drawString(garnet.getGraphics(), clock, 10, 26 + 20);
 
         garnet.getGraphics().setScale(prevScale);
     }
@@ -81,7 +81,7 @@ public class ComponentHud extends Component {
         Graphics graphics = garnet.getGraphics();
         double prevScale = graphics.getScale();
         graphics.setScale(scale);
-        int stringWidth = resources.bmfFont.getStringWidth(text);
+        int stringWidth = resources.getBitmapFont().getStringWidth(text);
         int windowWidth = (int) (garnet.getDisplay().getWindowWidth() / scale);
         int windowHeight = (int) (garnet.getDisplay().getWindowHeight() / scale);
         int textX = (windowWidth / 2) - (stringWidth / 2);
@@ -90,7 +90,7 @@ public class ComponentHud extends Component {
         if (((int) (textFlash * 10)) % 2 == 0) graphics.setColor(Color.RED.toInt());
         else graphics.setColor(Color.BLUE.toInt());
 
-        resources.bmfFont.drawString(graphics, resources.bmfFontTexture, text, textX, textY);
+        resources.getBitmapFont().drawString(graphics, text, textX, textY);
         graphics.setScale(prevScale);
     }
 }

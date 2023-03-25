@@ -34,8 +34,8 @@ public class SceneMenu extends Scene {
     public void draw() {
         garnet.getGraphics().setColor(textColor);
         garnet.getGraphics().setScale(2);
-        resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, "Garnet Example Project", 20, 20);
-        resources.bmfFont.drawString(garnet.getGraphics(), resources.bmfFontTexture, "Invaders", 20, 100);
+        resources.getBitmapFont().drawString(garnet.getGraphics(), "Garnet Example Project", 20, 20);
+        resources.getBitmapFont().drawString(garnet.getGraphics(), "Invaders", 20, 100);
     }
 
     @Override
