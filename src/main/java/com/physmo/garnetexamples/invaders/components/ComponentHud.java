@@ -35,10 +35,32 @@ public class ComponentHud extends Component {
         collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
     }
 
+    double overlayScroll = 0;
+
     @Override
     public void tick(double delta) {
         textFlash += delta;
         if (textFlash > 10) textFlash -= 10;
+
+        overlayScroll += delta * 1.5;
+        if (overlayScroll > 1) overlayScroll -= 1;
+    }
+
+    private void drawBanner(String text, double scale) {
+        Graphics graphics = garnet.getGraphics();
+        double prevScale = graphics.getScale();
+        graphics.setScale(scale);
+        int stringWidth = resources.getBitmapFont().getStringWidth(text);
+        int windowWidth = (int) (garnet.getDisplay().getWindowWidth() / scale);
+        int windowHeight = (int) (garnet.getDisplay().getWindowHeight() / scale);
+        int textX = (windowWidth / 2) - (stringWidth / 2);
+        int textY = (windowHeight / 2) - (16 / 2);
+
+        if (((int) (textFlash * 10)) % 2 == 0) graphics.setColor(Color.RED.toInt());
+        else graphics.setColor(Color.BLUE.toInt());
+
+        resources.getBitmapFont().drawString(graphics, text, textX, textY);
+        graphics.setScale(prevScale);
     }
 
     @Override
@@ -57,13 +79,17 @@ public class ComponentHud extends Component {
 
         if (gameLogic.showGetReady()) {
             drawBanner(textGetReady, 6);
+            drawOverlay();
         }
         if (gameLogic.showGameOver()) {
             drawBanner(textGameOver, 6);
+            drawOverlay();
         }
         if (gameLogic.showLevelComplete()) {
             drawBanner("Level complete!", 5);
+            drawOverlay();
         }
+
 
         garnet.getGraphics().setScale(1);
         garnet.getGraphics().setColor(textColor);
@@ -77,20 +103,22 @@ public class ComponentHud extends Component {
         garnet.getGraphics().setScale(prevScale);
     }
 
-    private void drawBanner(String text, double scale) {
+    // draw some big transparent invader sprites scrolling across the screen
+    private void drawOverlay() {
         Graphics graphics = garnet.getGraphics();
-        double prevScale = graphics.getScale();
+
+        int scale = 5;
+        int numY = 5;
+        int numX = 5;
+        int ySpan = (garnet.getDisplay().getWindowHeight() / scale) / numY;
+        int xSpan = (garnet.getDisplay().getWindowWidth() / scale) / numX;
         graphics.setScale(scale);
-        int stringWidth = resources.getBitmapFont().getStringWidth(text);
-        int windowWidth = (int) (garnet.getDisplay().getWindowWidth() / scale);
-        int windowHeight = (int) (garnet.getDisplay().getWindowHeight() / scale);
-        int textX = (windowWidth / 2) - (stringWidth / 2);
-        int textY = (windowHeight / 2) - (16 / 2);
-
-        if (((int) (textFlash * 10)) % 2 == 0) graphics.setColor(Color.RED.toInt());
-        else graphics.setColor(Color.BLUE.toInt());
-
-        resources.getBitmapFont().drawString(graphics, text, textX, textY);
-        graphics.setScale(prevScale);
+        graphics.setColor(new Color(0.5F, 1, 0.5f, 0.1f).toInt());
+        for (int y = -1; y <= numY; y++) {
+            for (int x = -1; x <= numX; x++) {
+                int offset = (int) (overlayScroll * ySpan);
+                graphics.drawImage(tileSheet, (x * xSpan) - (xSpan / 2), y * ySpan + offset, 2, 2);
+            }
+        }
     }
 }
