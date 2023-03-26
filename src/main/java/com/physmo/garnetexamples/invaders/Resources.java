@@ -8,7 +8,6 @@ import java.io.IOException;
 
 public class Resources {
 
-
     BitmapFont bitmapFont;
     RegularFont regularFont;
 
@@ -16,22 +15,18 @@ public class Resources {
         return bitmapFont;
     }
 
-    public void setBitmapFont(BitmapFont bitmapFont) {
-        this.bitmapFont = bitmapFont;
-    }
 
     public RegularFont getRegularFont() {
         return regularFont;
     }
 
-    public void setRegularFont(RegularFont regularFont) {
-        this.regularFont = regularFont;
-    }
 
     public Resources init() {
 
-        String fontImagePath = Utils.getPathForResource(this, "ptmono16_0.png");
-        String fontSpecFile = Utils.getPathForResource(this, "ptmono16.fnt");
+//        String fontImagePath = Utils.getPathForResource(this, "ptmono16_0.png");
+//        String fontSpecFile = Utils.getPathForResource(this, "ptmono16.fnt");
+        String fontImagePath = Utils.getPathForResource(this, "LucidaConsole16.png");
+        String fontSpecFile = Utils.getPathForResource(this, "LucidaConsole16.fnt");
 
         String pathForResource = fontSpecFile;
         try {
