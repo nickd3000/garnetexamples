@@ -48,12 +48,10 @@ public class ComponentEnemy extends Component implements Collidable {
 
         double speed = gameLogic.moveSpeed * delta;
 
-        if (gameLogic != null) {
-            if (gameLogic.enemyDir == 1) {
-                parent.getTransform().x += speed;
-            } else {
-                parent.getTransform().x -= speed;
-            }
+        if (gameLogic.enemyDir == 1) {
+            parent.getTransform().x += speed;
+        } else {
+            parent.getTransform().x -= speed;
         }
 
         if (parent.getTransform().x > 320 - 16) {
