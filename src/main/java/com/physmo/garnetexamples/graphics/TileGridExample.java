@@ -11,10 +11,6 @@ import com.physmo.garnet.tilegrid.TileGridDrawer;
 
 import java.util.Random;
 
-import static org.lwjgl.opengl.GL11.GL_SCISSOR_TEST;
-import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glScissor;
-
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class TileGridExample extends GarnetApp {
 
@@ -65,6 +61,8 @@ public class TileGridExample extends GarnetApp {
                 tileGridData.setTileId(x, y, random.nextInt(5));
             }
         }
+
+        graphics.addClipRect(1, 10, 300, 200, 200);
     }
 
     @Override
@@ -81,8 +79,8 @@ public class TileGridExample extends GarnetApp {
 //        graphics.setScale(5);
 //        graphics.drawImage(tileSheet, (int) x, 5, 2, 2);
 
-        glEnable(GL_SCISSOR_TEST);
-        glScissor(0, 0, 100, 200);
+        graphics.setActiveClipRect(1);
+
         tileGridDrawer.draw(graphics, 20, 20);
 
         graphics.render();
