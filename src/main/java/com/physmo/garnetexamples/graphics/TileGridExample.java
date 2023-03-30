@@ -14,7 +14,7 @@ import java.util.Random;
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class TileGridExample extends GarnetApp {
 
-    String imageFileName = "space.png";
+    String imageFileName = "prototypeArt.png";
     TileSheet tileSheet;
     Texture texture;
     Graphics graphics;
@@ -23,6 +23,9 @@ public class TileGridExample extends GarnetApp {
     TileGridDrawer tileGridDrawer;
     TileGridData tileGridData;
     Random random = new Random();
+
+    int wallTile;
+    int grassTile;
 
     public TileGridExample(Garnet garnet, String name) {
         super(garnet, name);
@@ -45,43 +48,44 @@ public class TileGridExample extends GarnetApp {
         graphics = garnet.getGraphics();
         graphics.addTexture(texture);
 
-        int mapWidth = 100;
-        int mapHeight = 100;
+        wallTile = tileSheet.getTileIndexFromCoords(0, 7);
+        grassTile = tileSheet.getTileIndexFromCoords(1, 7);
+
+        int mapWidth = 11;
+        int mapHeight = 11;
 
         tileGridData = new TileGridData(mapWidth, mapHeight);
         tileGridDrawer = new TileGridDrawer()
                 .setData(tileGridData)
-                .setWindowSize(5, 5)
+                .setWindowSize(300, 300)
                 .setTileSize(16, 16)
-                .setTileSheet(tileSheet);
+                .setTileSheet(tileSheet)
+                .setScale(3);
 
 
         for (int y = 0; y < mapHeight; y++) {
             for (int x = 0; x < mapWidth; x++) {
-                tileGridData.setTileId(x, y, random.nextInt(5));
+                int tileId = grassTile;//random.nextInt(5);
+                if (x == 0 || y == 0 || x == mapWidth - 1 || y == mapHeight - 1) tileId = wallTile;
+                tileGridData.setTileId(x, y, tileId);
             }
         }
 
-        graphics.addClipRect(1, 10, 300, 200, 200);
+
     }
 
     @Override
     public void tick(double delta) {
-        x += delta * 50;
-        if (x > 200) x = 0;
+        x += delta * 30;
+
 
         tileGridDrawer.setScroll(x, x / 2);
     }
 
     @Override
     public void draw() {
-//        graphics.setColor(Color.GREEN.toInt());
-//        graphics.setScale(5);
-//        graphics.drawImage(tileSheet, (int) x, 5, 2, 2);
 
-        graphics.setActiveClipRect(1);
-
-        tileGridDrawer.draw(graphics, 20, 20);
+        tileGridDrawer.draw(graphics, 50, 50);
 
         graphics.render();
     }

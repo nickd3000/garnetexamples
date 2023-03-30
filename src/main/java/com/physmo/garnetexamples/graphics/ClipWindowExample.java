@@ -46,6 +46,7 @@ public class ClipWindowExample extends GarnetApp {
             System.out.println("keyboard handler" + scancode + "  " + action);
         });
 
+        garnet.getGraphics().addClipRect(1, 50, 50, 300, 300);
     }
 
     @Override
@@ -70,8 +71,8 @@ public class ClipWindowExample extends GarnetApp {
         int offset2 = (int) (Math.cos(time * 4) * 50) - 50;
 
         // Draw unscaled sprites using sprite sheet
-        graphics.addClipRect(1, 50, 50, 300, 300);
-        graphics.setScale(1);
+
+        graphics.setScale(2);
         graphics.setDrawOrder(1);
 
         graphics.disableClipRect();
