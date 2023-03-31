@@ -18,7 +18,11 @@ public class TileGridExample extends GarnetApp {
     TileSheet tileSheet;
     Texture texture;
     Graphics graphics;
-    double x = 0;
+    double scrollX = 0;
+    double scrollY = 0;
+    int scrollDir = 3;
+    double scrollTimer = 0;
+    int scale = 2;
 
     TileGridDrawer tileGridDrawer;
     TileGridData tileGridData;
@@ -51,16 +55,16 @@ public class TileGridExample extends GarnetApp {
         wallTile = tileSheet.getTileIndexFromCoords(0, 7);
         grassTile = tileSheet.getTileIndexFromCoords(1, 7);
 
-        int mapWidth = 11;
-        int mapHeight = 11;
+        int mapWidth = 15;
+        int mapHeight = 15;
 
         tileGridData = new TileGridData(mapWidth, mapHeight);
         tileGridDrawer = new TileGridDrawer()
                 .setData(tileGridData)
-                .setWindowSize(300, 300)
+                .setWindowSize(100, 100)
                 .setTileSize(16, 16)
                 .setTileSheet(tileSheet)
-                .setScale(3);
+                .setScale(scale);
 
 
         for (int y = 0; y < mapHeight; y++) {
@@ -76,16 +80,39 @@ public class TileGridExample extends GarnetApp {
 
     @Override
     public void tick(double delta) {
-        x += delta * 30;
+        scrollTimer -= delta;
+        double scrollSpeed = 45;
+        if (scrollDir == 0) scrollX += delta * scrollSpeed;
+        if (scrollDir == 1) scrollX -= delta * scrollSpeed;
+        if (scrollDir == 2) scrollY += delta * scrollSpeed;
+        if (scrollDir == 3) scrollY -= delta * scrollSpeed;
+        if (scrollTimer <= 0) {
+            scrollDir = random.nextInt(4);
+            scrollTimer = 3 + random.nextInt(3);
+        }
 
+        int[] scrollExtents = tileGridDrawer.getScrollExtents();
+        if (scrollX <= 0 && scrollDir == 1) scrollTimer = 0;
+        if (scrollY <= 0 && scrollDir == 3) scrollTimer = 0;
+        if (scrollX >= scrollExtents[0] && scrollDir == 0) scrollTimer = 0;
+        if (scrollY >= scrollExtents[1] && scrollDir == 2) scrollTimer = 0;
 
-        tileGridDrawer.setScroll(x, x / 2);
+        //System.out.println("extents "+scrollExtents[0]+", "+scrollExtents[1]);
+
+        tileGridDrawer.setScroll(scrollX, scrollY);
     }
 
     @Override
     public void draw() {
 
-        tileGridDrawer.draw(graphics, 50, 50);
+        tileGridDrawer.draw(graphics, 16, 16);
+
+        int[] pos = tileGridDrawer.translateMapToScreenPosition(16, 16);
+        graphics.setActiveClipRect(tileGridDrawer.getClipRectId());
+        graphics.drawImage(tileSheet, pos[0], pos[1], 0, 0);
+
+        graphics.disableClipRect();
+        graphics.setScale(scale);
 
         graphics.render();
     }

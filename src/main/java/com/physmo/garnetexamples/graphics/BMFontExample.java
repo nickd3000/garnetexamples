@@ -2,7 +2,6 @@ package com.physmo.garnetexamples.graphics;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
-import com.physmo.garnet.Texture;
 import com.physmo.garnet.Utils;
 import com.physmo.garnet.bitmapfont.BitmapFont;
 import com.physmo.garnet.graphics.Graphics;
@@ -14,7 +13,6 @@ import java.io.IOException;
 public class BMFontExample extends GarnetApp {
 
     BitmapFont bmfFont;
-    Texture bmfFontTexture;
 
     public BMFontExample(Garnet garnet, String name) {
         super(garnet, name);
