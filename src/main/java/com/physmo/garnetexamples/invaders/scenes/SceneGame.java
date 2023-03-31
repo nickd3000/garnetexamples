@@ -7,11 +7,9 @@ import com.physmo.garnet.spritebatch.TileSheet;
 import com.physmo.garnetexamples.invaders.EnemyType;
 import com.physmo.garnetexamples.invaders.GameData;
 import com.physmo.garnetexamples.invaders.components.ComponentEnemy;
-import com.physmo.garnetexamples.invaders.components.ComponentEnemyMissile;
 import com.physmo.garnetexamples.invaders.components.ComponentGameLogic;
 import com.physmo.garnetexamples.invaders.components.ComponentHud;
 import com.physmo.garnetexamples.invaders.components.ComponentPlayer;
-import com.physmo.garnetexamples.invaders.components.ComponentPlayerMissile;
 import com.physmo.garnettoolkit.GameObject;
 import com.physmo.garnettoolkit.Rect;
 import com.physmo.garnettoolkit.Scene;
@@ -101,29 +99,9 @@ public class SceneGame extends Scene {
         player.addTag("pausable");
         context.add(player);
 
-        // Player missile pool.
-        for (int i = 0; i < 20; i++) {
-            GameObject missile = new GameObject("player_missile");
-            //missile.addTag("player_missile");
-            missile.setActive(false);
-            missile.setVisible(true);
-            missile.addComponent(new ComponentPlayerMissile());
-            missile.addTag("pausable");
-            context.add(missile);
-        }
-        // Enemy missile pool.
-        for (int i = 0; i < 35; i++) {
-            GameObject missile = new GameObject("enemy_missile");
-            missile.addTag("enemy_missile");
-            missile.setActive(false);
-            missile.setVisible(false);
-            missile.addComponent(new ComponentEnemyMissile());
-            missile.addTag("pausable");
-            context.add(missile);
-        }
 
         for (int y = 0; y < 5; y++) {
-            for (int x = 0; x < 9; x++) {
+            for (int x = 0; x < 8; x++) { //9
                 GameObject enemy = new GameObject("enemy");
 
                 EnemyType enemyType = EnemyType.basic;

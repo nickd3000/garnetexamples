@@ -22,8 +22,6 @@ import com.physmo.garnettoolkit.simplecollision.Collidable;
 import com.physmo.garnettoolkit.simplecollision.CollisionPacket;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
-import java.util.List;
-
 public class ComponentEnemy extends Component implements Collidable {
 
     public EnemyType enemyType;
@@ -34,16 +32,14 @@ public class ComponentEnemy extends Component implements Collidable {
 
     TileSheet tileSheet;
     Garnet garnet;
+    int basicCol = Utils.floatToRgb(0, 1, 0, 1);
+    int armoredCol = Utils.floatToRgb(0.5f, 0.6f, 0.7f, 1);
+    int shooterCol = Utils.floatToRgb(1, 0.5f, 0, 1);
+
 
     public ComponentEnemy(EnemyType enemyType) {
         this.enemyType = enemyType;
     }
-    int basicCol = Utils.floatToRgb(0, 1, 0, 1);
-
-    public void resetFireDelay() {
-        fireDelay = 2 + Math.random() * 4;
-    }
-
 
     @Override
     public void tick(double delta) {
@@ -52,12 +48,10 @@ public class ComponentEnemy extends Component implements Collidable {
 
         double speed = gameLogic.moveSpeed * delta;
 
-        if (gameLogic != null) {
-            if (gameLogic.enemyDir == 1) {
-                parent.getTransform().x += speed;
-            } else {
-                parent.getTransform().x -= speed;
-            }
+        if (gameLogic.enemyDir == 1) {
+            parent.getTransform().x += speed;
+        } else {
+            parent.getTransform().x -= speed;
         }
 
         if (parent.getTransform().x > 320 - 16) {
@@ -75,23 +69,31 @@ public class ComponentEnemy extends Component implements Collidable {
     }
 
     private void fireMissile() {
-        List<GameObject> missiles = parent.getContext().getObjectsByTag(Constants.ENEMY_MISSILE);
-        for (GameObject missile : missiles) {
-            if (!missile.isActive()) {
-                missile.setActive(true);
-                missile.setVisible(true);
-                missile.getTransform().set(parent.getTransform());
-                break;
-            }
+
+        GameObject missile = enemyMissileFactory();
+        parent.getContext().add(missile);
+        if (missile != null) {
+            missile.setActive(true);
+            missile.setVisible(true);
+            missile.getTransform().set(parent.getTransform());
         }
     }
-    int armoredCol = Utils.floatToRgb(0.5f, 0.6f, 0.7f, 1);
-    int shooterCol = Utils.floatToRgb(1, 0.5f, 0, 1);
 
+    public GameObject enemyMissileFactory() {
+
+        GameObject missile = new GameObject("enemy_missile");
+        missile.addTag("enemy_missile");
+        missile.setActive(false);
+        missile.setVisible(false);
+        missile.addComponent(new ComponentEnemyMissile());
+        missile.addTag("pausable");
+        return missile;
+    }
+    CollisionSystem collisionSystem;
     @Override
     public void init() {
 
-        CollisionSystem collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
+        collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
         collisionSystem.addCollidable(this);
 
         gameData = SceneManager.getSharedContext().getObjectByType(GameData.class);
@@ -101,7 +103,7 @@ public class ComponentEnemy extends Component implements Collidable {
 
         explosionParticleTemplate = new ParticleTemplate();
         explosionParticleTemplate.setLifeTime(0.2, 3);
-        explosionParticleTemplate.setSpeed(10, 50);
+        explosionParticleTemplate.setSpeed(30, 50);
         explosionParticleTemplate.setPositionJitter(2.1);
         explosionParticleTemplate.setColorSupplier(new ColorSupplierLinear(Color.YELLOW, new Color(1, 0, 0, 0)));
         explosionParticleTemplate.setSpeedCurve(new StandardCurve(CurveType.LINE_DOWN));
@@ -110,6 +112,10 @@ public class ComponentEnemy extends Component implements Collidable {
 
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
         tileSheet = parent.getContext().getObjectByType(TileSheet.class);
+    }
+
+    public void resetFireDelay() {
+        fireDelay = 2 + Math.random() * 4;
     }
 
     @Override
@@ -153,7 +159,9 @@ public class ComponentEnemy extends Component implements Collidable {
     }
 
     private void handleDying() {
-        parent.setActive(false);
+        collisionSystem.removeCollidable(this);
+        parent.destroy();
+
         gameData.currentScore++;
 
         Emitter emitter = new Emitter(parent.getTransform(), 0.2, explosionParticleTemplate);

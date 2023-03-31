@@ -1,24 +1,36 @@
 package com.physmo.garnetexamples.invaders;
 
-import com.physmo.garnet.Texture;
 import com.physmo.garnet.Utils;
-import com.physmo.garnet.bitmapfont.BMFFont;
+import com.physmo.garnet.bitmapfont.BitmapFont;
 import com.physmo.garnet.regularfont.RegularFont;
 
 import java.io.IOException;
 
 public class Resources {
 
-    public BMFFont bmfFont;
-    public Texture bmfFontTexture;
-    public RegularFont regularFont;
+    BitmapFont bitmapFont;
+    RegularFont regularFont;
+
+    public BitmapFont getBitmapFont() {
+        return bitmapFont;
+    }
+
+
+    public RegularFont getRegularFont() {
+        return regularFont;
+    }
+
 
     public Resources init() {
-        bmfFontTexture = Texture.loadTexture(Utils.getPathForResource(this, "ptmono16_0.png"));
-        bmfFont = new BMFFont();
-        String pathForResource = Utils.getPathForResource(this, "ptmono16.fnt");
+
+//        String fontImagePath = Utils.getPathForResource(this, "ptmono16_0.png");
+//        String fontSpecFile = Utils.getPathForResource(this, "ptmono16.fnt");
+        String fontImagePath = Utils.getPathForResource(this, "LucidaConsole16.png");
+        String fontSpecFile = Utils.getPathForResource(this, "LucidaConsole16.fnt");
+
+        String pathForResource = fontSpecFile;
         try {
-            bmfFont.init(pathForResource);
+            bitmapFont = new BitmapFont(fontImagePath, fontSpecFile);
         } catch (IOException e) {
             e.printStackTrace();
         }

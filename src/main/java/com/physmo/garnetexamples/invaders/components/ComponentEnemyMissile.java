@@ -16,28 +16,26 @@ import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 public class ComponentEnemyMissile extends Component implements Collidable {
     double speed = 100;
 
-
     TileSheet tileSheet;
     Garnet garnet;
+    int color = Utils.floatToRgb(1, 0, 1, 1);
+    CollisionSystem collisionSystem;
 
     public ComponentEnemyMissile() {
 
     }
-    int color = Utils.floatToRgb(1, 0, 1, 1);
 
     @Override
     public void tick(double delta) {
         parent.getTransform().y += speed * delta;
-        if (parent.getTransform().y > 480) parent.setActive(false);
+        if (parent.getTransform().y > 480 / 2) {
+            killMe();
+        }
     }
 
-    @Override
-    public void init() {
-
-        CollisionSystem collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
-        collisionSystem.addCollidable(this);
-        tileSheet = parent.getContext().getObjectByType(TileSheet.class);
-        garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
+    public void killMe() {
+        collisionSystem.removeCollidable(this);
+        parent.destroy();
     }
 
     @Override
@@ -51,6 +49,14 @@ public class ComponentEnemyMissile extends Component implements Collidable {
     }
 
     @Override
+    public void init() {
+        collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
+        collisionSystem.addCollidable(this);
+        tileSheet = parent.getContext().getObjectByType(TileSheet.class);
+        garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
+    }
+
+    @Override
     public Rect collisionGetRegion() {
         Rect rect = new Rect(parent.getTransform().x - 5, parent.getTransform().y - 5, 10, 10);
         return rect;
@@ -61,8 +67,7 @@ public class ComponentEnemyMissile extends Component implements Collidable {
         GameObject otherObject = collisionPacket.targetEntity.collisionGetGameObject();
 
         if (otherObject.getTags().contains(Constants.PLAYER_TAG)) {
-            parent.setActive(false);
-            parent.setVisible(false);
+            killMe();
         }
     }
 
