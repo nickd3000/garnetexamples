@@ -1,7 +1,7 @@
 package com.physmo.garnetexamples.graphics.support;
 
+import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
-import com.physmo.garnet.spritebatch.TileSheet;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.Vector3;
 

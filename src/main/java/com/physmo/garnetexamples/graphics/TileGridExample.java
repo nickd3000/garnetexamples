@@ -4,8 +4,8 @@ import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.Texture;
 import com.physmo.garnet.Utils;
+import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
-import com.physmo.garnet.spritebatch.TileSheet;
 import com.physmo.garnet.tilegrid.TileGridData;
 import com.physmo.garnet.tilegrid.TileGridDrawer;
 
@@ -28,8 +28,8 @@ public class TileGridExample extends GarnetApp {
     TileGridData tileGridData;
     Random random = new Random();
 
-    int wallTile;
-    int grassTile;
+    int wallTileID;
+    int grassTileID;
 
     public TileGridExample(Garnet garnet, String name) {
         super(garnet, name);
@@ -52,8 +52,8 @@ public class TileGridExample extends GarnetApp {
         graphics = garnet.getGraphics();
         graphics.addTexture(texture);
 
-        wallTile = tileSheet.getTileIndexFromCoords(0, 7);
-        grassTile = tileSheet.getTileIndexFromCoords(1, 7);
+        wallTileID = tileSheet.getTileIndexFromCoords(0, 7);
+        grassTileID = tileSheet.getTileIndexFromCoords(1, 7);
 
         int mapWidth = 15;
         int mapHeight = 15;
@@ -69,8 +69,8 @@ public class TileGridExample extends GarnetApp {
 
         for (int y = 0; y < mapHeight; y++) {
             for (int x = 0; x < mapWidth; x++) {
-                int tileId = grassTile;//random.nextInt(5);
-                if (x == 0 || y == 0 || x == mapWidth - 1 || y == mapHeight - 1) tileId = wallTile;
+                int tileId = grassTileID;//random.nextInt(5);
+                if (x == 0 || y == 0 || x == mapWidth - 1 || y == mapHeight - 1) tileId = wallTileID;
                 tileGridData.setTileId(x, y, tileId);
             }
         }

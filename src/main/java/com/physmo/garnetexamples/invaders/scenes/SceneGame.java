@@ -3,7 +3,7 @@ package com.physmo.garnetexamples.invaders.scenes;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Texture;
 import com.physmo.garnet.Utils;
-import com.physmo.garnet.spritebatch.TileSheet;
+import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnetexamples.invaders.EnemyType;
 import com.physmo.garnetexamples.invaders.GameData;
 import com.physmo.garnetexamples.invaders.components.ComponentEnemy;
@@ -11,7 +11,6 @@ import com.physmo.garnetexamples.invaders.components.ComponentGameLogic;
 import com.physmo.garnetexamples.invaders.components.ComponentHud;
 import com.physmo.garnetexamples.invaders.components.ComponentPlayer;
 import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.Rect;
 import com.physmo.garnettoolkit.Scene;
 import com.physmo.garnettoolkit.SceneManager;
 import com.physmo.garnettoolkit.Vector3;
@@ -64,16 +63,17 @@ public class SceneGame extends Scene {
 
     public void injectCollisionDrawer(CollisionSystem collisionSystem) {
         collisionSystem.setCollisionDrawingCallback(collidable -> {
-            garnet.setDrawModeWireframe();
-            Rect rect = collidable.collisionGetRegion();
-            float x = (float) rect.x;
-            float y = (float) rect.y;
-            float w = (float) rect.w;
-            float h = (float) rect.h;
-            garnet.getDisplay().drawLine(x, y, x + w, y);
-            garnet.getDisplay().drawLine(x + w, y, x + w, y + h);
-            garnet.getDisplay().drawLine(x + w, y + h, x, y + h);
-            garnet.getDisplay().drawLine(x, y + h, x, y);
+            // TODO rewrite this using Graphics
+//            garnet.setDrawModeWireframe();
+//            Rect rect = collidable.collisionGetRegion();
+//            float x = (float) rect.x;
+//            float y = (float) rect.y;
+//            float w = (float) rect.w;
+//            float h = (float) rect.h;
+//            garnet.getDisplay().drawLine(x, y, x + w, y);
+//            garnet.getDisplay().drawLine(x + w, y, x + w, y + h);
+//            garnet.getDisplay().drawLine(x + w, y + h, x, y + h);
+//            garnet.getDisplay().drawLine(x, y + h, x, y);
         });
     }
 

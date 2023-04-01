@@ -4,8 +4,8 @@ import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.Texture;
 import com.physmo.garnet.Utils;
+import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
-import com.physmo.garnet.spritebatch.TileSheet;
 import com.physmo.garnettoolkit.color.Color;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread

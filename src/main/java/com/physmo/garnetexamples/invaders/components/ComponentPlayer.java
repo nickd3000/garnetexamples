@@ -2,8 +2,8 @@ package com.physmo.garnetexamples.invaders.components;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
+import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.input.Input;
-import com.physmo.garnet.spritebatch.TileSheet;
 import com.physmo.garnetexamples.invaders.Constants;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
