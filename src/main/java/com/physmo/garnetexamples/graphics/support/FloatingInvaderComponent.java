@@ -4,6 +4,7 @@ import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.Vector3;
+import com.physmo.garnettoolkit.color.Color;
 
 public class FloatingInvaderComponent extends Component {
     Vector3 velocity;
@@ -12,11 +13,13 @@ public class FloatingInvaderComponent extends Component {
     int height;
     TileSheet tileSheet;
     Graphics graphics;
+    int color;
 
     public FloatingInvaderComponent(int width, int height) {
         this.width = width;
         this.height = height;
 
+        color = new Color((float) Math.random(), (float) Math.random(), (float) Math.random(), 1f).toInt();
     }
 
     @Override
@@ -46,6 +49,7 @@ public class FloatingInvaderComponent extends Component {
     public void draw() {
         if (graphics == null) return;
         Vector3 transform = parent.getTransform();
+        graphics.setColor(color);
         graphics.drawImage(tileSheet, (int) transform.x, (int) transform.y, 2, 2);
     }
 }

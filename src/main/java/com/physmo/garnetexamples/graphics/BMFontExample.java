@@ -19,7 +19,7 @@ public class BMFontExample extends GarnetApp {
     }
 
     public static void main(String[] args) {
-        Garnet garnet = new Garnet(400, 400);
+        Garnet garnet = new Garnet(400, 300);
         GarnetApp app = new BMFontExample(garnet, "");
 
         garnet.setApp(app);
@@ -54,8 +54,11 @@ public class BMFontExample extends GarnetApp {
 
         graphics.setScale(2);
         graphics.setColor(Color.SUNSET_GREEN.toInt());
+        bmfFont.drawString(graphics, "hello", 0, 10);
 
-        bmfFont.drawString(graphics, "hello", 10, 10);
+        graphics.setScale(3);
+        graphics.setColor(Color.SUNSET_YELLOW.toInt());
+        bmfFont.drawString(graphics, "hello but bigger", 0, 20);
 
         graphics.render();
     }

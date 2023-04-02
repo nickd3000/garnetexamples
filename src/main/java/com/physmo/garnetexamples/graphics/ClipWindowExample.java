@@ -10,10 +10,9 @@ import com.physmo.garnettoolkit.color.Color;
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class ClipWindowExample extends GarnetApp {
 
-    // TODO: make relative
-    private static final String fileName1 = "wood.png";
+    private static final String fileName = "wood.png";
 
-    Texture texture1;
+    Texture texture;
     double time = 0;
     Graphics graphics;
 
@@ -35,11 +34,11 @@ public class ClipWindowExample extends GarnetApp {
     @Override
     public void init(Garnet garnet) {
 
-        texture1 = Texture.loadTexture(Utils.getPathForResource(this, fileName1));
+        texture = Texture.loadTexture(Utils.getPathForResource(this, fileName));
 
         graphics = garnet.getGraphics();
 
-        graphics.addTexture(texture1);
+        graphics.addTexture(texture);
 
         graphics.addClipRect(1, 50, 50, 300, 300);
     }
@@ -70,10 +69,10 @@ public class ClipWindowExample extends GarnetApp {
 
         graphics.disableClipRect();
         graphics.setColor(Color.WHITE.toInt());
-        graphics.drawImage(texture1, offset1, 0);
+        graphics.drawImage(texture, offset1, 0);
         graphics.setActiveClipRect(1);
         graphics.setColor(Color.GREEN.toInt());
-        graphics.drawImage(texture1, 0, offset2);
+        graphics.drawImage(texture, 0, offset2);
         graphics.disableClipRect();
 
     }
