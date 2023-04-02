@@ -16,6 +16,7 @@ public class SimpleSpriteExample extends GarnetApp {
     Texture texture;
     Graphics graphics;
     double x = 0;
+    double scale = 4;
 
     public SimpleSpriteExample(Garnet garnet, String name) {
         super(garnet, name);
@@ -47,10 +48,16 @@ public class SimpleSpriteExample extends GarnetApp {
 
     @Override
     public void draw() {
+        int[] mousePosition = garnet.getInput().getMousePositionScaled(scale);
+
         graphics.setColor(Color.GREEN.toInt());
-        graphics.setScale(5);
+        graphics.setScale(scale);
         graphics.drawImage(tileSheet, (int) x, 5, 2, 2);
+
+        graphics.setColor(Color.SUNSET_BLUE.toInt());
+        graphics.drawImage(tileSheet, mousePosition[0], mousePosition[1], 2, 2);
         graphics.render();
+
     }
 
 }
