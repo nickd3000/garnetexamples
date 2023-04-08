@@ -19,7 +19,7 @@ public class StressTest extends GarnetApp {
     Texture texture;
     Graphics graphics;
 
-    int numPoints = 5000;
+    int numSprites = 25000;
 
     public StressTest(Garnet garnet, String name) {
         super(garnet, name);
@@ -46,10 +46,16 @@ public class StressTest extends GarnetApp {
         graphics = garnet.getGraphics();
         graphics.addTexture(texture);
 
+        // Configure the debug text.
+        garnet.getDebugDrawer().setScale(2);
+        garnet.getDebugDrawer().setUserString("Num Sprites:", String.valueOf(numSprites));
+
+        // Add the tilesheet and graphics object to the context so the sprite entities can access them.
         context.add(tileSheet);
         context.add(graphics);
 
-        for (int i = 0; i < numPoints; i++) {
+        // Create a number of entities and add them to the context.
+        for (int i = 0; i < numSprites; i++) {
             GameObject gameObject = new GameObject("");
             gameObject.addComponent(new FloatingInvaderComponent(garnet.getDisplay().getWindowWidth(), garnet.getDisplay().getWindowHeight()));
             context.add(gameObject);
