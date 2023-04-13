@@ -5,7 +5,6 @@ import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
 import com.physmo.garnettoolkit.GameObjectBucketGrid;
 import com.physmo.garnettoolkit.SceneManager;
-import com.physmo.garnettoolkit.Vector3;
 
 import java.util.List;
 
@@ -36,20 +35,20 @@ public class ComponentEnemySpacer extends Component {
 //        }
 
         for (GameObject enemy : enemies) {
-            List<GameObject> nearby = gameObjectBucketGrid.getObjects((int) enemy.getTransform().x, (int) enemy.getTransform().y, 1);
+            List<Object> nearby = gameObjectBucketGrid.getSurroundingObjects((int) enemy.getTransform().x, (int) enemy.getTransform().y, 1);
 
-            for (GameObject nb : nearby) {
-                if (enemy == nb) continue;
-
-                double distance = enemy.getTransform().distance(nb.getTransform());
-                if (distance > minDist) continue;
-
-                Vector3 dir = enemy.getTransform().getDirectionTo(nb.getTransform());
-
-                Vector3 scale = dir.scale(t * force);
-                enemy.getTransform().addi(scale);
-                //System.out.println();
-            }
+//            for (Object nb : nearby) {
+//                if (enemy == nb) continue;
+//
+//                double distance = enemy.getTransform().distance(nb.getTransform());
+//                if (distance > minDist) continue;
+//
+//                Vector3 dir = enemy.getTransform().getDirectionTo(nb.getTransform());
+//
+//                Vector3 scale = dir.scale(t * force);
+//                enemy.getTransform().addi(scale);
+//                //System.out.println();
+//            }
 
         }
 

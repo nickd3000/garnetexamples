@@ -32,7 +32,7 @@ public class ComponentBucketGrid extends Component {
         double force = 8;
         List<GameObject> enemies = parent.getContext().getObjectsByTag("enemy");
         for (GameObject enemy : enemies) {
-            gameObjectBucketGrid.addObject(enemy);
+            //gameObjectBucketGrid.addObject(enemy);
         }
 
 //        for (GameObject enemy : enemies) {
