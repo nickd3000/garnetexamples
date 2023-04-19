@@ -3,7 +3,7 @@ package com.physmo.garnetexamples.invaders.components;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
-import com.physmo.garnet.spritebatch.TileSheet;
+import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnetexamples.invaders.Constants;
 import com.physmo.garnetexamples.invaders.EnemyType;
 import com.physmo.garnetexamples.invaders.GameData;
@@ -21,6 +21,7 @@ import com.physmo.garnettoolkit.particle.ParticleTemplate;
 import com.physmo.garnettoolkit.simplecollision.Collidable;
 import com.physmo.garnettoolkit.simplecollision.CollisionPacket;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
+import com.physmo.garnettoolkit.simplecollision.RelativeObject;
 
 public class ComponentEnemy extends Component implements Collidable {
 
@@ -147,6 +148,11 @@ public class ComponentEnemy extends Component implements Collidable {
         if (otherObject.getTags().contains(Constants.PLAYER_MISSILE)) {
             handleBulletHit(1);
         }
+    }
+
+    @Override
+    public void proximityCallback(RelativeObject relativeObject) {
+
     }
 
     private void handleBulletHit(double bulletDamage) {

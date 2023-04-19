@@ -4,16 +4,12 @@ import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.Texture;
 import com.physmo.garnet.Utils;
+import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
-import com.physmo.garnet.spritebatch.TileSheet;
 import com.physmo.garnetexamples.graphics.support.FloatingInvaderComponent;
 import com.physmo.garnettoolkit.Context;
 import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.Vector3;
 import com.physmo.garnettoolkit.color.Color;
-
-import java.util.ArrayList;
-import java.util.List;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class StressTest extends GarnetApp {
@@ -22,11 +18,8 @@ public class StressTest extends GarnetApp {
     TileSheet tileSheet;
     Texture texture;
     Graphics graphics;
-    double x = 0;
 
-    int numPoints = 5000;
-    List<Vector3> points = new ArrayList<>();
-    List<Vector3> dirs = new ArrayList<>();
+    int numSprites = 25000;
 
     public StressTest(Garnet garnet, String name) {
         super(garnet, name);
@@ -53,10 +46,16 @@ public class StressTest extends GarnetApp {
         graphics = garnet.getGraphics();
         graphics.addTexture(texture);
 
+        // Configure the debug text.
+        garnet.getDebugDrawer().setScale(2);
+        garnet.getDebugDrawer().setUserString("Num Sprites:", String.valueOf(numSprites));
+
+        // Add the tilesheet and graphics object to the context so the sprite entities can access them.
         context.add(tileSheet);
         context.add(graphics);
 
-        for (int i = 0; i < 50000; i++) {
+        // Create a number of entities and add them to the context.
+        for (int i = 0; i < numSprites; i++) {
             GameObject gameObject = new GameObject("");
             gameObject.addComponent(new FloatingInvaderComponent(garnet.getDisplay().getWindowWidth(), garnet.getDisplay().getWindowHeight()));
             context.add(gameObject);

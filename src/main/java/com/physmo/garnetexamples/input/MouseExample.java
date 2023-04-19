@@ -1,4 +1,4 @@
-package com.physmo.garnetexamples.graphics;
+package com.physmo.garnetexamples.input;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
@@ -9,22 +9,22 @@ import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnettoolkit.color.Color;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
-public class SimpleSpriteExample extends GarnetApp {
+public class MouseExample extends GarnetApp {
 
     String imageFileName = "space.png";
     TileSheet tileSheet;
     Texture texture;
     Graphics graphics;
-    double x = 0;
-    double scale = 4;
 
-    public SimpleSpriteExample(Garnet garnet, String name) {
+    double scale = 3;
+
+    public MouseExample(Garnet garnet, String name) {
         super(garnet, name);
     }
 
     public static void main(String[] args) {
         Garnet garnet = new Garnet(400, 400);
-        GarnetApp app = new SimpleSpriteExample(garnet, "");
+        GarnetApp app = new MouseExample(garnet, "");
 
         garnet.setApp(app);
 
@@ -42,20 +42,23 @@ public class SimpleSpriteExample extends GarnetApp {
 
     @Override
     public void tick(double delta) {
-        x += delta * 50;
-        if (x > 80) x = -16;
+
     }
 
     @Override
     public void draw() {
-        int[] mousePosition = garnet.getInput().getMousePositionScaled(scale);
 
-        graphics.setColor(Color.GREEN.toInt());
+        int[] mp, mps;
+
+        mps = garnet.getInput().getMousePositionScaled(scale);
+        mp = garnet.getInput().getMousePosition();
+        garnet.getDebugDrawer().setUserString("Mouse pos:       ", mp[0] + "," + mp[1]);
+        garnet.getDebugDrawer().setUserString("Mouse pos scaled:", mps[0] + "," + mps[1]);
+
         graphics.setScale(scale);
-        graphics.drawImage(tileSheet, (int) x, 5, 2, 2);
-
         graphics.setColor(Color.SUNSET_BLUE.toInt());
-        graphics.drawImage(tileSheet, mousePosition[0], mousePosition[1], 2, 2);
+        graphics.drawImage(tileSheet, mps[0] - 8, mps[1] - 8, 2, 2);
+
         graphics.render();
 
     }

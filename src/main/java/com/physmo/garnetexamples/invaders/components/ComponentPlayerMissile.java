@@ -3,7 +3,7 @@ package com.physmo.garnetexamples.invaders.components;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
-import com.physmo.garnet.spritebatch.TileSheet;
+import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnetexamples.invaders.Constants;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
@@ -12,6 +12,7 @@ import com.physmo.garnettoolkit.SceneManager;
 import com.physmo.garnettoolkit.simplecollision.Collidable;
 import com.physmo.garnettoolkit.simplecollision.CollisionPacket;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
+import com.physmo.garnettoolkit.simplecollision.RelativeObject;
 
 public class ComponentPlayerMissile extends Component implements Collidable {
     double speed = 250;
@@ -73,6 +74,11 @@ public class ComponentPlayerMissile extends Component implements Collidable {
         if (otherObject.getTags().contains(Constants.ENEMY_TAG)) {
             killMe();
         }
+    }
+
+    @Override
+    public void proximityCallback(RelativeObject relativeObject) {
+
     }
 
     @Override
