@@ -19,6 +19,7 @@ import com.physmo.garnettoolkit.particle.ParticleTemplate;
 import com.physmo.garnettoolkit.simplecollision.Collidable;
 import com.physmo.garnettoolkit.simplecollision.CollisionPacket;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
+import com.physmo.garnettoolkit.simplecollision.RelativeObject;
 
 
 public class ComponentPlayer extends Component implements Collidable {
@@ -150,6 +151,11 @@ public class ComponentPlayer extends Component implements Collidable {
         if (otherObject.getTags().contains(Constants.ENEMY_MISSILE)) {
             gameLogic.playerGotHit();
         }
+    }
+
+    @Override
+    public void proximityCallback(RelativeObject relativeObject) {
+
     }
 
     @Override

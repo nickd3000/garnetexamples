@@ -8,6 +8,7 @@ import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnettoolkit.Context;
 import com.physmo.garnettoolkit.GameObject;
+import com.physmo.garnettoolkit.color.Color;
 import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 import com.physmo.garnettoolkit.simplecollision.RelativeObject;
@@ -15,8 +16,12 @@ import com.physmo.garnettoolkit.simplecollision.RelativeObject;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Example showing how to use the CollisionSystem to process objects that
+ * are close to each other.
+ */
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
-public class CollisionExample extends GarnetApp {
+public class CollisionExample_CloseObjects extends GarnetApp {
 
     static int width = 800;
     static int height = 600;
@@ -25,18 +30,19 @@ public class CollisionExample extends GarnetApp {
     Texture texture;
     Graphics graphics;
     Context context;
-    double scale = 1;
+    double scale = 2;
     Random random = new Random(12345);
     CollisionSystem collisionSystem;
     List<RelativeObject> nearestObjects;
+    int closeObjectTestCount = 0;
 
-    public CollisionExample(Garnet garnet, String name) {
+    public CollisionExample_CloseObjects(Garnet garnet, String name) {
         super(garnet, name);
     }
 
     public static void main(String[] args) {
         Garnet garnet = new Garnet(width, height);
-        GarnetApp app = new CollisionExample(garnet, "");
+        GarnetApp app = new CollisionExample_CloseObjects(garnet, "");
 
         garnet.setApp(app);
 
@@ -58,7 +64,7 @@ public class CollisionExample extends GarnetApp {
         collisionSystem = new CollisionSystem("d");
         context.add(collisionSystem);
 
-        for (int i = 0; i < 450; i++) {
+        for (int i = 0; i < 200; i++) {
             createObject(context, collisionSystem,
                     random.nextInt((int) (width / scale)),
                     random.nextInt((int) (height / scale)));
@@ -89,30 +95,15 @@ public class CollisionExample extends GarnetApp {
         List<GameObject> objectsByTag = context.getObjectsByTag("testobject");
         objectsByTag.get(0).getTransform().set(mps[0] - 8, mps[1] - 8, 0);
 
-        nearestObjects = collisionSystem.getNearestObjects(mps[0] - 8, mps[1] - 8, 150);
-
-        collisionSystem.processCloseObjects("testobject", 20);
+        closeObjectTestCount = collisionSystem.processCloseObjects("testobject", 20);
     }
 
     @Override
     public void draw() {
+        graphics.setBackgroundColor(new Color(0.3f, 0.2f, 0.3f, 1.0f).toInt());
         context.draw();
 
-        int[] mp, mps;
-
-        mps = garnet.getInput().getMousePositionScaled(scale);
-        mp = garnet.getInput().getMousePosition();
-        garnet.getDebugDrawer().setUserString("Mouse pos:       ", mp[0] + "," + mp[1]);
-        garnet.getDebugDrawer().setUserString("Mouse pos scaled:", mps[0] + "," + mps[1]);
-        garnet.getDebugDrawer().setUserString("collision checks:", String.valueOf(collisionSystem.getTestsPerFrame()));
-
-        if (nearestObjects != null) {
-            for (RelativeObject nearestObject : nearestObjects) {
-                GameObject gameObject = nearestObject.otherObject.collisionGetGameObject();
-                garnet.getGraphics().drawLine((float) mp[0], (float) mp[1], (float) gameObject.getTransform().x, (float) gameObject.getTransform().y);
-            }
-        }
-
+        garnet.getDebugDrawer().setUserString("closeObjectTestCount:", String.valueOf(closeObjectTestCount));
 
         graphics.setScale(scale);
 
