@@ -6,8 +6,11 @@ import com.physmo.garnet.input.Input;
 import com.physmo.garnetexamples.cellsurvivor.Resources;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.GameObjectBucketGrid;
 import com.physmo.garnettoolkit.SceneManager;
+import com.physmo.garnettoolkit.simplecollision.RelativeObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ComponentPlayer extends Component {
 
@@ -16,7 +19,15 @@ public class ComponentPlayer extends Component {
     Garnet garnet;
     GameObject gameObjectLevel;
     LevelMap levelMap;
-    GameObjectBucketGrid gameObjectBucketGrid;
+    List<RelativeObject> nearestObjects = new ArrayList<>();
+
+    public List<RelativeObject> getNearestObjects() {
+        return nearestObjects;
+    }
+
+    public void setNearestObjects(List<RelativeObject> nearestObjects) {
+        this.nearestObjects = nearestObjects;
+    }
 
     @Override
     public void tick(double t) {
@@ -49,8 +60,6 @@ public class ComponentPlayer extends Component {
         gameObjectLevel = parent.getContext().getObjectByTag("levelmap");
         levelMap = parent.getContext().getComponent(LevelMap.class);
 
-        ComponentBucketGrid componentBucketGrid = parent.getContext().getComponent(ComponentBucketGrid.class);
-        gameObjectBucketGrid = componentBucketGrid.getGameObjectBucketGrid();
     }
 
     @Override

@@ -21,14 +21,6 @@ public class CellSurvivor extends GarnetApp {
     @Override
     public void init(Garnet garnet) {
         SceneManager.getSharedContext().add(garnet);
-//        SceneManager.getSharedContext().add(new GameData());
-//        SceneManager.getSharedContext().add(new Resources().init());
-//
-//        SceneManager.addScene(new SceneGame("game"));
-//        SceneManager.addScene(new SceneMenu("menu"));
-//        SceneManager.addScene(new SubScenePause("pause"));
-//
-//        SceneManager.setActiveScene("menu");
 
         SceneManager.addScene(new SceneGame("game"));
         SceneManager.setActiveScene("game");
