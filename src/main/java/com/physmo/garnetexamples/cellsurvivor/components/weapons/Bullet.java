@@ -7,7 +7,9 @@ import com.physmo.garnetexamples.cellsurvivor.components.LevelMap;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
 import com.physmo.garnettoolkit.SceneManager;
+import com.physmo.garnettoolkit.simplecollision.Collidable;
 import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
+import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 public class Bullet extends Component {
     Resources resources;
@@ -15,8 +17,9 @@ public class Bullet extends Component {
     Garnet garnet;
     GameObject gameObjectLevel;
     LevelMap levelMap;
-    double speed = 50;
+    double speed = 80;
     double dx = 0, dy = 0;
+    boolean killMe = false;
 
     public void setDirection(double x, double y) {
         dx = x;
@@ -35,12 +38,24 @@ public class Bullet extends Component {
 
         ColliderComponent colliderComponent = parent.getComponent(ColliderComponent.class);
 
+        colliderComponent.setCallbackEnter(target -> {
+            if (target.hasTag("enemy")) {
+                killMe = true;
+            }
+        });
     }
 
     @Override
     public void tick(double t) {
         parent.getTransform().x += dx * t * speed;
         parent.getTransform().y += dy * t * speed;
+
+        if (killMe) {
+            CollisionSystem collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
+            Collidable collidable = parent.getComponent(ColliderComponent.class);
+            collisionSystem.removeCollidable(collidable);
+            parent.destroy();
+        }
     }
 
     @Override
