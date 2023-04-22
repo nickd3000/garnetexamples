@@ -1,11 +1,7 @@
 package com.physmo.garnetexamples.cellsurvivor.components;
 
-import com.physmo.garnet.Garnet;
-import com.physmo.garnet.graphics.Graphics;
-import com.physmo.garnetexamples.cellsurvivor.Resources;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.SceneManager;
 import com.physmo.garnettoolkit.Vector3;
 import com.physmo.garnettoolkit.simplecollision.Collidable;
 import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
@@ -16,13 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ComponentEnemy extends Component {
-
-    Resources resources;
-    Graphics graphics;
-    Garnet garnet;
-    GameObject gameObjectLevel;
-    LevelMap levelMap;
-
     Vector3 moveDir = new Vector3(1, 0, 0);
     GameObject player;
 
@@ -30,6 +19,8 @@ public class ComponentEnemy extends Component {
 
     double health = 100;
     List<RelativeObject> closeObjects = new ArrayList<>();
+
+    SpriteHelper spriteHelper;
 
     @Override
     public void tick(double t) {
@@ -68,13 +59,8 @@ public class ComponentEnemy extends Component {
 
     @Override
     public void init() {
-        resources = parent.getContext().getObjectByType(Resources.class);
 
-        garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
-        graphics = garnet.getGraphics();
-
-        gameObjectLevel = parent.getContext().getObjectByTag("levelmap");
-        levelMap = parent.getContext().getComponent(LevelMap.class);
+        spriteHelper = parent.getContext().getComponent(SpriteHelper.class);
 
         player = parent.getContext().getObjectByTag("player");
 
@@ -88,7 +74,6 @@ public class ComponentEnemy extends Component {
             }
         });
 
-
     }
 
     @Override
@@ -96,10 +81,6 @@ public class ComponentEnemy extends Component {
         int x = (int) parent.getTransform().x;
         int y = (int) parent.getTransform().y;
 
-        int[] tp = levelMap.getTileGridDrawer().translateMapToScreenPosition(x, y);
-        int clipRectId = levelMap.getTileGridDrawer().getClipRectId();
-
-        graphics.setActiveClipRect(clipRectId);
-        graphics.drawImage(resources.getSpritesTilesheet(), tp[0], tp[1], 5, 0);
+        spriteHelper.drawSpriteInMap(x, y, 5, 0);
     }
 }

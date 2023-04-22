@@ -1,22 +1,13 @@
 package com.physmo.garnetexamples.cellsurvivor.components.weapons;
 
-import com.physmo.garnet.Garnet;
-import com.physmo.garnet.graphics.Graphics;
-import com.physmo.garnetexamples.cellsurvivor.Resources;
-import com.physmo.garnetexamples.cellsurvivor.components.LevelMap;
+import com.physmo.garnetexamples.cellsurvivor.components.SpriteHelper;
 import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.SceneManager;
 import com.physmo.garnettoolkit.simplecollision.Collidable;
 import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 public class Bullet extends Component {
-    Resources resources;
-    Graphics graphics;
-    Garnet garnet;
-    GameObject gameObjectLevel;
-    LevelMap levelMap;
+
     double speed = 80;
     double dx = 0, dy = 0;
     boolean killMe = false;
@@ -26,15 +17,10 @@ public class Bullet extends Component {
         dy = y;
     }
 
+    SpriteHelper spriteHelper;
     @Override
     public void init() {
-        resources = parent.getContext().getObjectByType(Resources.class);
-
-        garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
-        graphics = garnet.getGraphics();
-
-        gameObjectLevel = parent.getContext().getObjectByTag("levelmap");
-        levelMap = parent.getContext().getComponent(LevelMap.class);
+        spriteHelper = parent.getContext().getComponent(SpriteHelper.class);
 
         ColliderComponent colliderComponent = parent.getComponent(ColliderComponent.class);
 
@@ -63,8 +49,6 @@ public class Bullet extends Component {
         int x = (int) parent.getTransform().x;
         int y = (int) parent.getTransform().y;
 
-        int[] tp = levelMap.getTileGridDrawer().translateMapToScreenPosition(x, y);
-
-        graphics.drawImage(resources.getSpritesTilesheet(), tp[0], tp[1], 1, 1);
+        spriteHelper.drawSpriteInMap(x, y, 1, 1);
     }
 }

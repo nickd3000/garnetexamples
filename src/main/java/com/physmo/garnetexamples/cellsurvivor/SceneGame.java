@@ -3,6 +3,7 @@ package com.physmo.garnetexamples.cellsurvivor;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnetexamples.cellsurvivor.components.ComponentPlayer;
 import com.physmo.garnetexamples.cellsurvivor.components.LevelMap;
+import com.physmo.garnetexamples.cellsurvivor.components.SpriteHelper;
 import com.physmo.garnetexamples.cellsurvivor.components.weapons.Gun;
 import com.physmo.garnettoolkit.GameObject;
 import com.physmo.garnettoolkit.Scene;
@@ -47,7 +48,8 @@ public class SceneGame extends Scene {
             EnemyFactory.addEnemy(context, collisionSystem, random.nextInt(400), random.nextInt(400));
         }
 
-
+        GameObject spriteHelper = new GameObject("spriteHelper").addComponent(new SpriteHelper());
+        context.add(spriteHelper);
     }
 
     @Override
