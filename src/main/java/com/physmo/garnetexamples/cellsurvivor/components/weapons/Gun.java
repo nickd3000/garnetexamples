@@ -1,5 +1,6 @@
 package com.physmo.garnetexamples.cellsurvivor.components.weapons;
 
+import com.physmo.garnetexamples.cellsurvivor.Constants;
 import com.physmo.garnetexamples.cellsurvivor.components.ComponentPlayer;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
@@ -32,7 +33,7 @@ public class Gun extends Component {
     }
 
     public void fire() {
-        List<RelativeObject> nearestObjects = parent.getComponent(ComponentPlayer.class).getNearestObjects();
+        List<RelativeObject> nearestObjects = parent.getComponent(ComponentPlayer.class).getNearestEnemies();
         if (nearestObjects.size() < 1) return;
         RelativeObject relativeObject = nearestObjects.get(random.nextInt(nearestObjects.size()));
         createBullet(parent.getTransform().x, parent.getTransform().y, relativeObject.dx, relativeObject.dy);
@@ -46,7 +47,7 @@ public class Gun extends Component {
         obj.getTransform().set(x, y, 0);
         bullet.setDirection(dx, dy);
 
-        obj.addTag("bullet");
+        obj.addTag(Constants.TAG_BULLET);
         parent.getContext().add(obj);
 
         collisionSystem.addCollidable(collider);
