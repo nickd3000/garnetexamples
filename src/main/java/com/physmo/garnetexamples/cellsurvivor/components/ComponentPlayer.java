@@ -2,8 +2,12 @@ package com.physmo.garnetexamples.cellsurvivor.components;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.input.Input;
+import com.physmo.garnetexamples.cellsurvivor.Constants;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.SceneManager;
+import com.physmo.garnettoolkit.Vector3;
+import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
+import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 import com.physmo.garnettoolkit.simplecollision.RelativeObject;
 
 import java.util.ArrayList;
@@ -13,15 +17,21 @@ public class ComponentPlayer extends Component {
 
     Garnet garnet;
 
-    List<RelativeObject> nearestObjects = new ArrayList<>();
+    List<RelativeObject> nearestEnemies = new ArrayList<>();
+    List<RelativeObject> nearestCrystals = new ArrayList<>();
     SpriteHelper spriteHelper;
+    CollisionSystem collisionSystem;
 
-    public List<RelativeObject> getNearestObjects() {
-        return nearestObjects;
+    public List<RelativeObject> getNearestEnemies() {
+        return nearestEnemies;
     }
 
-    public void setNearestObjects(List<RelativeObject> nearestObjects) {
-        this.nearestObjects = nearestObjects;
+    public void setNearestEnemies(List<RelativeObject> list) {
+        this.nearestEnemies = list;
+    }
+
+    public void setNearestCrystals(List<RelativeObject> list) {
+        this.nearestCrystals = list;
     }
 
     @Override
@@ -41,15 +51,33 @@ public class ComponentPlayer extends Component {
             parent.getTransform().y += speed * t;
         }
 
+        if (nearestCrystals != null) {
+            for (RelativeObject nearestCrystal : nearestCrystals) {
+                Vector3 transform = nearestCrystal.otherObject.collisionGetGameObject().getTransform();
+
+                transform.x -= nearestCrystal.dx * 70.1 * t;
+                transform.y -= nearestCrystal.dy * 70.1 * t;
+            }
+        }
+
+
     }
 
     @Override
     public void init() {
         spriteHelper = parent.getContext().getComponent(SpriteHelper.class);
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
+        collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
 
-        parent.addTag("player");
+        parent.addTag(Constants.TAG_PLAYER);
 
+        ColliderComponent collider = parent.getComponent(ColliderComponent.class);
+
+        collider.setCallbackEnter(target -> {
+            if (target.hasTag(Constants.TAG_CRYSTAL)) {
+                target.getComponent(ComponentCrystal.class).requestKill();
+            }
+        });
     }
 
     @Override

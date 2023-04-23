@@ -1,5 +1,7 @@
 package com.physmo.garnetexamples.cellsurvivor.components;
 
+import com.physmo.garnetexamples.cellsurvivor.Constants;
+import com.physmo.garnetexamples.cellsurvivor.EntityFactory;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
 import com.physmo.garnettoolkit.Vector3;
@@ -50,6 +52,8 @@ public class ComponentEnemy extends Component {
             Collidable collidable = parent.getComponent(ColliderComponent.class);
             collisionSystem.removeCollidable(collidable);
             parent.destroy();
+
+            EntityFactory.addCrystal(parent.getContext(), collisionSystem, (int) parent.getTransform().x, (int) parent.getTransform().y);
         }
     }
 
@@ -62,14 +66,14 @@ public class ComponentEnemy extends Component {
 
         spriteHelper = parent.getContext().getComponent(SpriteHelper.class);
 
-        player = parent.getContext().getObjectByTag("player");
+        player = parent.getContext().getObjectByTag(Constants.TAG_PLAYER);
 
         ColliderComponent collider = parent.getComponent(ColliderComponent.class);
         collider.setCallbackProximity(relativeObject -> {
             closeObjects.add(relativeObject); // Just store for now and process the event in the tick function.
         });
         collider.setCallbackEnter(target -> {
-            if (target.hasTag("bullet")) {
+            if (target.hasTag(Constants.TAG_BULLET)) {
                 health -= 35;
             }
         });
@@ -78,6 +82,8 @@ public class ComponentEnemy extends Component {
 
     @Override
     public void draw() {
+        if (spriteHelper == null) return;
+
         int x = (int) parent.getTransform().x;
         int y = (int) parent.getTransform().y;
 
