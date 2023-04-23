@@ -89,7 +89,7 @@ public class CollisionExample extends GarnetApp {
         List<GameObject> objectsByTag = context.getObjectsByTag("testobject");
         objectsByTag.get(0).getTransform().set(mps[0] - 8, mps[1] - 8, 0);
 
-        nearestObjects = collisionSystem.getNearestObjects(mps[0] - 8, mps[1] - 8, 150);
+        nearestObjects = collisionSystem.getNearestObjects("testobject", mps[0] - 8, mps[1] - 8, 150);
 
         collisionSystem.processCloseObjects("testobject", 20);
     }
