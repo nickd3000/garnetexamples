@@ -4,6 +4,7 @@ import com.physmo.garnet.Garnet;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.tilegrid.TileGridData;
 import com.physmo.garnet.tilegrid.TileGridDrawer;
+import com.physmo.garnetexamples.cellsurvivor.Constants;
 import com.physmo.garnetexamples.cellsurvivor.Resources;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
@@ -68,7 +69,7 @@ public class LevelMap extends Component {
             }
         }
 
-        player = parent.getContext().getObjectByTag("player");
+        player = parent.getContext().getObjectByTag(Constants.TAG_PLAYER);
     }
 
     @Override
