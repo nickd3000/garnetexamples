@@ -22,6 +22,14 @@ public class SpriteHelper extends Component {
         graphics.drawImage(resources.getSpritesTilesheet(), tp[0], tp[1], tileX, tileY);
     }
 
+    public void drawSpriteInMap(int x, int y, int tileX, int tileY, double angle) {
+        int[] tp = levelMap.getTileGridDrawer().translateMapToScreenPosition(x, y);
+        int clipRectId = levelMap.getTileGridDrawer().getClipRectId();
+
+        graphics.setActiveClipRect(clipRectId);
+        graphics.drawImage(resources.getSpritesTilesheet(), tp[0], tp[1], tileX, tileY, angle);
+    }
+
     @Override
     public void init() {
         resources = parent.getContext().getObjectByType(Resources.class);
