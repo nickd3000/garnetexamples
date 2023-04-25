@@ -48,7 +48,7 @@ public class SceneGame extends Scene {
         resources.init(garnet.getGraphics());
         context.add(resources);
 
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 40; i++) {
             EntityFactory.addEnemy(context, collisionSystem, random.nextInt(400), random.nextInt(400));
         }
 

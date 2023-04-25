@@ -47,6 +47,7 @@ public class RotatedSpriteExample extends GarnetApp {
         if (x > 80) x = -16;
         angle += delta * 30;
 
+        garnet.getDebugDrawer().setUserString("LPS", Double.toString(garnet.getGameClock().getLps()));
         garnet.getDebugDrawer().setUserString("x    ", String.valueOf(x));
         garnet.getDebugDrawer().setUserString("angle", String.valueOf(angle));
     }
