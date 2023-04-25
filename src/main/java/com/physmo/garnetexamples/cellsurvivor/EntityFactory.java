@@ -14,11 +14,15 @@ public class EntityFactory {
         enemy.getTransform().set(x, y, 0);
         enemy.addTag(Constants.TAG_ENEMY);
 
-        ColliderComponent collider = new ColliderComponent();
-        enemy.addComponent(collider);
-        collisionSystem.addCollidable(collider);
+        addColliderToGameObject(collisionSystem, enemy);
 
         context.add(enemy);
+    }
+
+    public static void addColliderToGameObject(CollisionSystem collisionSystem, GameObject gameObject) {
+        ColliderComponent collider = new ColliderComponent();
+        gameObject.addComponent(collider);
+        collisionSystem.addCollidable(collider);
     }
 
     public static void addCrystal(Context context, CollisionSystem collisionSystem, int x, int y) {
@@ -26,10 +30,9 @@ public class EntityFactory {
         entity.getTransform().set(x, y, 0);
         entity.addTag(Constants.TAG_CRYSTAL);
 
-        ColliderComponent collider = new ColliderComponent();
-        entity.addComponent(collider);
-        collisionSystem.addCollidable(collider);
+        addColliderToGameObject(collisionSystem, entity);
 
         context.add(entity);
     }
+
 }
