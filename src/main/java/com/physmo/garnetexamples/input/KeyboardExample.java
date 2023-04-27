@@ -7,6 +7,7 @@ import com.physmo.garnet.Utils;
 import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.input.InputAction;
+import com.physmo.garnet.input.InputKeys;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class KeyboardExample extends GarnetApp {
@@ -38,6 +39,13 @@ public class KeyboardExample extends GarnetApp {
         tileSheet = new TileSheet(texture, 16, 16);
         graphics = garnet.getGraphics();
         graphics.addTexture(texture);
+
+        // The input system is given some default config at startup,
+        // here we add some extra WASD keys to the movement actions.
+        garnet.getInput().addKeyboardAction(InputKeys.KEY_W, InputAction.UP);
+        garnet.getInput().addKeyboardAction(InputKeys.KEY_S, InputAction.DOWN);
+        garnet.getInput().addKeyboardAction(InputKeys.KEY_A, InputAction.LEFT);
+        garnet.getInput().addKeyboardAction(InputKeys.KEY_D, InputAction.RIGHT);
     }
 
     @Override
@@ -52,10 +60,10 @@ public class KeyboardExample extends GarnetApp {
     public void draw() {
         garnet.getDebugDrawer().setScale(2);
 
-        garnet.getDebugDrawer().setUserString("UP:    ", Boolean.toString(up));
-        garnet.getDebugDrawer().setUserString("DOWN:  ", Boolean.toString(down));
-        garnet.getDebugDrawer().setUserString("LEFT:  ", Boolean.toString(left));
-        garnet.getDebugDrawer().setUserString("RIGHT: ", Boolean.toString(right));
+        garnet.getDebugDrawer().setUserString("UP/W:    ", Boolean.toString(up));
+        garnet.getDebugDrawer().setUserString("DOWN/S:  ", Boolean.toString(down));
+        garnet.getDebugDrawer().setUserString("LEFT/A:  ", Boolean.toString(left));
+        garnet.getDebugDrawer().setUserString("RIGHT/D: ", Boolean.toString(right));
 
         graphics.render();
     }
