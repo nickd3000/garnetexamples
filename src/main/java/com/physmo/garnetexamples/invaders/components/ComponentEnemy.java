@@ -7,9 +7,8 @@ import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnetexamples.invaders.Constants;
 import com.physmo.garnetexamples.invaders.EnemyType;
 import com.physmo.garnetexamples.invaders.GameData;
+import com.physmo.garnetexamples.invaders.InvadersEntityFactory;
 import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.Rect;
 import com.physmo.garnettoolkit.SceneManager;
 import com.physmo.garnettoolkit.color.Color;
 import com.physmo.garnettoolkit.color.ColorSupplierLinear;
@@ -18,12 +17,10 @@ import com.physmo.garnettoolkit.curve.StandardCurve;
 import com.physmo.garnettoolkit.particle.Emitter;
 import com.physmo.garnettoolkit.particle.ParticleManager;
 import com.physmo.garnettoolkit.particle.ParticleTemplate;
-import com.physmo.garnettoolkit.simplecollision.Collidable;
-import com.physmo.garnettoolkit.simplecollision.CollisionPacket;
+import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
-import com.physmo.garnettoolkit.simplecollision.RelativeObject;
 
-public class ComponentEnemy extends Component implements Collidable {
+public class ComponentEnemy extends Component {
 
     public EnemyType enemyType;
     GameData gameData;
@@ -36,7 +33,7 @@ public class ComponentEnemy extends Component implements Collidable {
     int basicCol = Utils.floatToRgb(0, 1, 0, 1);
     int armoredCol = Utils.floatToRgb(0.5f, 0.6f, 0.7f, 1);
     int shooterCol = Utils.floatToRgb(1, 0.5f, 0, 1);
-
+    CollisionSystem collisionSystem;
 
     public ComponentEnemy(EnemyType enemyType) {
         this.enemyType = enemyType;
@@ -70,32 +67,13 @@ public class ComponentEnemy extends Component implements Collidable {
     }
 
     private void fireMissile() {
-
-        GameObject missile = enemyMissileFactory();
-        parent.getContext().add(missile);
-        if (missile != null) {
-            missile.setActive(true);
-            missile.setVisible(true);
-            missile.getTransform().set(parent.getTransform());
-        }
+        InvadersEntityFactory.addEnemyMissile(parent.getContext(), collisionSystem, parent.getTransform().x, parent.getTransform().y);
     }
 
-    public GameObject enemyMissileFactory() {
-
-        GameObject missile = new GameObject("enemy_missile");
-        missile.addTag("enemy_missile");
-        missile.setActive(false);
-        missile.setVisible(false);
-        missile.addComponent(new ComponentEnemyMissile());
-        missile.addTag("pausable");
-        return missile;
-    }
-    CollisionSystem collisionSystem;
     @Override
     public void init() {
 
         collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
-        collisionSystem.addCollidable(this);
 
         gameData = SceneManager.getSharedContext().getObjectByType(GameData.class);
 
@@ -113,6 +91,13 @@ public class ComponentEnemy extends Component implements Collidable {
 
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
         tileSheet = parent.getContext().getObjectByType(TileSheet.class);
+
+        ColliderComponent colliderComponent = parent.getComponent(ColliderComponent.class);
+        colliderComponent.setCallbackEnter(col -> {
+            if (col.hasTag(Constants.PLAYER_MISSILE)) {
+                handleBulletHit(1);
+            }
+        });
     }
 
     public void resetFireDelay() {
@@ -133,27 +118,22 @@ public class ComponentEnemy extends Component implements Collidable {
                 (int) (parent.getTransform().y) - 8, 2, 2);
 
     }
-
-    @Override
-    public Rect collisionGetRegion() {
-        Rect rect = new Rect();
-        rect.set(parent.getTransform().x - 7, parent.getTransform().y - 7, 14, 14);
-        return rect;
-    }
-
-    @Override
-    public void collisionCallback(CollisionPacket collisionPacket) {
-        GameObject otherObject = collisionPacket.targetEntity.collisionGetGameObject();
-
-        if (otherObject.getTags().contains(Constants.PLAYER_MISSILE)) {
-            handleBulletHit(1);
-        }
-    }
-
-    @Override
-    public void proximityCallback(RelativeObject relativeObject) {
-
-    }
+//
+//    @Override
+//    public Rect collisionGetRegion() {
+//        Rect rect = new Rect();
+//        rect.set(parent.getTransform().x - 7, parent.getTransform().y - 7, 14, 14);
+//        return rect;
+//    }
+//
+//    @Override
+//    public void collisionCallback(CollisionPacket collisionPacket) {
+//        GameObject otherObject = collisionPacket.targetEntity.collisionGetGameObject();
+//
+//        if (otherObject.getTags().contains(Constants.PLAYER_MISSILE)) {
+//            handleBulletHit(1);
+//        }
+//    }
 
     private void handleBulletHit(double bulletDamage) {
         double damageScale = 1;
@@ -165,7 +145,10 @@ public class ComponentEnemy extends Component implements Collidable {
     }
 
     private void handleDying() {
-        collisionSystem.removeCollidable(this);
+        //collisionSystem.removeCollidable(this);
+        ColliderComponent colliderComponent = parent.getComponent(ColliderComponent.class);
+        collisionSystem.removeCollidable(colliderComponent);
+
         parent.destroy();
 
         gameData.currentScore++;
@@ -176,8 +159,13 @@ public class ComponentEnemy extends Component implements Collidable {
         parent.getContext().getObjectByType(ParticleManager.class).addEmitter(emitter);
     }
 
-    @Override
-    public GameObject collisionGetGameObject() {
-        return parent;
-    }
+//    @Override
+//    public void proximityCallback(RelativeObject relativeObject) {
+//
+//    }
+//
+//    @Override
+//    public GameObject collisionGetGameObject() {
+//        return parent;
+//    }
 }

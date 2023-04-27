@@ -2,7 +2,7 @@ package com.physmo.garnetexamples.invaders.scenes;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
-import com.physmo.garnet.input.Input;
+import com.physmo.garnet.input.InputAction;
 import com.physmo.garnetexamples.invaders.Resources;
 import com.physmo.garnettoolkit.Scene;
 import com.physmo.garnettoolkit.SceneManager;
@@ -25,7 +25,7 @@ public class SceneMenu extends Scene {
 
     @Override
     public void tick(double delta) {
-        if (garnet.getInput().isPressed(Input.VirtualButton.FIRE1)) {
+        if (garnet.getInput().isPressed(InputAction.FIRE1)) {
             SceneManager.setActiveScene("game");
         }
     }

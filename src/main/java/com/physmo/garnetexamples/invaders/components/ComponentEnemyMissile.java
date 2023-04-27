@@ -4,17 +4,12 @@ package com.physmo.garnetexamples.invaders.components;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
 import com.physmo.garnet.drawablebatch.TileSheet;
-import com.physmo.garnetexamples.invaders.Constants;
 import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.Rect;
 import com.physmo.garnettoolkit.SceneManager;
-import com.physmo.garnettoolkit.simplecollision.Collidable;
-import com.physmo.garnettoolkit.simplecollision.CollisionPacket;
+import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
-import com.physmo.garnettoolkit.simplecollision.RelativeObject;
 
-public class ComponentEnemyMissile extends Component implements Collidable {
+public class ComponentEnemyMissile extends Component {
     double speed = 100;
 
     TileSheet tileSheet;
@@ -26,17 +21,15 @@ public class ComponentEnemyMissile extends Component implements Collidable {
 
     }
 
+    ColliderComponent colliderComponent;
+
     @Override
     public void tick(double delta) {
         parent.getTransform().y += speed * delta;
         if (parent.getTransform().y > 480 / 2) {
             killMe();
         }
-    }
-
-    public void killMe() {
-        collisionSystem.removeCollidable(this);
-        parent.destroy();
+        colliderComponent.setCollisionRegion(-2, -5, 4, 10);
     }
 
     @Override
@@ -49,36 +42,18 @@ public class ComponentEnemyMissile extends Component implements Collidable {
 
     }
 
+    public void killMe() {
+        collisionSystem.removeCollidable(parent.getComponent(ColliderComponent.class));
+        parent.destroy();
+    }
+
     @Override
     public void init() {
         collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
-        collisionSystem.addCollidable(this);
+
         tileSheet = parent.getContext().getObjectByType(TileSheet.class);
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
+        colliderComponent = parent.getComponent(ColliderComponent.class);
     }
 
-    @Override
-    public Rect collisionGetRegion() {
-        Rect rect = new Rect(parent.getTransform().x - 5, parent.getTransform().y - 5, 10, 10);
-        return rect;
-    }
-
-    @Override
-    public void collisionCallback(CollisionPacket collisionPacket) {
-        GameObject otherObject = collisionPacket.targetEntity.collisionGetGameObject();
-
-        if (otherObject.getTags().contains(Constants.PLAYER_TAG)) {
-            killMe();
-        }
-    }
-
-    @Override
-    public void proximityCallback(RelativeObject relativeObject) {
-
-    }
-
-    @Override
-    public GameObject collisionGetGameObject() {
-        return parent;
-    }
 }

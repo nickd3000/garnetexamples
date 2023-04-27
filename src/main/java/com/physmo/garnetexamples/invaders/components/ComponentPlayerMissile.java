@@ -6,15 +6,11 @@ import com.physmo.garnet.Utils;
 import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnetexamples.invaders.Constants;
 import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.Rect;
 import com.physmo.garnettoolkit.SceneManager;
-import com.physmo.garnettoolkit.simplecollision.Collidable;
-import com.physmo.garnettoolkit.simplecollision.CollisionPacket;
+import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
-import com.physmo.garnettoolkit.simplecollision.RelativeObject;
 
-public class ComponentPlayerMissile extends Component implements Collidable {
+public class ComponentPlayerMissile extends Component {
     double speed = 250;
 
     TileSheet tileSheet;
@@ -25,17 +21,19 @@ public class ComponentPlayerMissile extends Component implements Collidable {
     public ComponentPlayerMissile() {
     }
 
+    ColliderComponent colliderComponent;
+
     @Override
     public void tick(double delta) {
         parent.getTransform().y -= speed * delta;
-
+        colliderComponent.setCollisionRegion(-2, -5, 4, 10);
         if (parent.getTransform().y < 0) {
             killMe();
         }
     }
 
     public void killMe() {
-        collisionSystem.removeCollidable(this);
+        collisionSystem.removeCollidable(colliderComponent);
         parent.destroy();
     }
 
@@ -43,12 +41,17 @@ public class ComponentPlayerMissile extends Component implements Collidable {
     public void init() {
 
         collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
-        collisionSystem.addCollidable(this);
 
         parent.addTag(Constants.PLAYER_MISSILE);
 
         tileSheet = parent.getContext().getObjectByType(TileSheet.class);
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
+
+        colliderComponent = parent.getComponent(ColliderComponent.class);
+
+        colliderComponent.setCallbackEnter(collision -> {
+            if (collision.hasTag(Constants.ENEMY_TAG)) killMe();
+        });
     }
 
     @Override
@@ -61,28 +64,4 @@ public class ComponentPlayerMissile extends Component implements Collidable {
 
     }
 
-    @Override
-    public Rect collisionGetRegion() {
-        Rect rect = new Rect(parent.getTransform().x - 5, parent.getTransform().y - 5, 10, 10);
-        return rect;
-    }
-
-    @Override
-    public void collisionCallback(CollisionPacket collisionPacket) {
-        GameObject otherObject = collisionPacket.targetEntity.collisionGetGameObject();
-
-        if (otherObject.getTags().contains(Constants.ENEMY_TAG)) {
-            killMe();
-        }
-    }
-
-    @Override
-    public void proximityCallback(RelativeObject relativeObject) {
-
-    }
-
-    @Override
-    public GameObject collisionGetGameObject() {
-        return parent;
-    }
 }

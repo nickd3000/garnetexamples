@@ -6,7 +6,7 @@ import com.physmo.garnet.Texture;
 import com.physmo.garnet.Utils;
 import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
-import com.physmo.garnet.input.Input;
+import com.physmo.garnet.input.InputAction;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class KeyboardExample extends GarnetApp {
@@ -42,10 +42,10 @@ public class KeyboardExample extends GarnetApp {
 
     @Override
     public void tick(double delta) {
-        right = garnet.getInput().isPressed(Input.VirtualButton.RIGHT);
-        left = garnet.getInput().isPressed(Input.VirtualButton.LEFT);
-        up = garnet.getInput().isPressed(Input.VirtualButton.UP);
-        down = garnet.getInput().isPressed(Input.VirtualButton.DOWN);
+        right = garnet.getInput().isPressed(InputAction.RIGHT);
+        left = garnet.getInput().isPressed(InputAction.LEFT);
+        up = garnet.getInput().isPressed(InputAction.UP);
+        down = garnet.getInput().isPressed(InputAction.DOWN);
     }
 
     @Override

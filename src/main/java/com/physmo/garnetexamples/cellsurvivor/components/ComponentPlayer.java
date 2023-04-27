@@ -1,7 +1,7 @@
 package com.physmo.garnetexamples.cellsurvivor.components;
 
 import com.physmo.garnet.Garnet;
-import com.physmo.garnet.input.Input;
+import com.physmo.garnet.input.InputAction;
 import com.physmo.garnetexamples.cellsurvivor.Constants;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.SceneManager;
@@ -38,16 +38,16 @@ public class ComponentPlayer extends Component {
     public void tick(double t) {
         double speed = 30;
 
-        if (garnet.getInput().isPressed(Input.VirtualButton.RIGHT)) {
+        if (garnet.getInput().isPressed(InputAction.RIGHT)) {
             parent.getTransform().x += speed * t;
         }
-        if (garnet.getInput().isPressed(Input.VirtualButton.LEFT)) {
+        if (garnet.getInput().isPressed(InputAction.LEFT)) {
             parent.getTransform().x -= speed * t;
         }
-        if (garnet.getInput().isPressed(Input.VirtualButton.UP)) {
+        if (garnet.getInput().isPressed(InputAction.UP)) {
             parent.getTransform().y -= speed * t;
         }
-        if (garnet.getInput().isPressed(Input.VirtualButton.DOWN)) {
+        if (garnet.getInput().isPressed(InputAction.DOWN)) {
             parent.getTransform().y += speed * t;
         }
 

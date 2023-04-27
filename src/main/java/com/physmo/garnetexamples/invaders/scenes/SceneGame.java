@@ -4,13 +4,14 @@ import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Texture;
 import com.physmo.garnet.Utils;
 import com.physmo.garnet.drawablebatch.TileSheet;
-import com.physmo.garnetexamples.invaders.EnemyType;
+import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnetexamples.invaders.GameData;
-import com.physmo.garnetexamples.invaders.components.ComponentEnemy;
+import com.physmo.garnetexamples.invaders.InvadersEntityFactory;
 import com.physmo.garnetexamples.invaders.components.ComponentGameLogic;
 import com.physmo.garnetexamples.invaders.components.ComponentHud;
 import com.physmo.garnetexamples.invaders.components.ComponentPlayer;
 import com.physmo.garnettoolkit.GameObject;
+import com.physmo.garnettoolkit.Rect;
 import com.physmo.garnettoolkit.Scene;
 import com.physmo.garnettoolkit.SceneManager;
 import com.physmo.garnettoolkit.Vector3;
@@ -23,8 +24,10 @@ public class SceneGame extends Scene {
     Texture texture;
     GameData gameData;
     Garnet garnet;
+    Graphics graphics;
     TileSheet tileSheet;
     boolean showCollisionInfo = false;
+    CollisionSystem collisionSystem;
 
     public SceneGame(String name) {
         super(name);
@@ -49,7 +52,7 @@ public class SceneGame extends Scene {
         gameData.currentScore = 0;
         gameData.lives = 3;
 
-        CollisionSystem collisionSystem = new CollisionSystem("collisionsystem");
+        collisionSystem = new CollisionSystem("collisionsystem");
         context.add(collisionSystem);
 
         if (showCollisionInfo) injectCollisionDrawer(collisionSystem);
@@ -57,23 +60,21 @@ public class SceneGame extends Scene {
         createEntities();
 
         initParticleManager();
-
-        garnet.getGraphics().setBackgroundColor(Color.SUNSET_BLUE.toInt());
+        graphics = garnet.getGraphics();
+        graphics.setBackgroundColor(Color.SUNSET_BLUE.toInt());
     }
 
     public void injectCollisionDrawer(CollisionSystem collisionSystem) {
         collisionSystem.setCollisionDrawingCallback(collidable -> {
-            // TODO rewrite this using Graphics
-//            garnet.setDrawModeWireframe();
-//            Rect rect = collidable.collisionGetRegion();
-//            float x = (float) rect.x;
-//            float y = (float) rect.y;
-//            float w = (float) rect.w;
-//            float h = (float) rect.h;
-//            garnet.getDisplay().drawLine(x, y, x + w, y);
-//            garnet.getDisplay().drawLine(x + w, y, x + w, y + h);
-//            garnet.getDisplay().drawLine(x + w, y + h, x, y + h);
-//            garnet.getDisplay().drawLine(x, y + h, x, y);
+
+            Rect rect = collidable.collisionGetRegion();
+            float x = (float) rect.x;
+            float y = (float) rect.y;
+            float w = (float) rect.w;
+            float h = (float) rect.h;
+
+            graphics.setColor(Color.GREEN.toInt());
+            graphics.drawRect(x, y, w, h);
         });
     }
 
@@ -96,25 +97,13 @@ public class SceneGame extends Scene {
         player.setTransform(new Vector3(100, 200, 0));
         player.setActive(true);
         player.setVisible(true);
-        player.addTag("pausable");
+
         context.add(player);
 
 
         for (int y = 0; y < 5; y++) {
             for (int x = 0; x < 8; x++) { //9
-                GameObject enemy = new GameObject("enemy");
-
-                EnemyType enemyType = EnemyType.basic;
-                if (Math.random() < 0.3) enemyType = EnemyType.armoured;
-                if (Math.random() < 0.3) enemyType = EnemyType.shooter;
-                enemy.addComponent(new ComponentEnemy(enemyType));
-
-                enemy.setTransform(new Vector3(60 + x * 30, 50 + y * 30, 0));
-                enemy.setActive(true);
-                enemy.setVisible(true);
-                enemy.addTag("pausable");
-                //enemy.addTag("enemy");
-                context.add(enemy);
+                InvadersEntityFactory.addEnemy(context, collisionSystem, 60 + x * 30, 50 + y * 30);
             }
         }
 

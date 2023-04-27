@@ -3,7 +3,7 @@ package com.physmo.garnetexamples.invaders.components;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
-import com.physmo.garnet.input.Input;
+import com.physmo.garnet.input.InputAction;
 import com.physmo.garnetexamples.invaders.Constants;
 import com.physmo.garnetexamples.invaders.GameData;
 import com.physmo.garnettoolkit.Component;
@@ -81,14 +81,12 @@ public class ComponentGameLogic extends Component {
         levelState.addState(levelStateGameOver, t -> {
             stateTimer += t;
             if (stateTimer > 3) {
-                //levelState.changeState(levelStateRunning);
                 SceneManager.setActiveScene("menu");
             }
         });
         levelState.addState(levelStateLevelComplete, t -> {
             stateTimer += t;
             if (stateTimer > 5) {
-                //levelState.changeState(levelStateRunning);
                 SceneManager.setActiveScene("menu");
             }
         });
@@ -114,7 +112,7 @@ public class ComponentGameLogic extends Component {
             }
         }
 
-        if (garnet.getInput().isFirstPress(Input.VirtualButton.MENU)) {
+        if (garnet.getInput().isFirstPress(InputAction.MENU)) {
             System.out.println("MENU");
             SceneManager.pushSubScene("pause");
         }

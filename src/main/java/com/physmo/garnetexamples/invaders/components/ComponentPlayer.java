@@ -3,11 +3,11 @@ package com.physmo.garnetexamples.invaders.components;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
 import com.physmo.garnet.drawablebatch.TileSheet;
-import com.physmo.garnet.input.Input;
+import com.physmo.garnet.input.InputAction;
 import com.physmo.garnetexamples.invaders.Constants;
+import com.physmo.garnetexamples.invaders.InvadersEntityFactory;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.Rect;
 import com.physmo.garnettoolkit.SceneManager;
 import com.physmo.garnettoolkit.color.Color;
 import com.physmo.garnettoolkit.color.ColorSupplierLinear;
@@ -16,13 +16,10 @@ import com.physmo.garnettoolkit.curve.StandardCurve;
 import com.physmo.garnettoolkit.particle.Emitter;
 import com.physmo.garnettoolkit.particle.ParticleManager;
 import com.physmo.garnettoolkit.particle.ParticleTemplate;
-import com.physmo.garnettoolkit.simplecollision.Collidable;
-import com.physmo.garnettoolkit.simplecollision.CollisionPacket;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
-import com.physmo.garnettoolkit.simplecollision.RelativeObject;
 
 
-public class ComponentPlayer extends Component implements Collidable {
+public class ComponentPlayer extends Component {
 
     public static final double BULLET_COOL_DOWN = 0.2;
     static int playerColor = Utils.floatToRgb(0.3f, 1f, 0.2f, 1f);
@@ -47,6 +44,8 @@ public class ComponentPlayer extends Component implements Collidable {
 
     }
 
+    CollisionSystem collisionSystem;
+
     @Override
     public void init() {
         shootParticleTemplate = new ParticleTemplate();
@@ -62,8 +61,8 @@ public class ComponentPlayer extends Component implements Collidable {
 
         parent.addTag(Constants.PLAYER_TAG);
 
-        CollisionSystem collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
-        collisionSystem.addCollidable(this);
+        collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
+
         tileSheet = parent.getContext().getObjectByType(TileSheet.class);
         gameLogic = parent.getContext().getComponent(ComponentGameLogic.class);
 
@@ -76,17 +75,17 @@ public class ComponentPlayer extends Component implements Collidable {
         boolean canMove = gameLogic.playerCanMove();
         boolean canShoot = gameLogic.playerCanShoot();
 
-        if (canMove && garnet.getInput().isPressed(Input.VirtualButton.RIGHT)) {
+        if (canMove && garnet.getInput().isPressed(InputAction.RIGHT)) {
             parent.getTransform().x += speed * delta;
             if (parent.getTransform().x > rightWall) parent.getTransform().x = rightWall;
         }
-        if (canMove && garnet.getInput().isPressed(Input.VirtualButton.LEFT)) {
+        if (canMove && garnet.getInput().isPressed(InputAction.LEFT)) {
             parent.getTransform().x -= speed * delta;
             if (parent.getTransform().x < leftWall) {
                 parent.getTransform().x = leftWall;
             }
         }
-        if (canShoot && garnet.getInput().isPressed(Input.VirtualButton.FIRE1)) {
+        if (canShoot && garnet.getInput().isPressed(InputAction.FIRE1)) {
             fireMissile();
         }
 
@@ -102,12 +101,10 @@ public class ComponentPlayer extends Component implements Collidable {
     private void fireMissile() {
         if (bulletCoolDown > 0) return;
 
-        GameObject playerMissile = playerMissileFactory();
+        GameObject playerMissile = InvadersEntityFactory.addPlayerMissile(parent.getContext(), collisionSystem, parent.getTransform().x, parent.getTransform().y);
 
         if (playerMissile != null) {
-            parent.getContext().add(playerMissile);
-            playerMissile.setActive(true);
-            playerMissile.getTransform().set(parent.getTransform());
+
             bulletCoolDown = BULLET_COOL_DOWN;
 
             Emitter emitter = new Emitter(parent.getTransform(), 0.2, shootParticleTemplate);
@@ -116,15 +113,6 @@ public class ComponentPlayer extends Component implements Collidable {
         }
     }
 
-    public GameObject playerMissileFactory() {
-        GameObject missile = new GameObject("player_missile");
-        missile.setActive(false);
-        missile.setVisible(true);
-        missile.addComponent(new ComponentPlayerMissile());
-        missile.addTag("pausable");
-        //context.add(missile);
-        return missile;
-    }
 
     @Override
     public void draw() {
@@ -137,29 +125,29 @@ public class ComponentPlayer extends Component implements Collidable {
         garnet.getGraphics().drawImage(tileSheet, (int) (parent.getTransform().x) - 8,
                 (int) (parent.getTransform().y) - 8, 0, 2);
     }
-
-    @Override
-    public Rect collisionGetRegion() {
-        Rect rect = new Rect(parent.getTransform().x - 8, parent.getTransform().y, 16, 10);
-        return rect;
-    }
-
-    @Override
-    public void collisionCallback(CollisionPacket collisionPacket) {
-        GameObject otherObject = collisionPacket.targetEntity.collisionGetGameObject();
-
-        if (otherObject.getTags().contains(Constants.ENEMY_MISSILE)) {
-            gameLogic.playerGotHit();
-        }
-    }
-
-    @Override
-    public void proximityCallback(RelativeObject relativeObject) {
-
-    }
-
-    @Override
-    public GameObject collisionGetGameObject() {
-        return parent;
-    }
+//
+//    @Override
+//    public Rect collisionGetRegion() {
+//        Rect rect = new Rect(parent.getTransform().x - 8, parent.getTransform().y, 16, 10);
+//        return rect;
+//    }
+//
+//    @Override
+//    public void collisionCallback(CollisionPacket collisionPacket) {
+//        GameObject otherObject = collisionPacket.targetEntity.collisionGetGameObject();
+//
+//        if (otherObject.getTags().contains(Constants.ENEMY_MISSILE)) {
+//            gameLogic.playerGotHit();
+//        }
+//    }
+//
+//    @Override
+//    public void proximityCallback(RelativeObject relativeObject) {
+//
+//    }
+//
+//    @Override
+//    public GameObject collisionGetGameObject() {
+//        return parent;
+//    }
 }
