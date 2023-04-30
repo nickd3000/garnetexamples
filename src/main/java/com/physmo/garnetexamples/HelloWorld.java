@@ -32,6 +32,7 @@ public class HelloWorld extends GarnetApp {
     @Override
     public void draw() {
         garnet.getGraphics().drawCircle(200, 200, 100, 100);
+        garnet.getGraphics().drawCircle(200, 200, 110, 150);
         garnet.getGraphics().render();
     }
 }
