@@ -26,13 +26,13 @@ public class InvadersApp extends GarnetApp {
     public void init(Garnet garnet) {
         SceneManager.getSharedContext().add(garnet);
         SceneManager.getSharedContext().add(new GameData());
-        SceneManager.getSharedContext().add(new Resources().init());
+        SceneManager.getSharedContext().add(new Resources(garnet).init());
 
         SceneManager.addScene(new SceneGame("game"));
         SceneManager.addScene(new SceneMenu("menu"));
         SceneManager.addScene(new SubScenePause("pause"));
 
-        SceneManager.setActiveScene("menu");
+        SceneManager.setActiveScene("game");
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.physmo.garnetexamples.games.invaders.Constants;
 import com.physmo.garnetexamples.games.invaders.EnemyType;
 import com.physmo.garnetexamples.games.invaders.GameData;
 import com.physmo.garnetexamples.games.invaders.InvadersEntityFactory;
+import com.physmo.garnetexamples.games.invaders.Resources;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.SceneManager;
 import com.physmo.garnettoolkit.color.Color;
@@ -34,6 +35,9 @@ public class ComponentEnemy extends Component {
     int armoredCol = Utils.floatToRgb(0.5f, 0.6f, 0.7f, 1);
     int shooterCol = Utils.floatToRgb(1, 0.5f, 0, 1);
     CollisionSystem collisionSystem;
+    int soundExplosionId;
+    int soundShieldHitId;
+    int soundEnemyFireId;
 
     public ComponentEnemy(EnemyType enemyType) {
         this.enemyType = enemyType;
@@ -67,6 +71,7 @@ public class ComponentEnemy extends Component {
     }
 
     private void fireMissile() {
+        garnet.getSound().playSound(soundEnemyFireId);
         InvadersEntityFactory.addEnemyMissile(parent.getContext(), collisionSystem, parent.getTransform().x, parent.getTransform().y);
     }
 
@@ -98,6 +103,10 @@ public class ComponentEnemy extends Component {
                 handleBulletHit(1);
             }
         });
+
+        soundExplosionId = SceneManager.getSharedContext().getObjectByType(Resources.class).soundExplosionId;
+        soundShieldHitId = SceneManager.getSharedContext().getObjectByType(Resources.class).soundShieldHitId;
+        soundEnemyFireId = SceneManager.getSharedContext().getObjectByType(Resources.class).soundEnemyFireId;
     }
 
     public void resetFireDelay() {
@@ -142,6 +151,7 @@ public class ComponentEnemy extends Component {
 
         health -= bulletDamage * damageScale;
         if (health <= 0) handleDying();
+        else garnet.getSound().playSound(soundShieldHitId);
     }
 
     private void handleDying() {
@@ -157,6 +167,8 @@ public class ComponentEnemy extends Component {
         emitter.setEmitPerSecond(1500);
 
         parent.getContext().getObjectByType(ParticleManager.class).addEmitter(emitter);
+
+        garnet.getSound().playSound(soundExplosionId);
     }
 
 //    @Override

@@ -6,6 +6,7 @@ import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.input.InputAction;
 import com.physmo.garnetexamples.games.invaders.Constants;
 import com.physmo.garnetexamples.games.invaders.InvadersEntityFactory;
+import com.physmo.garnetexamples.games.invaders.Resources;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
 import com.physmo.garnettoolkit.SceneManager;
@@ -39,6 +40,7 @@ public class ComponentPlayer extends Component {
 
     ComponentGameLogic gameLogic;
     TileSheet tileSheet;
+    Resources resources;
 
     public ComponentPlayer() {
 
@@ -66,9 +68,12 @@ public class ComponentPlayer extends Component {
         tileSheet = parent.getContext().getObjectByType(TileSheet.class);
         gameLogic = parent.getContext().getComponent(ComponentGameLogic.class);
 
+        resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
 
+        //soundLaser = garnet.getSound().loadSound(Utils.getPathForResource(this,"sounds/laserShoot-3.wav"));
     }
 
+    //int soundLaser;
     @Override
     public void tick(double delta) {
 
@@ -102,7 +107,7 @@ public class ComponentPlayer extends Component {
         if (bulletCoolDown > 0) return;
 
         GameObject playerMissile = InvadersEntityFactory.addPlayerMissile(parent.getContext(), collisionSystem, parent.getTransform().x, parent.getTransform().y);
-
+        garnet.getSound().playSound(resources.soundLaserId);
         if (playerMissile != null) {
 
             bulletCoolDown = BULLET_COOL_DOWN;

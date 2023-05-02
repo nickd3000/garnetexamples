@@ -54,7 +54,7 @@ public class ComponentGameLogic extends Component {
         levelState = new StateMachine();
         levelState.addState(levelStateStart, t -> {
             stateTimer += t;
-            if (stateTimer > 3) {
+            if (stateTimer > 0.03) {
                 levelState.changeState(levelStateRunning);
             }
         });
