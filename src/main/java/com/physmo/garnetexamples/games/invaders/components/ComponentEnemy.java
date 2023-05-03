@@ -24,17 +24,21 @@ import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 public class ComponentEnemy extends Component {
 
     public EnemyType enemyType;
-    GameData gameData;
+
     double fireDelay;
     double health;
-    ParticleTemplate explosionParticleTemplate;
 
+    ParticleTemplate explosionParticleTemplate;
+    GameData gameData;
     TileSheet tileSheet;
     Garnet garnet;
+    CollisionSystem collisionSystem;
+    Resources resources;
+
     int basicCol = Utils.floatToRgb(0, 1, 0, 1);
     int armoredCol = Utils.floatToRgb(0.5f, 0.6f, 0.7f, 1);
     int shooterCol = Utils.floatToRgb(1, 0.5f, 0, 1);
-    CollisionSystem collisionSystem;
+
     int soundExplosionId;
     int soundShieldHitId;
     int soundEnemyFireId;
@@ -104,45 +108,15 @@ public class ComponentEnemy extends Component {
             }
         });
 
-        soundExplosionId = SceneManager.getSharedContext().getObjectByType(Resources.class).soundExplosionId;
-        soundShieldHitId = SceneManager.getSharedContext().getObjectByType(Resources.class).soundShieldHitId;
-        soundEnemyFireId = SceneManager.getSharedContext().getObjectByType(Resources.class).soundEnemyFireId;
+        resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
+        soundExplosionId = resources.soundExplosionId;
+        soundShieldHitId = resources.soundShieldHitId;
+        soundEnemyFireId = resources.soundEnemyFireId;
     }
 
     public void resetFireDelay() {
         fireDelay = 2 + Math.random() * 4;
     }
-
-    @Override
-    public void draw() {
-        if (!parent.isActive()) return;
-
-
-        ComponentEnemy component = parent.getComponent(ComponentEnemy.class);
-        if (component.enemyType == EnemyType.basic) garnet.getGraphics().setColor(basicCol);
-        if (component.enemyType == EnemyType.armoured) garnet.getGraphics().setColor(armoredCol);
-        if (component.enemyType == EnemyType.shooter) garnet.getGraphics().setColor(shooterCol);
-        garnet.getGraphics().setScale(2);
-        garnet.getGraphics().drawImage(tileSheet, (int) (parent.getTransform().x) - 8,
-                (int) (parent.getTransform().y) - 8, 2, 2);
-
-    }
-//
-//    @Override
-//    public Rect collisionGetRegion() {
-//        Rect rect = new Rect();
-//        rect.set(parent.getTransform().x - 7, parent.getTransform().y - 7, 14, 14);
-//        return rect;
-//    }
-//
-//    @Override
-//    public void collisionCallback(CollisionPacket collisionPacket) {
-//        GameObject otherObject = collisionPacket.targetEntity.collisionGetGameObject();
-//
-//        if (otherObject.getTags().contains(Constants.PLAYER_MISSILE)) {
-//            handleBulletHit(1);
-//        }
-//    }
 
     private void handleBulletHit(double bulletDamage) {
         double damageScale = 1;
@@ -154,8 +128,8 @@ public class ComponentEnemy extends Component {
         else garnet.getSound().playSound(soundShieldHitId);
     }
 
+
     private void handleDying() {
-        //collisionSystem.removeCollidable(this);
         ColliderComponent colliderComponent = parent.getComponent(ColliderComponent.class);
         collisionSystem.removeCollidable(colliderComponent);
 
@@ -169,6 +143,20 @@ public class ComponentEnemy extends Component {
         parent.getContext().getObjectByType(ParticleManager.class).addEmitter(emitter);
 
         garnet.getSound().playSound(soundExplosionId);
+    }
+
+    @Override
+    public void draw() {
+        if (!parent.isActive()) return;
+
+
+        ComponentEnemy component = parent.getComponent(ComponentEnemy.class);
+        if (component.enemyType == EnemyType.basic) garnet.getGraphics().setColor(basicCol);
+        if (component.enemyType == EnemyType.armoured) garnet.getGraphics().setColor(armoredCol);
+        if (component.enemyType == EnemyType.shooter) garnet.getGraphics().setColor(shooterCol);
+        garnet.getGraphics().setScale(2);
+        garnet.getGraphics().drawImage(tileSheet, (int) (parent.getTransform().x) - 8, (int) (parent.getTransform().y) - 8, 2, 2);
+
     }
 
 //    @Override
