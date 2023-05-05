@@ -6,8 +6,8 @@ import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnetexamples.games.invaders.GameData;
 import com.physmo.garnetexamples.games.invaders.Resources;
 import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.SceneManager;
 import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.scene.SceneManager;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 public class ComponentHud extends Component {

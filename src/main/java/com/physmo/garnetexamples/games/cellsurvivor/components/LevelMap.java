@@ -8,8 +8,8 @@ import com.physmo.garnetexamples.games.cellsurvivor.Constants;
 import com.physmo.garnetexamples.games.cellsurvivor.Resources;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.SceneManager;
 import com.physmo.garnettoolkit.Vector3;
+import com.physmo.garnettoolkit.scene.SceneManager;
 
 public class LevelMap extends Component {
     TileGridData tileGridData;

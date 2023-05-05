@@ -8,7 +8,7 @@ import com.physmo.garnetexamples.games.invaders.Constants;
 import com.physmo.garnetexamples.games.invaders.GameData;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.SceneManager;
+import com.physmo.garnettoolkit.scene.SceneManager;
 import com.physmo.garnettoolkit.stateMachine.StateMachine;
 
 import java.util.List;

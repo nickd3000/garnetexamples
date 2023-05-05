@@ -6,7 +6,7 @@ import com.physmo.garnet.Utils;
 import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnetexamples.games.invaders.Constants;
 import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.SceneManager;
+import com.physmo.garnettoolkit.scene.SceneManager;
 import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 

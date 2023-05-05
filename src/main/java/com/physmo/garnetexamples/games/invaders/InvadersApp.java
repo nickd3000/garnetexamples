@@ -5,7 +5,7 @@ import com.physmo.garnet.GarnetApp;
 import com.physmo.garnetexamples.games.invaders.scenes.SceneGame;
 import com.physmo.garnetexamples.games.invaders.scenes.SceneMenu;
 import com.physmo.garnetexamples.games.invaders.scenes.SubScenePause;
-import com.physmo.garnettoolkit.SceneManager;
+import com.physmo.garnettoolkit.scene.SceneManager;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class InvadersApp extends GarnetApp {

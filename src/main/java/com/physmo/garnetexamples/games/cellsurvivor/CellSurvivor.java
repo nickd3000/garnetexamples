@@ -2,7 +2,7 @@ package com.physmo.garnetexamples.games.cellsurvivor;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
-import com.physmo.garnettoolkit.SceneManager;
+import com.physmo.garnettoolkit.scene.SceneManager;
 
 public class CellSurvivor extends GarnetApp {
 

@@ -12,11 +12,11 @@ import com.physmo.garnetexamples.games.invaders.components.ComponentHud;
 import com.physmo.garnetexamples.games.invaders.components.ComponentPlayer;
 import com.physmo.garnettoolkit.GameObject;
 import com.physmo.garnettoolkit.Rect;
-import com.physmo.garnettoolkit.Scene;
-import com.physmo.garnettoolkit.SceneManager;
 import com.physmo.garnettoolkit.Vector3;
 import com.physmo.garnettoolkit.color.Color;
 import com.physmo.garnettoolkit.particle.ParticleManager;
+import com.physmo.garnettoolkit.scene.Scene;
+import com.physmo.garnettoolkit.scene.SceneManager;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 public class SceneGame extends Scene {
@@ -79,7 +79,7 @@ public class SceneGame extends Scene {
     }
 
     public void initParticleManager() {
-        ParticleManager particleManager = new ParticleManager(100);
+        ParticleManager particleManager = new ParticleManager(1000);
         particleManager.setParticleDrawer(p -> {
             float pAge = (float) (p.age / p.lifeTime);
             garnet.getGraphics().setColor(p.colorSupplier.getColor(pAge).toInt());

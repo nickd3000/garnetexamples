@@ -106,6 +106,7 @@ public class CollisionExample extends GarnetApp {
         garnet.getDebugDrawer().setUserString("Mouse pos scaled:", mps[0] + "," + mps[1]);
         garnet.getDebugDrawer().setUserString("collision checks:", String.valueOf(collisionSystem.getTestsPerFrame()));
 
+        garnet.getGraphics().setColor(0xff444471);
         if (nearestObjects != null) {
             for (RelativeObject nearestObject : nearestObjects) {
                 GameObject gameObject = nearestObject.otherObject.collisionGetGameObject();

@@ -6,6 +6,7 @@ import com.physmo.garnet.Texture;
 import com.physmo.garnet.Utils;
 import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.input.Input;
 import com.physmo.garnettoolkit.color.Color;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
@@ -15,7 +16,8 @@ public class MouseExample extends GarnetApp {
     TileSheet tileSheet;
     Texture texture;
     Graphics graphics;
-
+    Input input;
+    boolean mousePressed = false;
     double scale = 3;
 
     public MouseExample(Garnet garnet, String name) {
@@ -32,17 +34,19 @@ public class MouseExample extends GarnetApp {
         garnet.run();
     }
 
+
     @Override
     public void init(Garnet garnet) {
         texture = Texture.loadTexture(Utils.getPathForResource(this, imageFileName));
         tileSheet = new TileSheet(texture, 16, 16);
         graphics = garnet.getGraphics();
         graphics.addTexture(texture);
+        input = garnet.getInput();
     }
 
     @Override
     public void tick(double delta) {
-
+        mousePressed = input.isMouseButtonPressed(Input.MOUSE_BUTTON_LEFT);
     }
 
     @Override
@@ -50,13 +54,18 @@ public class MouseExample extends GarnetApp {
 
         int[] mp, mps;
 
-        mps = garnet.getInput().getMousePositionScaled(scale);
-        mp = garnet.getInput().getMousePosition();
-        garnet.getDebugDrawer().setUserString("Mouse pos:       ", mp[0] + "," + mp[1]);
-        garnet.getDebugDrawer().setUserString("Mouse pos scaled:", mps[0] + "," + mps[1]);
+        mps = input.getMousePositionScaled(scale);
+        mp = input.getMousePosition();
+
+        garnet.getDebugDrawer().setUserString("Mouse pos:        ", String.format("%d,%d", mp[0], mp[1]));
+        garnet.getDebugDrawer().setUserString("Mouse pos scaled: ", String.format("%d,%d", mps[0], mps[1]));
+
 
         graphics.setScale(scale);
-        graphics.setColor(Color.SUNSET_BLUE.toInt());
+
+        if (mousePressed) graphics.setColor(Color.SUNSET_RED.toInt());
+        else graphics.setColor(Color.SUNSET_YELLOW.toInt());
+
         graphics.drawImage(tileSheet, mps[0] - 8, mps[1] - 8, 2, 2);
 
         graphics.render();
