@@ -32,7 +32,7 @@ public class InvadersApp extends GarnetApp {
         SceneManager.addScene(new SceneMenu("menu"));
         SceneManager.addScene(new SubScenePause("pause"));
 
-        SceneManager.setActiveScene("game");
+        SceneManager.setActiveScene("menu");
     }
 
     @Override
