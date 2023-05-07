@@ -1,4 +1,4 @@
-package com.physmo.garnetexamples.input;
+package com.physmo.garnetexamples.sound;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
@@ -6,27 +6,26 @@ import com.physmo.garnet.Texture;
 import com.physmo.garnet.Utils;
 import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
-import com.physmo.garnet.input.Input;
 import com.physmo.garnettoolkit.color.Color;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
-public class MouseExample extends GarnetApp {
+public class SimpleSoundExample extends GarnetApp {
 
     String imageFileName = "space.png";
+    String soundFileName = "space.png";
     TileSheet tileSheet;
     Texture texture;
     Graphics graphics;
-    Input input;
-    boolean mousePressed = false;
-    double scale = 3;
+    double x = 0;
+    double scale = 4;
 
-    public MouseExample(Garnet garnet, String name) {
+    public SimpleSoundExample(Garnet garnet, String name) {
         super(garnet, name);
     }
 
     public static void main(String[] args) {
         Garnet garnet = new Garnet(400, 400);
-        GarnetApp app = new MouseExample(garnet, "");
+        GarnetApp app = new SimpleSoundExample(garnet, "");
 
         garnet.setApp(app);
 
@@ -34,40 +33,36 @@ public class MouseExample extends GarnetApp {
         garnet.run();
     }
 
-
     @Override
     public void init(Garnet garnet) {
         texture = Texture.loadTexture(Utils.getPathForResource(this, imageFileName));
         tileSheet = new TileSheet(texture, 16, 16);
         graphics = garnet.getGraphics();
         graphics.addTexture(texture);
-        input = garnet.getInput();
+
+        int soundA = garnet.getSound().loadSound("sounds/synth.wav");
+        int soundB = garnet.getSound().loadSound("sounds/laserShoot-3.wav");
+
+        garnet.getSound().playSound(soundA);
+        garnet.getSound().playSound(soundB);
     }
 
     @Override
     public void tick(double delta) {
-        mousePressed = input.isMouseButtonPressed(Input.MOUSE_BUTTON_LEFT);
+        x += delta * 50;
+        if (x > 80) x = -16;
     }
 
     @Override
     public void draw() {
+        int[] mousePosition = garnet.getInput().getMousePositionScaled(scale);
 
-        int[] mp, mps;
-
-        mps = input.getMousePositionScaled(scale);
-        mp = input.getMousePosition();
-
-        garnet.getDebugDrawer().setUserString("Mouse pos:        ", String.format("%d,%d", mp[0], mp[1]));
-        garnet.getDebugDrawer().setUserString("Mouse pos scaled: ", String.format("%d,%d", mps[0], mps[1]));
-
-
+        graphics.setColor(Color.GREEN.toInt());
         graphics.setScale(scale);
+        graphics.drawImage(tileSheet, (int) x, 5, 2, 2);
 
-        if (mousePressed) graphics.setColor(Color.SUNSET_RED.toInt());
-        else graphics.setColor(Color.SUNSET_YELLOW.toInt());
-
-        graphics.drawImage(tileSheet, mps[0] - 8, mps[1] - 8, 2, 2);
-
+        graphics.setColor(Color.SUNSET_BLUE.toInt());
+        graphics.drawImage(tileSheet, mousePosition[0], mousePosition[1], 2, 2);
         graphics.render();
 
     }

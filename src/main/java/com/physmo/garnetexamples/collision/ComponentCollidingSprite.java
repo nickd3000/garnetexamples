@@ -47,13 +47,15 @@ public class ComponentCollidingSprite extends Component {
     public void tick(double t) {
 
         double minDist = 20;
-        double pushForce = 3;
+        double pushForce = 80;
         for (RelativeObject closeObject : closeObjects) {
 
             if (closeObject.distance > minDist) continue;
             Vector3 transform = parent.getTransform();
-            transform.x += closeObject.dx * t * pushForce;
-            transform.y += closeObject.dy * t * pushForce;
+            double dx = closeObject.dx / closeObject.distance;
+            double dy = closeObject.dy / closeObject.distance;
+            transform.x += dx * t * pushForce;
+            transform.y += dy * t * pushForce;
         }
         closeObjects.clear();
 

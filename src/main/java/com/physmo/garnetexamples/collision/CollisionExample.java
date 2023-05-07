@@ -89,7 +89,7 @@ public class CollisionExample extends GarnetApp {
         List<GameObject> objectsByTag = context.getObjectsByTag("testobject");
         objectsByTag.get(0).getTransform().set(mps[0] - 8, mps[1] - 8, 0);
 
-        nearestObjects = collisionSystem.getNearestObjects(mps[0] - 8, mps[1] - 8, 150);
+        nearestObjects = collisionSystem.getNearestObjects("testobject", mps[0] - 8, mps[1] - 8, 150);
 
         collisionSystem.processCloseObjects("testobject", 20);
     }
@@ -106,6 +106,7 @@ public class CollisionExample extends GarnetApp {
         garnet.getDebugDrawer().setUserString("Mouse pos scaled:", mps[0] + "," + mps[1]);
         garnet.getDebugDrawer().setUserString("collision checks:", String.valueOf(collisionSystem.getTestsPerFrame()));
 
+        garnet.getGraphics().setColor(0xff444471);
         if (nearestObjects != null) {
             for (RelativeObject nearestObject : nearestObjects) {
                 GameObject gameObject = nearestObject.otherObject.collisionGetGameObject();
