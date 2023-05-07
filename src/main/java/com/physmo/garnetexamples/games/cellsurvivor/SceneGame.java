@@ -1,8 +1,9 @@
 package com.physmo.garnetexamples.games.cellsurvivor;
 
 import com.physmo.garnet.Garnet;
+import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentEnemySpawner;
+import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentLevelMap;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentPlayer;
-import com.physmo.garnetexamples.games.cellsurvivor.components.LevelMap;
 import com.physmo.garnetexamples.games.cellsurvivor.components.SpriteHelper;
 import com.physmo.garnetexamples.games.cellsurvivor.components.weapons.Gun;
 import com.physmo.garnettoolkit.GameObject;
@@ -21,9 +22,14 @@ public class SceneGame extends Scene {
     GameObject player;
     CollisionSystem collisionSystem;
     Garnet garnet;
+
     public SceneGame(String name) {
         super(name);
     }
+
+    ComponentLevelMap componentLevelMap;
+    SpriteHelper spriteHelperComponent;
+
 
     @Override
     public void init() {
@@ -32,9 +38,11 @@ public class SceneGame extends Scene {
         collisionSystem = new CollisionSystem("d");
         context.add(collisionSystem);
 
-        GameObject levelMap = new GameObject("levelmap").addComponent(new LevelMap());
-        levelMap.addTag("levelmap");
-        context.add(levelMap);
+        GameObject levelMapObject = new GameObject("levelmap");
+        componentLevelMap = new ComponentLevelMap();
+        levelMapObject.addComponent(componentLevelMap);
+        levelMapObject.addTag("levelmap");
+        context.add(levelMapObject);
 
         player = new GameObject("player").addComponent(new ComponentPlayer());
         player.addComponent(new Gun());
@@ -48,23 +56,19 @@ public class SceneGame extends Scene {
         resources.init(garnet.getGraphics());
         context.add(resources);
 
-        for (int i = 0; i < 40; i++) {
-            EntityFactory.addEnemy(context, collisionSystem, random.nextInt(400), random.nextInt(400));
-        }
-
-        GameObject spriteHelper = new GameObject("spriteHelper").addComponent(new SpriteHelper());
+        GameObject spriteHelper = new GameObject("spriteHelper");
+        spriteHelperComponent = new SpriteHelper();
+        spriteHelper.addComponent(spriteHelperComponent);
         context.add(spriteHelper);
+
+        GameObject enemySpawnerObject = new GameObject("enemySpawner").addComponent(new ComponentEnemySpawner());
+        context.add(enemySpawnerObject);
     }
 
     @Override
     public void tick(double delta) {
 
-        if (Math.random() < 0.01) {
-            EntityFactory.addEnemy(context, collisionSystem, random.nextInt(400), random.nextInt(400));
-        }
-
         collisionSystem.processCloseObjects(Constants.TAG_ENEMY, 20);
-
 
         List<RelativeObject> nearestEnemies = collisionSystem.getNearestObjects(Constants.TAG_ENEMY, (int) player.getTransform().x, (int) player.getTransform().y, 60);
         player.getComponent(ComponentPlayer.class).setNearestEnemies(nearestEnemies);
@@ -73,7 +77,9 @@ public class SceneGame extends Scene {
         player.getComponent(ComponentPlayer.class).setNearestCrystals(nearestCrystals);
 
         garnet.getDebugDrawer().setUserString("collisions", String.valueOf(collisionSystem.getTestsPerFrame()));
+
     }
+
 
     @Override
     public void draw() {
