@@ -8,10 +8,11 @@ import com.physmo.garnetexamples.games.cellsurvivor.Constants;
 import com.physmo.garnetexamples.games.cellsurvivor.Resources;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
+import com.physmo.garnettoolkit.Rect;
 import com.physmo.garnettoolkit.Vector3;
 import com.physmo.garnettoolkit.scene.SceneManager;
 
-public class LevelMap extends Component {
+public class ComponentLevelMap extends Component {
     TileGridData tileGridData;
     TileGridDrawer tileGridDrawer;
     int mapWidth = 100;
@@ -27,7 +28,7 @@ public class LevelMap extends Component {
     int windowWidth = 300;
     int windowHeight = 200;
 
-    public LevelMap() {
+    public ComponentLevelMap() {
 
 
     }
@@ -77,6 +78,23 @@ public class LevelMap extends Component {
         tileGridDrawer.setScale(2);
         tileGridDrawer.setScroll(scrollX, scrollY);
         tileGridDrawer.draw(graphics, 20, 20);
+
+//        Rect visibleMapExtents = getVisibleMapExtents();
+//        graphics.drawRect((float) visibleMapExtents.x, (float) visibleMapExtents.y,400,400);
     }
 
+    public Rect getVisibleMapExtents() {
+        Rect rect = new Rect();
+
+        double[] scrollPosition = tileGridDrawer.getScrollPosition();
+        rect.x = scrollPosition[0];
+        rect.y = scrollPosition[1];
+
+        int[] windowSizeInTiles = tileGridDrawer.getWindowSizeInTiles();
+        rect.w = (windowSizeInTiles[0] * 16);
+        rect.h = (windowSizeInTiles[1] * 16);
+
+
+        return rect;
+    }
 }
