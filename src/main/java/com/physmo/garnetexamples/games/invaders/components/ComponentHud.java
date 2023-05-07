@@ -20,6 +20,8 @@ public class ComponentHud extends Component {
     double textFlash = 0;
     ComponentGameLogic gameLogic;
     CollisionSystem collisionSystem;
+    double overlayScroll = 0;
+
     public ComponentHud() {
 
     }
@@ -34,8 +36,6 @@ public class ComponentHud extends Component {
         gameLogic = parent.getContext().getComponent(ComponentGameLogic.class);
         collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
     }
-
-    double overlayScroll = 0;
 
     @Override
     public void tick(double delta) {

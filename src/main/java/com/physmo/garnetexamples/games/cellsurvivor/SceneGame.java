@@ -22,14 +22,12 @@ public class SceneGame extends Scene {
     GameObject player;
     CollisionSystem collisionSystem;
     Garnet garnet;
+    ComponentLevelMap componentLevelMap;
+    SpriteHelper spriteHelperComponent;
 
     public SceneGame(String name) {
         super(name);
     }
-
-    ComponentLevelMap componentLevelMap;
-    SpriteHelper spriteHelperComponent;
-
 
     @Override
     public void init() {

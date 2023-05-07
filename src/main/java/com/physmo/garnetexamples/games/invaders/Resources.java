@@ -14,21 +14,19 @@ public class Resources {
     public int soundEnemyFireId;
     BitmapFont bitmapFont;
     RegularFont regularFont;
-
-    public BitmapFont getBitmapFont() {
-        return bitmapFont;
-    }
-
-
-    public RegularFont getRegularFont() {
-        return regularFont;
-    }
-
     Garnet garnet;
 
 
     public Resources(Garnet garnet) {
         this.garnet = garnet;
+    }
+
+    public BitmapFont getBitmapFont() {
+        return bitmapFont;
+    }
+
+    public RegularFont getRegularFont() {
+        return regularFont;
     }
 
     public Resources init() {

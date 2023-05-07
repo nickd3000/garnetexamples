@@ -20,12 +20,11 @@ public class StressTest extends GarnetApp {
     Graphics graphics;
 
     int numSprites = 25000;
+    Context context;
 
     public StressTest(Garnet garnet, String name) {
         super(garnet, name);
     }
-
-    Context context;
 
     public static void main(String[] args) {
         Garnet garnet = new Garnet(640, 480);

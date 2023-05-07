@@ -16,12 +16,11 @@ public class ComponentEnemyMissile extends Component {
     Garnet garnet;
     int color = Utils.floatToRgb(1, 0, 1, 1);
     CollisionSystem collisionSystem;
+    ColliderComponent colliderComponent;
 
     public ComponentEnemyMissile() {
 
     }
-
-    ColliderComponent colliderComponent;
 
     @Override
     public void tick(double delta) {

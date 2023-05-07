@@ -41,12 +41,11 @@ public class ComponentPlayer extends Component {
     ComponentGameLogic gameLogic;
     TileSheet tileSheet;
     Resources resources;
+    CollisionSystem collisionSystem;
 
     public ComponentPlayer() {
 
     }
-
-    CollisionSystem collisionSystem;
 
     @Override
     public void init() {

@@ -88,7 +88,6 @@ public class ComponentEnemy extends Component {
     }
 
 
-
     @Override
     public void draw() {
         if (spriteHelper == null) return;
