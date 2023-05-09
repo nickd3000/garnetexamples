@@ -3,7 +3,6 @@ package com.physmo.garnetexamples.graphics;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.Texture;
-import com.physmo.garnet.Utils;
 import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
 
@@ -32,7 +31,8 @@ public class SimpleSpriteExample extends GarnetApp {
 
     @Override
     public void init(Garnet garnet) {
-        texture = Texture.loadTexture(Utils.getPathForResource(this, "space.png"));
+
+        texture = Texture.loadTexture("space.png");
         tileSheet = new TileSheet(texture, 16, 16);
         graphics = garnet.getGraphics();
         graphics.addTexture(texture);

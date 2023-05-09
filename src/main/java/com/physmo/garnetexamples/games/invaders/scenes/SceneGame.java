@@ -2,7 +2,6 @@ package com.physmo.garnetexamples.games.invaders.scenes;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Texture;
-import com.physmo.garnet.Utils;
 import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnetexamples.games.invaders.GameData;
@@ -40,9 +39,10 @@ public class SceneGame extends Scene {
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
 
         String spriteSheetFileName = "space.png";
-        String spriteSheetFileNamePath = Utils.getPathForResource(this, spriteSheetFileName);
+        //String spriteSheetFileNamePath = Utils.getPathForResource(this, spriteSheetFileName);
 
-        texture = Texture.loadTexture(spriteSheetFileNamePath);
+
+        texture = Texture.loadTexture(spriteSheetFileName);
         garnet.getGraphics().addTexture(texture);
 
         tileSheet = new TileSheet(texture, 16, 16);

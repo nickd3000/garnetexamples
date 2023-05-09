@@ -3,7 +3,6 @@ package com.physmo.garnetexamples.graphics;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.Texture;
-import com.physmo.garnet.Utils;
 import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnetexamples.graphics.support.FloatingInvaderComponent;
@@ -40,7 +39,8 @@ public class StressTest extends GarnetApp {
     public void init(Garnet garnet) {
         context = new Context();
 
-        texture = Texture.loadTexture(Utils.getPathForResource(this, imageFileName));
+
+        texture = Texture.loadTexture(imageFileName);
         tileSheet = new TileSheet(texture, 16, 16);
         graphics = garnet.getGraphics();
         graphics.addTexture(texture);

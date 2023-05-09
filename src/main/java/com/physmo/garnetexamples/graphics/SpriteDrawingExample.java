@@ -8,6 +8,8 @@ import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnettoolkit.color.Color;
 
+import java.io.InputStream;
+
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class SpriteDrawingExample extends GarnetApp {
 
@@ -42,12 +44,13 @@ public class SpriteDrawingExample extends GarnetApp {
 
     @Override
     public void init(Garnet garnet) {
-
-        texture1 = Texture.loadTexture(Utils.getPathForResource(this, fileName1));
+        InputStream inputStream = Utils.getFileFromResourceAsStream(fileName1);
+        texture1 = Texture.loadTexture(inputStream);
         tileSheet1 = new TileSheet(texture1, 16, 16);
         garnet.getGraphics().addTexture(texture1);
 
-        texture2 = Texture.loadTexture(Utils.getPathForResource(this, fileName2));
+        InputStream inputStream2 = Utils.getFileFromResourceAsStream(fileName2);
+        texture2 = Texture.loadTexture(inputStream2);
         tileSheet2 = new TileSheet(texture2, 16, 16);
         garnet.getGraphics().addTexture(texture2);
 
