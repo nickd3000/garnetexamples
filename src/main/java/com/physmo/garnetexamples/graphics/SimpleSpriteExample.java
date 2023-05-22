@@ -3,15 +3,12 @@ package com.physmo.garnetexamples.graphics;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.Texture;
-import com.physmo.garnet.Utils;
 import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
-import com.physmo.garnettoolkit.color.Color;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class SimpleSpriteExample extends GarnetApp {
 
-    String imageFileName = "space.png";
     TileSheet tileSheet;
     Texture texture;
     Graphics graphics;
@@ -34,7 +31,8 @@ public class SimpleSpriteExample extends GarnetApp {
 
     @Override
     public void init(Garnet garnet) {
-        texture = Texture.loadTexture(Utils.getPathForResource(this, imageFileName));
+
+        texture = Texture.loadTexture("space.png");
         tileSheet = new TileSheet(texture, 16, 16);
         graphics = garnet.getGraphics();
         graphics.addTexture(texture);
@@ -50,14 +48,12 @@ public class SimpleSpriteExample extends GarnetApp {
     public void draw() {
         int[] mousePosition = garnet.getInput().getMousePositionScaled(scale);
 
-        graphics.setColor(Color.GREEN.toInt());
+        graphics.setColor(0xaaff22ff);
         graphics.setScale(scale);
         graphics.drawImage(tileSheet, (int) x, 5, 2, 2);
 
-        graphics.setColor(Color.SUNSET_BLUE.toInt());
+        graphics.setColor(0xaa22ffff);
         graphics.drawImage(tileSheet, mousePosition[0], mousePosition[1], 2, 2);
         graphics.render();
-
     }
-
 }

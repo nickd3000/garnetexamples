@@ -3,7 +3,6 @@ package com.physmo.garnetexamples.graphics;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.Texture;
-import com.physmo.garnet.Utils;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnettoolkit.color.Color;
 
@@ -34,7 +33,7 @@ public class ClipWindowExample extends GarnetApp {
     @Override
     public void init(Garnet garnet) {
 
-        texture = Texture.loadTexture(Utils.getPathForResource(this, fileName));
+        texture = Texture.loadTexture(fileName);
 
         graphics = garnet.getGraphics();
 

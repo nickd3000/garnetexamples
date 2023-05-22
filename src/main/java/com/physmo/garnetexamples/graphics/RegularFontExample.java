@@ -6,6 +6,8 @@ import com.physmo.garnet.Utils;
 import com.physmo.garnet.regularfont.RegularFont;
 import com.physmo.garnettoolkit.color.Color;
 
+import java.io.InputStream;
+
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class RegularFontExample extends GarnetApp {
 
@@ -27,7 +29,8 @@ public class RegularFontExample extends GarnetApp {
 
     @Override
     public void init(Garnet garnet) {
-        regularFont = new RegularFont(Utils.getPathForResource(this, "12x12Font.png"), 12, 12);
+        InputStream inputStream = Utils.getFileFromResourceAsStream("12x12Font.png");
+        regularFont = new RegularFont(inputStream, 12, 12);
         garnet.getGraphics().setBackgroundColor(Color.SUNSET_BLUE.toInt());
     }
 

@@ -1,7 +1,6 @@
 package com.physmo.garnetexamples.games.cellsurvivor;
 
 import com.physmo.garnet.Texture;
-import com.physmo.garnet.Utils;
 import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
 
@@ -13,7 +12,7 @@ public class Resources {
 
     public void init(Graphics graphics) {
         this.graphics = graphics;
-        spritesTexture = Texture.loadTexture(Utils.getPathForResource(this, spritesFileName));
+        spritesTexture = Texture.loadTexture(spritesFileName);
         graphics.addTexture(spritesTexture);
         spritesTilesheet = new TileSheet(spritesTexture, 16, 16);
 

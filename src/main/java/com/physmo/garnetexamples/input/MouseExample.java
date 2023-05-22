@@ -9,6 +9,8 @@ import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.input.Input;
 import com.physmo.garnettoolkit.color.Color;
 
+import java.io.InputStream;
+
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class MouseExample extends GarnetApp {
 
@@ -37,7 +39,8 @@ public class MouseExample extends GarnetApp {
 
     @Override
     public void init(Garnet garnet) {
-        texture = Texture.loadTexture(Utils.getPathForResource(this, imageFileName));
+        InputStream inputStream = Utils.getFileFromResourceAsStream(imageFileName);
+        texture = Texture.loadTexture(inputStream);
         tileSheet = new TileSheet(texture, 16, 16);
         graphics = garnet.getGraphics();
         graphics.addTexture(texture);
