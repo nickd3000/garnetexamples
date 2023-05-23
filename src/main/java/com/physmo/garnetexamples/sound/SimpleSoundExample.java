@@ -2,21 +2,20 @@ package com.physmo.garnetexamples.sound;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
-import com.physmo.garnet.Texture;
-import com.physmo.garnet.drawablebatch.TileSheet;
+import com.physmo.garnet.Utils;
 import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.input.Input;
+import com.physmo.garnet.regularfont.RegularFont;
 import com.physmo.garnettoolkit.color.Color;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class SimpleSoundExample extends GarnetApp {
 
-    String imageFileName = "space.png";
-    String soundFileName = "space.png";
-    TileSheet tileSheet;
-    Texture texture;
     Graphics graphics;
-    double x = 0;
-    double scale = 4;
+    RegularFont regularFont;
+    int soundA;
+    int soundB;
+
 
     public SimpleSoundExample(Garnet garnet, String name) {
         super(garnet, name);
@@ -32,16 +31,15 @@ public class SimpleSoundExample extends GarnetApp {
         garnet.run();
     }
 
+
     @Override
     public void init(Garnet garnet) {
-
-        texture = Texture.loadTexture(imageFileName);
-        tileSheet = new TileSheet(texture, 16, 16);
         graphics = garnet.getGraphics();
-        graphics.addTexture(texture);
 
-        int soundA = garnet.getSound().loadSound("sounds/synth.wav");
-        int soundB = garnet.getSound().loadSound("sounds/laserShoot-3.wav");
+        regularFont = new RegularFont("12x12Font.png", 12, 12);
+
+        soundA = garnet.getSound().loadSound(Utils.getPathForResource(this, "sounds/laserShoot-3.wav"));
+        soundB = garnet.getSound().loadSound(Utils.getPathForResource(this, "sounds/laserShoot.wav"));
 
         garnet.getSound().playSound(soundA);
         garnet.getSound().playSound(soundB);
@@ -49,20 +47,27 @@ public class SimpleSoundExample extends GarnetApp {
 
     @Override
     public void tick(double delta) {
-        x += delta * 50;
-        if (x > 80) x = -16;
+        if (garnet.getInput().isMouseButtonFirstPress(Input.MOUSE_BUTTON_LEFT)) {
+            garnet.getSound().playSound(soundA);
+        }
+        if (garnet.getInput().isMouseButtonFirstPress(Input.MOUSE_BUTTON_RIGHT)) {
+            garnet.getSound().playSound(soundB);
+        }
     }
 
     @Override
     public void draw() {
-        int[] mousePosition = garnet.getInput().getMousePositionScaled(scale);
 
         graphics.setColor(Color.GREEN.toInt());
-        graphics.setScale(scale);
-        graphics.drawImage(tileSheet, (int) x, 5, 2, 2);
+        graphics.setScale(2);
 
         graphics.setColor(Color.SUNSET_BLUE.toInt());
-        graphics.drawImage(tileSheet, mousePosition[0], mousePosition[1], 2, 2);
+
+        regularFont.setHorizontalPad(-4);
+
+        regularFont.drawText(graphics, "Left / Right mouse", 20, 20);
+        regularFont.drawText(graphics, "button to play", 20, 35);
+        regularFont.drawText(graphics, "sounds", 20, 50);
         graphics.render();
 
     }

@@ -70,7 +70,7 @@ public class CollisionExample_CloseObjects extends GarnetApp {
         }
 
         context.init();
-
+        garnet.getDebugDrawer().setVisible(true);
         garnet.getDebugDrawer().setScale(2);
     }
 

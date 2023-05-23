@@ -64,7 +64,7 @@ public class CollisionExample extends GarnetApp {
         }
 
         context.init();
-
+        garnet.getDebugDrawer().setVisible(true);
         garnet.getDebugDrawer().setScale(2);
     }
 
