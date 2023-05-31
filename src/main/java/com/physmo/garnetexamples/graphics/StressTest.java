@@ -47,7 +47,7 @@ public class StressTest extends GarnetApp {
 
         // Configure the debug text.
         garnet.getDebugDrawer().setScale(2);
-        garnet.getDebugDrawer().setUserString("Num Sprites:", String.valueOf(numSprites));
+        garnet.getDebugDrawer().setUserString("Sprite count:", String.valueOf(numSprites));
 
         // Add the tilesheet and graphics object to the context so the sprite entities can access them.
         context.add(tileSheet);
@@ -59,6 +59,8 @@ public class StressTest extends GarnetApp {
             gameObject.addComponent(new FloatingInvaderComponent(garnet.getDisplay().getWindowWidth(), garnet.getDisplay().getWindowHeight()));
             context.add(gameObject);
         }
+
+        garnet.getDebugDrawer().setVisible(true);
     }
 
     @Override

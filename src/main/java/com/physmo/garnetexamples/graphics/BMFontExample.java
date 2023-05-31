@@ -2,7 +2,6 @@ package com.physmo.garnetexamples.graphics;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
-import com.physmo.garnet.Utils;
 import com.physmo.garnet.bitmapfont.BitmapFont;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnettoolkit.color.Color;
@@ -31,8 +30,8 @@ public class BMFontExample extends GarnetApp {
     @Override
     public void init(Garnet garnet) {
 
-        String imagePath = Utils.getPathForResource(this, "ptmono16_0.png");
-        String definitionPath = Utils.getPathForResource(this, "ptmono16.fnt");
+        String imagePath = "bitmapfonts/ptmono16_0.png";
+        String definitionPath = "bitmapfonts/ptmono16.fnt";
 
         try {
             bmfFont = new BitmapFont(imagePath, definitionPath);
@@ -54,11 +53,11 @@ public class BMFontExample extends GarnetApp {
 
         graphics.setScale(2);
         graphics.setColor(Color.SUNSET_GREEN.toInt());
-        bmfFont.drawString(graphics, "hello", 0, 10);
+        bmfFont.drawText(graphics, "hello", 0, 10);
 
         graphics.setScale(3);
         graphics.setColor(Color.SUNSET_YELLOW.toInt());
-        bmfFont.drawString(graphics, "hello but bigger", 0, 20);
+        bmfFont.drawText(graphics, "hello but bigger", 0, 20);
 
         graphics.render();
     }

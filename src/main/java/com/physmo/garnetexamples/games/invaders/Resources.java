@@ -31,8 +31,8 @@ public class Resources {
 
     public Resources init() {
 
-        String fontImagePath = "LucidaConsole16.png"; //Utils.getPathForResource(this, "LucidaConsole16.png");
-        String fontSpecFile = "LucidaConsole16.fnt"; //Utils.getPathForResource(this, "LucidaConsole16.fnt");
+        String fontImagePath = "bitmapfonts/LucidaConsole16.png"; //Utils.getPathForResource(this, "LucidaConsole16.png");
+        String fontSpecFile = "bitmapfonts/LucidaConsole16.fnt"; //Utils.getPathForResource(this, "LucidaConsole16.fnt");
 
         String pathForResource = fontSpecFile;
         try {
@@ -42,7 +42,7 @@ public class Resources {
         }
 
         // Regular font
-        String fontName = "12x12Font.png";
+        String fontName = "regularfonts/12x12Font.png";
         //String fontFileName = Utils.getPathForResource(this, fontName);
 
         regularFont = new RegularFont(fontName, 12, 12);

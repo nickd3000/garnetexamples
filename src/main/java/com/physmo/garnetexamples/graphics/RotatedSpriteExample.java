@@ -39,6 +39,7 @@ public class RotatedSpriteExample extends GarnetApp {
         tileSheet = new TileSheet(texture, 16, 16);
         graphics = garnet.getGraphics();
         graphics.addTexture(texture);
+        garnet.getDebugDrawer().setVisible(true);
     }
 
     @Override

@@ -49,6 +49,8 @@ public class KeyboardExample extends GarnetApp {
         garnet.getInput().addKeyboardAction(InputKeys.KEY_S, InputAction.DOWN);
         garnet.getInput().addKeyboardAction(InputKeys.KEY_A, InputAction.LEFT);
         garnet.getInput().addKeyboardAction(InputKeys.KEY_D, InputAction.RIGHT);
+
+        garnet.getDebugDrawer().setVisible(true);
     }
 
     @Override

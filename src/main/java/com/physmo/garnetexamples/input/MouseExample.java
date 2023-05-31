@@ -45,6 +45,7 @@ public class MouseExample extends GarnetApp {
         graphics = garnet.getGraphics();
         graphics.addTexture(texture);
         input = garnet.getInput();
+        garnet.getDebugDrawer().setVisible(true);
     }
 
     @Override
@@ -62,7 +63,6 @@ public class MouseExample extends GarnetApp {
 
         garnet.getDebugDrawer().setUserString("Mouse pos:        ", String.format("%d,%d", mp[0], mp[1]));
         garnet.getDebugDrawer().setUserString("Mouse pos scaled: ", String.format("%d,%d", mps[0], mps[1]));
-
 
         graphics.setScale(scale);
 
