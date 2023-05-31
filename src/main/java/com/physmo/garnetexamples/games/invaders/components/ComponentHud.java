@@ -59,7 +59,7 @@ public class ComponentHud extends Component {
         if (((int) (textFlash * 10)) % 2 == 0) graphics.setColor(Color.RED.toInt());
         else graphics.setColor(Color.BLUE.toInt());
 
-        resources.getBitmapFont().drawString(graphics, text, textX, textY);
+        resources.getBitmapFont().drawText(graphics, text, textX, textY);
         graphics.setScale(prevScale);
     }
 
@@ -70,8 +70,8 @@ public class ComponentHud extends Component {
 
         garnet.getGraphics().setColor(textColor);
         garnet.getGraphics().setScale(2);
-        resources.getBitmapFont().drawString(garnet.getGraphics(), "Score:" + gameData.currentScore, 10, 10);
-        resources.getBitmapFont().drawString(garnet.getGraphics(), "Lives:" + gameData.lives, 10 + 250, 10);
+        resources.getBitmapFont().drawText(garnet.getGraphics(), "Score:" + gameData.currentScore, 10, 10);
+        resources.getBitmapFont().drawText(garnet.getGraphics(), "Lives:" + gameData.lives, 10 + 250, 10);
 
 
         String textGetReady = "Get Ready!";
@@ -98,7 +98,7 @@ public class ComponentHud extends Component {
         String clock = "fps:" + fps + "  lps:" + lps + " objects:" + parent.getContext().getObjectCount();
         clock += " colliders:" + collisionSystem.getSize();
         garnet.getGraphics().setScale(1);
-        resources.getBitmapFont().drawString(garnet.getGraphics(), clock, 10, 26 + 20);
+        resources.getBitmapFont().drawText(garnet.getGraphics(), clock, 10, 26 + 20);
 
         garnet.getGraphics().setScale(prevScale);
     }
