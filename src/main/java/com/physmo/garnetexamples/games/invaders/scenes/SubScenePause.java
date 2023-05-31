@@ -10,7 +10,7 @@ import com.physmo.garnettoolkit.scene.SceneManager;
 
 public class SubScenePause extends Scene {
 
-    public static final String fontName = "/12x12Font.png";
+    public static final String fontName = "/regularfonts/12x12Font.png";
     RegularFont regularFont;
     Garnet garnet;
 

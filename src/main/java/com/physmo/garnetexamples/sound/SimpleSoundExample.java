@@ -36,7 +36,7 @@ public class SimpleSoundExample extends GarnetApp {
     public void init(Garnet garnet) {
         graphics = garnet.getGraphics();
 
-        regularFont = new RegularFont("12x12Font.png", 12, 12);
+        regularFont = new RegularFont("regularfonts/12x12Font.png", 12, 12);
 
         soundA = garnet.getSound().loadSound(Utils.getPathForResource(this, "sounds/laserShoot-3.wav"));
         soundB = garnet.getSound().loadSound(Utils.getPathForResource(this, "sounds/laserShoot.wav"));
