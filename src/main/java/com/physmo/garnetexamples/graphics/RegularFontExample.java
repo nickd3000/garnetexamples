@@ -26,7 +26,7 @@ public class RegularFontExample extends GarnetApp {
 
     @Override
     public void init(Garnet garnet) {
-        regularFont = new RegularFont("12x12Font.png", 12, 12);
+        regularFont = new RegularFont("regularfonts/12x12Font.png", 12, 12);
         garnet.getGraphics().setBackgroundColor(Color.SUNSET_BLUE.toInt());
     }
 
