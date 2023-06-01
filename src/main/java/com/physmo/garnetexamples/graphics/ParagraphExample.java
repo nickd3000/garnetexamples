@@ -4,6 +4,7 @@ import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.ParagraphDrawer;
 import com.physmo.garnet.bitmapfont.BitmapFont;
+import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.regularfont.RegularFont;
 import com.physmo.garnettoolkit.color.Color;
 
@@ -51,23 +52,25 @@ public class ParagraphExample extends GarnetApp {
 
     @Override
     public void draw() {
-        String paragraphText = "The quick brown fox jumps over the lazy dogs. The quick brown fox jumps over the lazy dogs.";
-        garnet.getGraphics().setScale(2);
-        garnet.getGraphics().setColor(Color.SUNSET_GREEN.toInt());
+
+        String paragraphText = "The quick brown fox \n jumps over the lazy dogs. The quick brown fox jumps over the lazy dogs.";
+        Graphics graphics = garnet.getGraphics();
+        graphics.setScale(2);
+        graphics.setColor(Color.SUNSET_GREEN.toInt());
         //regularFont.drawText(garnet.getGraphics(), "Regular font", 0, 10);
 
         ParagraphDrawer paragraphDrawer = new ParagraphDrawer(regularFont);
-        paragraphDrawer.drawParagraph(garnet.getGraphics(), paragraphText, 200, 200, 0, 0);
+        paragraphDrawer.drawParagraph(graphics, paragraphText, 200, 200, 0, 0);
 
         int[] mp = garnet.getInput().getMousePositionScaled(2);
-        paragraphDrawer.drawParagraph(garnet.getGraphics(), paragraphText, mp[0], 200, 0, 60);
+        paragraphDrawer.drawParagraph(graphics, paragraphText, mp[0], 200, 0, 60);
 
         ParagraphDrawer paragraphDrawerBitmapFont = new ParagraphDrawer(bitmapFont);
         paragraphDrawerBitmapFont.setPadY(4);
-        paragraphDrawerBitmapFont.drawParagraph(garnet.getGraphics(), paragraphText, mp[0], 200, 0, 200);
+        int ph = paragraphDrawerBitmapFont.drawParagraph(graphics, paragraphText, mp[0], 200, 0, 200);
+        graphics.drawRect(0, 200, mp[0], ph);
 
-
-        garnet.getGraphics().render();
+        graphics.render();
     }
 
 }
