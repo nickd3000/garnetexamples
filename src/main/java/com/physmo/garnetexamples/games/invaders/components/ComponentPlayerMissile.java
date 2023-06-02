@@ -3,8 +3,8 @@ package com.physmo.garnetexamples.games.invaders.components;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
-import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnetexamples.games.invaders.Constants;
+import com.physmo.garnetexamples.games.invaders.Resources;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.scene.SceneManager;
 import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
@@ -13,7 +13,7 @@ import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 public class ComponentPlayerMissile extends Component {
     double speed = 250;
 
-    TileSheet tileSheet;
+    Resources resources;
     Garnet garnet;
     int color = Utils.floatToRgb(1, 0, 1, 1);
     CollisionSystem collisionSystem;
@@ -43,7 +43,7 @@ public class ComponentPlayerMissile extends Component {
 
         parent.addTag(Constants.PLAYER_MISSILE);
 
-        tileSheet = parent.getContext().getObjectByType(TileSheet.class);
+        resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
 
         colliderComponent = parent.getComponent(ColliderComponent.class);
@@ -58,7 +58,7 @@ public class ComponentPlayerMissile extends Component {
         if (!parent.isActive()) return;
 
         garnet.getGraphics().setColor(color);
-        garnet.getGraphics().drawImage(tileSheet, (int) (parent.getTransform().x) - 8,
+        garnet.getGraphics().drawImage(resources.getSpriteTilesheet(), (int) (parent.getTransform().x) - 8,
                 (int) (parent.getTransform().y) - 8, 4, 2);
 
     }

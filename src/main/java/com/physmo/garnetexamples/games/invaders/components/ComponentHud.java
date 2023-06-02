@@ -1,7 +1,6 @@
 package com.physmo.garnetexamples.games.invaders.components;
 
 import com.physmo.garnet.Garnet;
-import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnetexamples.games.invaders.GameData;
 import com.physmo.garnetexamples.games.invaders.Resources;
@@ -15,7 +14,7 @@ public class ComponentHud extends Component {
     Resources resources;
     GameData gameData;
     Garnet garnet;
-    TileSheet tileSheet;
+
     int textColor = Color.YELLOW.toInt();
     double textFlash = 0;
     ComponentGameLogic gameLogic;
@@ -32,7 +31,6 @@ public class ComponentHud extends Component {
         resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
 
-        tileSheet = parent.getContext().getObjectByType(TileSheet.class);
         gameLogic = parent.getContext().getComponent(ComponentGameLogic.class);
         collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
     }
@@ -117,7 +115,7 @@ public class ComponentHud extends Component {
         for (int y = -1; y <= numY; y++) {
             for (int x = -1; x <= numX; x++) {
                 int offset = (int) (overlayScroll * ySpan);
-                graphics.drawImage(tileSheet, (x * xSpan) - (xSpan / 2), y * ySpan + offset, 2, 2);
+                graphics.drawImage(resources.getSpriteTilesheet(), (x * xSpan) - (xSpan / 2), y * ySpan + offset, 2, 2);
             }
         }
     }

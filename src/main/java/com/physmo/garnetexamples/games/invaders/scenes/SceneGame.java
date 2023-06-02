@@ -20,17 +20,19 @@ import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 public class SceneGame extends Scene {
 
-    Texture texture;
     GameData gameData;
     Garnet garnet;
     Graphics graphics;
-    TileSheet tileSheet;
+
     boolean showCollisionInfo = false;
     CollisionSystem collisionSystem;
 
     public SceneGame(String name) {
         super(name);
     }
+
+    TileSheet tileSheet;
+    Texture texture;
 
     @Override
     public void init() {
@@ -39,11 +41,10 @@ public class SceneGame extends Scene {
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
 
         String spriteSheetFileName = "space.png";
-        //String spriteSheetFileNamePath = Utils.getPathForResource(this, spriteSheetFileName);
-
 
         texture = Texture.loadTexture(spriteSheetFileName);
         garnet.getGraphics().addTexture(texture);
+        texture.setFilter(true);
 
         tileSheet = new TileSheet(texture, 16, 16);
         context.add(tileSheet);

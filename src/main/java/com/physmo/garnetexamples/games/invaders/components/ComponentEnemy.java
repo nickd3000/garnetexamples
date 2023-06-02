@@ -3,7 +3,6 @@ package com.physmo.garnetexamples.games.invaders.components;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
-import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnetexamples.games.invaders.*;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.color.Color;
@@ -26,7 +25,6 @@ public class ComponentEnemy extends Component {
 
     ParticleTemplate explosionParticleTemplate;
     GameData gameData;
-    TileSheet tileSheet;
     Garnet garnet;
     CollisionSystem collisionSystem;
     Resources resources;
@@ -95,7 +93,6 @@ public class ComponentEnemy extends Component {
         parent.addTag(Constants.ENEMY_TAG);
 
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
-        tileSheet = parent.getContext().getObjectByType(TileSheet.class);
 
         ColliderComponent colliderComponent = parent.getComponent(ColliderComponent.class);
         colliderComponent.setCallbackEnter(col -> {
@@ -105,9 +102,9 @@ public class ComponentEnemy extends Component {
         });
 
         resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
-        soundExplosionId = resources.soundExplosionId;
-        soundShieldHitId = resources.soundShieldHitId;
-        soundEnemyFireId = resources.soundEnemyFireId;
+        soundExplosionId = resources.soundIdExplosion;
+        soundShieldHitId = resources.soundIdShieldHit;
+        soundEnemyFireId = resources.soundIdEnemyFire;
     }
 
     public void resetFireDelay() {
@@ -145,23 +142,13 @@ public class ComponentEnemy extends Component {
     public void draw() {
         if (!parent.isActive()) return;
 
-
         ComponentEnemy component = parent.getComponent(ComponentEnemy.class);
         if (component.enemyType == EnemyType.basic) garnet.getGraphics().setColor(basicCol);
         if (component.enemyType == EnemyType.armoured) garnet.getGraphics().setColor(armoredCol);
         if (component.enemyType == EnemyType.shooter) garnet.getGraphics().setColor(shooterCol);
         garnet.getGraphics().setScale(2);
-        garnet.getGraphics().drawImage(tileSheet, (int) (parent.getTransform().x) - 8, (int) (parent.getTransform().y) - 8, 2, 2);
+        garnet.getGraphics().drawImage(resources.getSpriteTilesheet(), (int) (parent.getTransform().x) - 8, (int) (parent.getTransform().y) - 8, 2, 2);
 
     }
 
-//    @Override
-//    public void proximityCallback(RelativeObject relativeObject) {
-//
-//    }
-//
-//    @Override
-//    public GameObject collisionGetGameObject() {
-//        return parent;
-//    }
 }
