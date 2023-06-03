@@ -22,7 +22,6 @@ public class CollisionExample extends GarnetApp {
     String imageFileName = "space.png";
     TileSheet tileSheet;
     Texture texture;
-    Graphics graphics;
     Context context;
     double scale = 1;
     Random random = new Random(12345);
@@ -49,7 +48,7 @@ public class CollisionExample extends GarnetApp {
 
         texture = Texture.loadTexture(imageFileName);
         tileSheet = new TileSheet(texture, 16, 16);
-        graphics = garnet.getGraphics();
+        Graphics graphics = garnet.getGraphics();
         graphics.addTexture(texture);
         context.add(tileSheet);
         context.add(graphics);
@@ -94,7 +93,7 @@ public class CollisionExample extends GarnetApp {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
         context.draw();
 
         int[] mp, mps;
@@ -105,19 +104,18 @@ public class CollisionExample extends GarnetApp {
         garnet.getDebugDrawer().setUserString("Mouse pos scaled:", mps[0] + "," + mps[1]);
         garnet.getDebugDrawer().setUserString("collision checks:", String.valueOf(collisionSystem.getTestsPerFrame()));
 
-        garnet.getGraphics().setColor(0xff444471);
+        g.setColor(0xff444471);
         if (nearestObjects != null) {
             for (RelativeObject nearestObject : nearestObjects) {
                 GameObject gameObject = nearestObject.otherObject.collisionGetGameObject();
-                garnet.getGraphics().drawLine((float) mp[0], (float) mp[1], (float) gameObject.getTransform().x, (float) gameObject.getTransform().y);
+                g.drawLine((float) mp[0], (float) mp[1], (float) gameObject.getTransform().x, (float) gameObject.getTransform().y);
             }
         }
 
 
-        graphics.setScale(scale);
+        g.setScale(scale);
 
-        graphics.render();
-
+        g.render();
     }
 
 }

@@ -13,7 +13,6 @@ public class RotatedSpriteExample extends GarnetApp {
     String imageFileName = "space.png";
     TileSheet tileSheet;
     Texture texture;
-    Graphics graphics;
     double x = 0;
     double scale = 4;
     double angle = 0;
@@ -37,7 +36,7 @@ public class RotatedSpriteExample extends GarnetApp {
 
         texture = Texture.loadTexture(imageFileName);
         tileSheet = new TileSheet(texture, 16, 16);
-        graphics = garnet.getGraphics();
+        Graphics graphics = garnet.getGraphics();
         graphics.addTexture(texture);
         garnet.getDebugDrawer().setVisible(true);
     }
@@ -54,21 +53,21 @@ public class RotatedSpriteExample extends GarnetApp {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
         int[] mousePosition = garnet.getInput().getMousePositionScaled(scale);
 
 
-        graphics.setColor(Color.GREEN.toInt());
-        graphics.setScale(scale);
-        graphics.drawImage(tileSheet, (int) x, 5, 2, 2);
+        g.setColor(Color.GREEN.toInt());
+        g.setScale(scale);
+        g.drawImage(tileSheet, (int) x, 5, 2, 2);
 
-        graphics.setColor(Color.GREEN.toInt());
-        graphics.setScale(scale);
-        graphics.drawImage(tileSheet, (int) x, 20, 2, 2, angle);
+        g.setColor(Color.GREEN.toInt());
+        g.setScale(scale);
+        g.drawImage(tileSheet, (int) x, 20, 2, 2, angle);
 
-        graphics.setColor(Color.SUNSET_BLUE.toInt());
-        graphics.drawImage(tileSheet, mousePosition[0], mousePosition[1], 2, 2, -angle / 2);
-        graphics.render();
+        g.setColor(Color.SUNSET_BLUE.toInt());
+        g.drawImage(tileSheet, mousePosition[0], mousePosition[1], 2, 2, -angle / 2);
+        g.render();
 
     }
 

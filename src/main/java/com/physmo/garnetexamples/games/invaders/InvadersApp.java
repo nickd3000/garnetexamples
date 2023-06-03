@@ -2,6 +2,7 @@ package com.physmo.garnetexamples.games.invaders;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
+import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnetexamples.games.invaders.scenes.SceneGame;
 import com.physmo.garnetexamples.games.invaders.scenes.SceneMenu;
 import com.physmo.garnetexamples.games.invaders.scenes.SubScenePause;
@@ -41,8 +42,8 @@ public class InvadersApp extends GarnetApp {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
         SceneManager.draw();
-        garnet.getGraphics().render();
+        g.render();
     }
 }

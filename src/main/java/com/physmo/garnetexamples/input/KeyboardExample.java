@@ -17,7 +17,6 @@ public class KeyboardExample extends GarnetApp {
     String imageFileName = "space.png";
     TileSheet tileSheet;
     Texture texture;
-    Graphics graphics;
 
     boolean up, down, left, right;
 
@@ -40,8 +39,8 @@ public class KeyboardExample extends GarnetApp {
         InputStream inputStream = Utils.getFileFromResourceAsStream(imageFileName);
         texture = Texture.loadTexture(inputStream);
         tileSheet = new TileSheet(texture, 16, 16);
-        graphics = garnet.getGraphics();
-        graphics.addTexture(texture);
+
+        garnet.getGraphics().addTexture(texture);
 
         // The input system is given some default config at startup,
         // here we add some extra WASD keys to the movement actions.
@@ -62,7 +61,7 @@ public class KeyboardExample extends GarnetApp {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
         garnet.getDebugDrawer().setScale(2);
 
         garnet.getDebugDrawer().setUserString("UP/W:    ", Boolean.toString(up));
@@ -70,7 +69,7 @@ public class KeyboardExample extends GarnetApp {
         garnet.getDebugDrawer().setUserString("LEFT/A:  ", Boolean.toString(left));
         garnet.getDebugDrawer().setUserString("RIGHT/D: ", Boolean.toString(right));
 
-        graphics.render();
+        g.render();
     }
 
 }

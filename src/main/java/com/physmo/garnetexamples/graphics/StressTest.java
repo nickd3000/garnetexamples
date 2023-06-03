@@ -16,8 +16,6 @@ public class StressTest extends GarnetApp {
     String imageFileName = "space.png";
     TileSheet tileSheet;
     Texture texture;
-    Graphics graphics;
-
     int numSprites = 25000;
     Context context;
 
@@ -42,7 +40,7 @@ public class StressTest extends GarnetApp {
 
         texture = Texture.loadTexture(imageFileName);
         tileSheet = new TileSheet(texture, 16, 16);
-        graphics = garnet.getGraphics();
+        Graphics graphics = garnet.getGraphics();
         graphics.addTexture(texture);
 
         // Configure the debug text.
@@ -69,13 +67,13 @@ public class StressTest extends GarnetApp {
     }
 
     @Override
-    public void draw() {
-        graphics.setColor(Color.GREEN.toInt());
-        graphics.setScale(1);
+    public void draw(Graphics g) {
+        g.setColor(Color.GREEN.toInt());
+        g.setScale(1);
 
         context.draw();
 
-        graphics.render();
+        g.render();
     }
 
 }

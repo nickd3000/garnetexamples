@@ -1,7 +1,8 @@
-package com.physmo.garnetexamples.graphics;
+package com.physmo.garnetexamples.text;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
+import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.regularfont.RegularFont;
 import com.physmo.garnettoolkit.color.Color;
 
@@ -35,7 +36,7 @@ public class RegularFontExample extends GarnetApp {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
 
         garnet.getGraphics().setScale(2);
         garnet.getGraphics().setColor(Color.SUNSET_GREEN.toInt());

@@ -13,8 +13,6 @@ public class ClipWindowExample extends GarnetApp {
 
     Texture texture;
     double time = 0;
-    Graphics graphics;
-
 
     public ClipWindowExample(Garnet garnet, String name) {
         super(garnet, name);
@@ -35,7 +33,7 @@ public class ClipWindowExample extends GarnetApp {
 
         texture = Texture.loadTexture(fileName);
 
-        graphics = garnet.getGraphics();
+        Graphics graphics = garnet.getGraphics();
 
         graphics.addTexture(texture);
 
@@ -48,15 +46,15 @@ public class ClipWindowExample extends GarnetApp {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
 
-        drawTestSpriteBuilder();
+        drawTestSpriteBuilder(g);
 
-        graphics.render();
+        g.render();
 
     }
 
-    private void drawTestSpriteBuilder() {
+    private void drawTestSpriteBuilder(Graphics graphics) {
 
         int offset1 = (int) (Math.sin(time * 3) * 50) - 50;
         int offset2 = (int) (Math.cos(time * 4) * 50) - 50;

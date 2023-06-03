@@ -11,7 +11,6 @@ public class SimpleSpriteExample extends GarnetApp {
 
     TileSheet tileSheet;
     Texture texture;
-    Graphics graphics;
     double x = 0;
     double scale = 4;
 
@@ -34,7 +33,7 @@ public class SimpleSpriteExample extends GarnetApp {
 
         texture = Texture.loadTexture("space.png");
         tileSheet = new TileSheet(texture, 16, 16);
-        graphics = garnet.getGraphics();
+        Graphics graphics = garnet.getGraphics();
         graphics.addTexture(texture);
     }
 
@@ -45,15 +44,15 @@ public class SimpleSpriteExample extends GarnetApp {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
         int[] mousePosition = garnet.getInput().getMousePositionScaled(scale);
 
-        graphics.setColor(0xaaff22ff);
-        graphics.setScale(scale);
-        graphics.drawImage(tileSheet, (int) x, 5, 2, 2);
+        g.setColor(0xaaff22ff);
+        g.setScale(scale);
+        g.drawImage(tileSheet, (int) x, 5, 2, 2);
 
-        graphics.setColor(0xaa22ffff);
-        graphics.drawImage(tileSheet, mousePosition[0], mousePosition[1], 2, 2);
-        graphics.render();
+        g.setColor(0xaa22ffff);
+        g.drawImage(tileSheet, mousePosition[0], mousePosition[1], 2, 2);
+        g.render();
     }
 }
