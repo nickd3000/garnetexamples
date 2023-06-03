@@ -57,7 +57,6 @@ public class BMFontExample extends GarnetApp {
         g.setColor(Color.SUNSET_YELLOW.toInt());
         bmfFont.drawText(g, "hello but bigger", 0, 20);
 
-        g.render();
     }
 
 }

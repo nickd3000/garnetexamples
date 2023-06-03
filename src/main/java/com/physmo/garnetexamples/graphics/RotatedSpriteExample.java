@@ -56,7 +56,6 @@ public class RotatedSpriteExample extends GarnetApp {
     public void draw(Graphics g) {
         int[] mousePosition = garnet.getInput().getMousePositionScaled(scale);
 
-
         g.setColor(Color.GREEN.toInt());
         g.setScale(scale);
         g.drawImage(tileSheet, (int) x, 5, 2, 2);
@@ -67,7 +66,6 @@ public class RotatedSpriteExample extends GarnetApp {
 
         g.setColor(Color.SUNSET_BLUE.toInt());
         g.drawImage(tileSheet, mousePosition[0], mousePosition[1], 2, 2, -angle / 2);
-        g.render();
 
     }
 

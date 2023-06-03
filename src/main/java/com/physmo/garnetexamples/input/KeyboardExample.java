@@ -69,7 +69,6 @@ public class KeyboardExample extends GarnetApp {
         garnet.getDebugDrawer().setUserString("LEFT/A:  ", Boolean.toString(left));
         garnet.getDebugDrawer().setUserString("RIGHT/D: ", Boolean.toString(right));
 
-        g.render();
     }
 
 }

@@ -103,7 +103,6 @@ public class TileGridExample extends GarnetApp {
 
     @Override
     public void draw(Graphics g) {
-
         tileGridDrawer.draw(g, 16, 16);
 
         int[] pos = tileGridDrawer.translateMapToScreenPosition(16, 16);
@@ -112,8 +111,6 @@ public class TileGridExample extends GarnetApp {
 
         g.disableClipRect();
         g.setScale(scale);
-
-        g.render();
     }
 
 }

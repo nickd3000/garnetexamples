@@ -64,7 +64,6 @@ public class SimpleSoundExample extends GarnetApp {
         regularFont.drawText(g, "Left / Right mouse", 20, 20);
         regularFont.drawText(g, "button to play", 20, 35);
         regularFont.drawText(g, "sounds", 20, 50);
-        g.render();
 
     }
 

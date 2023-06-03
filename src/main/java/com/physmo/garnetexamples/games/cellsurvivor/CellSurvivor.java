@@ -35,6 +35,5 @@ public class CellSurvivor extends GarnetApp {
     @Override
     public void draw(Graphics g) {
         SceneManager.draw();
-        g.render();
     }
 }

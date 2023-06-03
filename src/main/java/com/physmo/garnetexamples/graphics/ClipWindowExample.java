@@ -47,11 +47,7 @@ public class ClipWindowExample extends GarnetApp {
 
     @Override
     public void draw(Graphics g) {
-
         drawTestSpriteBuilder(g);
-
-        g.render();
-
     }
 
     private void drawTestSpriteBuilder(Graphics graphics) {

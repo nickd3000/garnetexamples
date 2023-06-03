@@ -53,6 +53,6 @@ public class SimpleSpriteExample extends GarnetApp {
 
         g.setColor(0xaa22ffff);
         g.drawImage(tileSheet, mousePosition[0], mousePosition[1], 2, 2);
-        g.render();
+
     }
 }

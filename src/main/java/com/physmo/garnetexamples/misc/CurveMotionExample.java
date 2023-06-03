@@ -86,8 +86,6 @@ public class CurveMotionExample extends GarnetApp {
         x = standardCurve_EASE_OUT_SINE.value(pos);
         g.drawImage(tileSheet, (int) (x * width), (y++) * 16, 2, 2);
 
-
-        g.render();
     }
 
 }

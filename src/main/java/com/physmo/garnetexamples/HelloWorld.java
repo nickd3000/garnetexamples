@@ -34,6 +34,5 @@ public class HelloWorld extends GarnetApp {
     public void draw(Graphics g) {
         g.drawCircle(200, 200, 100, 100);
         g.drawCircle(200, 200, 110, 150);
-        g.render();
     }
 }

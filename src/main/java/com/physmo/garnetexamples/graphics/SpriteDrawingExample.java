@@ -69,11 +69,7 @@ public class SpriteDrawingExample extends GarnetApp {
 
     @Override
     public void draw(Graphics g) {
-
         drawTestSpriteBuilder();
-
-        g.render();
-
     }
 
     private void drawTestSpriteBuilder() {

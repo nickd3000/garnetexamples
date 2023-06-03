@@ -104,9 +104,6 @@ public class CollisionExample_CloseObjects extends GarnetApp {
         garnet.getDebugDrawer().setUserString("closeObjectTestCount:", String.valueOf(closeObjectTestCount));
 
         g.setScale(scale);
-
-        g.render();
-
     }
 
 }

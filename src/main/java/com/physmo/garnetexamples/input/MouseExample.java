@@ -69,8 +69,6 @@ public class MouseExample extends GarnetApp {
 
         g.drawImage(tileSheet, mps[0] - 8, mps[1] - 8, 2, 2);
 
-        g.render();
-
     }
 
 }

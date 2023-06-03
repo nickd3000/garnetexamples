@@ -38,28 +38,26 @@ public class RegularFontExample extends GarnetApp {
     @Override
     public void draw(Graphics g) {
 
-        garnet.getGraphics().setScale(2);
-        garnet.getGraphics().setColor(Color.SUNSET_GREEN.toInt());
+        g.setScale(2);
+        g.setColor(Color.SUNSET_GREEN.toInt());
         regularFont.drawText(garnet.getGraphics(), "Regular font", 0, 10);
 
-        garnet.getGraphics().setScale(3);
-        garnet.getGraphics().setColor(Color.SUNSET_YELLOW.toInt());
+        g.setScale(3);
+        g.setColor(Color.SUNSET_YELLOW.toInt());
         regularFont.drawText(garnet.getGraphics(), "example", 0, 26);
 
-        garnet.getGraphics().setScale(1);
-        garnet.getGraphics().setColor(Color.SUNSET_GREEN.toInt());
+        g.setScale(1);
+        g.setColor(Color.SUNSET_GREEN.toInt());
         regularFont.setHorizontalPad(2);
         regularFont.drawText(garnet.getGraphics(), "horizontal pad 2", 0, 140);
 
-        garnet.getGraphics().setScale(1);
-        garnet.getGraphics().setColor(Color.SUNSET_YELLOW.toInt());
+        g.setScale(1);
+        g.setColor(Color.SUNSET_YELLOW.toInt());
         regularFont.setHorizontalPad(-3);
         regularFont.drawText(garnet.getGraphics(), "horizontal pad -3 minimum", 0, 180);
 
         regularFont.setHorizontalPad(0);
 
-
-        garnet.getGraphics().render();
     }
 
 }
