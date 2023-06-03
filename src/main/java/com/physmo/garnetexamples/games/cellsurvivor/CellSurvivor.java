@@ -14,7 +14,6 @@ public class CellSurvivor extends GarnetApp {
     public static void main(String[] args) {
         Garnet garnet = new Garnet(640, 480);
         garnet.setApp(new CellSurvivor(garnet, ""));
-
         garnet.init();
         garnet.run();
     }
@@ -22,7 +21,6 @@ public class CellSurvivor extends GarnetApp {
     @Override
     public void init(Garnet garnet) {
         SceneManager.getSharedContext().add(garnet);
-
         SceneManager.addScene(new SceneGame("game"));
         SceneManager.setActiveScene("game");
     }

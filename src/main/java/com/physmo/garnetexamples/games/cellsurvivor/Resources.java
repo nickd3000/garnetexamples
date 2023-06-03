@@ -13,7 +13,7 @@ public class Resources {
     public void init(Graphics graphics) {
         this.graphics = graphics;
         spritesTexture = Texture.loadTexture(spritesFileName);
-        spritesTexture.setFilter(true); // Show what smoothed textures look like
+        spritesTexture.setFilter(false); // Show what smoothed textures look like
         graphics.addTexture(spritesTexture);
         spritesTilesheet = new TileSheet(spritesTexture, 16, 16);
 
