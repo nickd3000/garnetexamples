@@ -3,17 +3,13 @@ package com.physmo.garnetexamples.graphics;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.Texture;
-import com.physmo.garnet.Utils;
 import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnettoolkit.color.ColorUtils;
 
-import java.io.InputStream;
-
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class SpriteDrawingExample extends GarnetApp {
 
-    // TODO: make relative
     private static final String fileName1 = "space.PNG";
     private static final String fileName2 = "prototypeArt.PNG";
 
@@ -44,13 +40,12 @@ public class SpriteDrawingExample extends GarnetApp {
 
     @Override
     public void init(Garnet garnet) {
-        InputStream inputStream = Utils.getFileFromResourceAsStream(fileName1);
-        texture1 = Texture.loadTexture(inputStream);
+
+        texture1 = Texture.loadTexture(fileName1);
         tileSheet1 = new TileSheet(texture1, 16, 16);
         garnet.getGraphics().addTexture(texture1);
 
-        InputStream inputStream2 = Utils.getFileFromResourceAsStream(fileName2);
-        texture2 = Texture.loadTexture(inputStream2);
+        texture2 = Texture.loadTexture(fileName2);
         tileSheet2 = new TileSheet(texture2, 16, 16);
         garnet.getGraphics().addTexture(texture2);
 
@@ -119,6 +114,10 @@ public class SpriteDrawingExample extends GarnetApp {
 
         graphics.setColor(ColorUtils.GREEN);
         graphics.drawRect(30, 30, 30, 30);
+
+        graphics.setColor(ColorUtils.SUNSET_BLUE);
+        graphics.filledRect(70, 30, 30, 30);
+
     }
 
     private void drawNew() {
