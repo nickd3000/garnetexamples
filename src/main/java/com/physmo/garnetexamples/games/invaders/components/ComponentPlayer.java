@@ -8,8 +8,8 @@ import com.physmo.garnetexamples.games.invaders.InvadersEntityFactory;
 import com.physmo.garnetexamples.games.invaders.Resources;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.color.Color;
 import com.physmo.garnettoolkit.color.ColorSupplierLinear;
+import com.physmo.garnettoolkit.color.ColorUtils;
 import com.physmo.garnettoolkit.curve.CurveType;
 import com.physmo.garnettoolkit.curve.StandardCurve;
 import com.physmo.garnettoolkit.particle.Emitter;
@@ -51,7 +51,7 @@ public class ComponentPlayer extends Component {
         shootParticleTemplate.setLifeTime(0.2, 0.8);
         shootParticleTemplate.setSpeed(10, 50);
         shootParticleTemplate.setPositionJitter(1.1);
-        shootParticleTemplate.setColorSupplier(new ColorSupplierLinear(new Color(1, 0, 1, 0.5f), new Color(0, 1, 1, 0)));
+        shootParticleTemplate.setColorSupplier(new ColorSupplierLinear(ColorUtils.asRGBA(1, 0, 1, 0.5f), ColorUtils.asRGBA(0, 1, 1, 0)));
         shootParticleTemplate.setSpeedCurve(new StandardCurve(CurveType.LINE_DOWN));
 
         particleManager = parent.getContext().getObjectByType(ParticleManager.class);

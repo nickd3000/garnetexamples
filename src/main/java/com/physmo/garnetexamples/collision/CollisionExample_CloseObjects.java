@@ -7,7 +7,7 @@ import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnettoolkit.Context;
 import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorUtils;
 import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 import com.physmo.garnettoolkit.simplecollision.RelativeObject;
@@ -98,7 +98,7 @@ public class CollisionExample_CloseObjects extends GarnetApp {
 
     @Override
     public void draw(Graphics g) {
-        g.setBackgroundColor(new Color(0.3f, 0.2f, 0.3f, 1.0f).toInt());
+        g.setBackgroundColor(ColorUtils.asRGBA(0.3f, 0.2f, 0.3f, 1.0f));
         context.draw();
 
         garnet.getDebugDrawer().setUserString("closeObjectTestCount:", String.valueOf(closeObjectTestCount));

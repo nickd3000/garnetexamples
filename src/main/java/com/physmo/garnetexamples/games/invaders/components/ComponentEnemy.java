@@ -5,8 +5,8 @@ import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
 import com.physmo.garnetexamples.games.invaders.*;
 import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.color.Color;
 import com.physmo.garnettoolkit.color.ColorSupplierLinear;
+import com.physmo.garnettoolkit.color.ColorUtils;
 import com.physmo.garnettoolkit.curve.CurveType;
 import com.physmo.garnettoolkit.curve.StandardCurve;
 import com.physmo.garnettoolkit.particle.Emitter;
@@ -87,7 +87,7 @@ public class ComponentEnemy extends Component {
         explosionParticleTemplate.setLifeTime(0.2, 3);
         explosionParticleTemplate.setSpeed(30, 50);
         explosionParticleTemplate.setPositionJitter(2.1);
-        explosionParticleTemplate.setColorSupplier(new ColorSupplierLinear(Color.YELLOW, new Color(1, 0, 0, 0)));
+        explosionParticleTemplate.setColorSupplier(new ColorSupplierLinear(ColorUtils.YELLOW, ColorUtils.asRGBA(1, 0, 0, 0)));
         explosionParticleTemplate.setSpeedCurve(new StandardCurve(CurveType.LINE_DOWN));
 
         parent.addTag(Constants.ENEMY_TAG);

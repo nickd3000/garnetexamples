@@ -6,7 +6,7 @@ import com.physmo.garnet.Utils;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.input.Input;
 import com.physmo.garnet.regularfont.RegularFont;
-import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorUtils;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class SimpleSoundExample extends GarnetApp {
@@ -54,10 +54,10 @@ public class SimpleSoundExample extends GarnetApp {
     @Override
     public void draw(Graphics g) {
 
-        g.setColor(Color.GREEN.toInt());
+        g.setColor(ColorUtils.GREEN);
         g.setScale(2);
 
-        g.setColor(Color.SUNSET_BLUE.toInt());
+        g.setColor(ColorUtils.SUNSET_BLUE);
 
         regularFont.setHorizontalPad(-4);
 

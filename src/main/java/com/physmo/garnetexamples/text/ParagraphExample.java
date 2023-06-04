@@ -6,7 +6,7 @@ import com.physmo.garnet.ParagraphDrawer;
 import com.physmo.garnet.bitmapfont.BitmapFont;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.regularfont.RegularFont;
-import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorUtils;
 
 import java.io.IOException;
 
@@ -36,7 +36,7 @@ public class ParagraphExample extends GarnetApp {
     public void init(Garnet garnet) {
         regularFont = new RegularFont("regularfonts/12x12Font.png", 12, 12);
         regularFont.setHorizontalPad(-5);
-        garnet.getGraphics().setBackgroundColor(Color.SUNSET_BLUE.toInt());
+        garnet.getGraphics().setBackgroundColor(ColorUtils.SUNSET_BLUE);
 
         String bitmapFontImagePath = "bitmapfonts/SmallFont12.png";
         String bitmapFontDefinitionPath = "bitmapfonts/SmallFont12.fnt";
@@ -62,7 +62,7 @@ public class ParagraphExample extends GarnetApp {
         String paragraphText2 = "Move the mouse to change the width of this paragraph.\n The paragraph drawer returns the total height of the lines in the drawn paragraph.";
 
         g.setScale(2);
-        g.setColor(Color.SUNSET_GREEN.toInt());
+        g.setColor(ColorUtils.SUNSET_GREEN);
         //regularFont.drawText(garnet.getGraphics(), "Regular font", 0, 10);
 
         regularFontParagraphDrawer.drawParagraph(g, paragraphText, 200, 200, 0, 0);

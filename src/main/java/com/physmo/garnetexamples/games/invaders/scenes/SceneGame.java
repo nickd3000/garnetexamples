@@ -12,7 +12,7 @@ import com.physmo.garnetexamples.games.invaders.components.ComponentPlayer;
 import com.physmo.garnettoolkit.GameObject;
 import com.physmo.garnettoolkit.Rect;
 import com.physmo.garnettoolkit.Vector3;
-import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorUtils;
 import com.physmo.garnettoolkit.particle.ParticleManager;
 import com.physmo.garnettoolkit.scene.Scene;
 import com.physmo.garnettoolkit.scene.SceneManager;
@@ -62,7 +62,7 @@ public class SceneGame extends Scene {
 
         initParticleManager();
         graphics = garnet.getGraphics();
-        graphics.setBackgroundColor(Color.SUNSET_BLUE.toInt());
+        graphics.setBackgroundColor(ColorUtils.SUNSET_BLUE);
     }
 
     public void injectCollisionDrawer(CollisionSystem collisionSystem) {
@@ -74,7 +74,7 @@ public class SceneGame extends Scene {
             float w = (float) rect.w;
             float h = (float) rect.h;
 
-            graphics.setColor(Color.GREEN.toInt());
+            graphics.setColor(ColorUtils.GREEN);
             graphics.drawRect(x, y, w, h);
         });
     }
@@ -83,7 +83,7 @@ public class SceneGame extends Scene {
         ParticleManager particleManager = new ParticleManager(1000);
         particleManager.setParticleDrawer(p -> {
             float pAge = (float) (p.age / p.lifeTime);
-            garnet.getGraphics().setColor(p.colorSupplier.getColor(pAge).toInt());
+            garnet.getGraphics().setColor(p.colorSupplier.getColor(pAge));
             garnet.getGraphics().drawImage(tileSheet, (int) (p.position.x) - 8,
                     (int) (p.position.y) - 8, 3, 0);
         });

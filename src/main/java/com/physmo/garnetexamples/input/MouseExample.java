@@ -7,7 +7,7 @@ import com.physmo.garnet.Utils;
 import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.input.Input;
-import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorUtils;
 
 import java.io.InputStream;
 
@@ -64,8 +64,8 @@ public class MouseExample extends GarnetApp {
 
         g.setScale(scale);
 
-        if (mousePressed) g.setColor(Color.SUNSET_RED.toInt());
-        else g.setColor(Color.SUNSET_YELLOW.toInt());
+        if (mousePressed) g.setColor(ColorUtils.SUNSET_RED);
+        else g.setColor(ColorUtils.SUNSET_YELLOW);
 
         g.drawImage(tileSheet, mps[0] - 8, mps[1] - 8, 2, 2);
 

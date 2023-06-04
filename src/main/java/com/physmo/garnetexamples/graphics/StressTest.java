@@ -8,7 +8,7 @@ import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnetexamples.graphics.support.FloatingInvaderComponent;
 import com.physmo.garnettoolkit.Context;
 import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorUtils;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class StressTest extends GarnetApp {
@@ -66,7 +66,7 @@ public class StressTest extends GarnetApp {
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(Color.GREEN.toInt());
+        g.setColor(ColorUtils.GREEN);
         g.setScale(1);
 
         context.draw();

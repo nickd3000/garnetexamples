@@ -5,7 +5,7 @@ import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.Texture;
 import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
-import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorUtils;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class RotatedSpriteExample extends GarnetApp {
@@ -56,15 +56,15 @@ public class RotatedSpriteExample extends GarnetApp {
     public void draw(Graphics g) {
         int[] mousePosition = garnet.getInput().getMousePositionScaled(scale);
 
-        g.setColor(Color.GREEN.toInt());
+        g.setColor(ColorUtils.GREEN);
         g.setScale(scale);
         g.drawImage(tileSheet, (int) x, 5, 2, 2);
 
-        g.setColor(Color.GREEN.toInt());
+        g.setColor(ColorUtils.GREEN);
         g.setScale(scale);
         g.drawImage(tileSheet, (int) x, 20, 2, 2, angle);
 
-        g.setColor(Color.SUNSET_BLUE.toInt());
+        g.setColor(ColorUtils.SUNSET_BLUE);
         g.drawImage(tileSheet, mousePosition[0], mousePosition[1], 2, 2, -angle / 2);
 
     }

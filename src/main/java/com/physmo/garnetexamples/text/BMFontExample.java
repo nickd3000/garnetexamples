@@ -4,7 +4,7 @@ import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.bitmapfont.BitmapFont;
 import com.physmo.garnet.graphics.Graphics;
-import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorUtils;
 
 import java.io.IOException;
 
@@ -50,11 +50,11 @@ public class BMFontExample extends GarnetApp {
     public void draw(Graphics g) {
 
         g.setScale(2);
-        g.setColor(Color.SUNSET_GREEN.toInt());
+        g.setColor(ColorUtils.SUNSET_GREEN);
         bmfFont.drawText(g, "hello", 0, 10);
 
         g.setScale(3);
-        g.setColor(Color.SUNSET_YELLOW.toInt());
+        g.setColor(ColorUtils.SUNSET_YELLOW);
         bmfFont.drawText(g, "hello but bigger", 0, 20);
 
     }

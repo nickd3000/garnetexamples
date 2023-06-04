@@ -4,7 +4,7 @@ import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.regularfont.RegularFont;
-import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorUtils;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class RegularFontExample extends GarnetApp {
@@ -28,7 +28,7 @@ public class RegularFontExample extends GarnetApp {
     @Override
     public void init(Garnet garnet) {
         regularFont = new RegularFont("regularfonts/12x12Font.png", 12, 12);
-        garnet.getGraphics().setBackgroundColor(Color.SUNSET_BLUE.toInt());
+        garnet.getGraphics().setBackgroundColor(ColorUtils.SUNSET_BLUE);
     }
 
     @Override
@@ -39,20 +39,20 @@ public class RegularFontExample extends GarnetApp {
     public void draw(Graphics g) {
 
         g.setScale(2);
-        g.setColor(Color.SUNSET_GREEN.toInt());
+        g.setColor(ColorUtils.SUNSET_GREEN);
         regularFont.drawText(garnet.getGraphics(), "Regular font", 0, 10);
 
         g.setScale(3);
-        g.setColor(Color.SUNSET_YELLOW.toInt());
+        g.setColor(ColorUtils.SUNSET_YELLOW);
         regularFont.drawText(garnet.getGraphics(), "example", 0, 26);
 
         g.setScale(1);
-        g.setColor(Color.SUNSET_GREEN.toInt());
+        g.setColor(ColorUtils.SUNSET_GREEN);
         regularFont.setHorizontalPad(2);
         regularFont.drawText(garnet.getGraphics(), "horizontal pad 2", 0, 140);
 
         g.setScale(1);
-        g.setColor(Color.SUNSET_YELLOW.toInt());
+        g.setColor(ColorUtils.SUNSET_YELLOW);
         regularFont.setHorizontalPad(-3);
         regularFont.drawText(garnet.getGraphics(), "horizontal pad -3 minimum", 0, 180);
 

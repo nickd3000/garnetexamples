@@ -6,7 +6,7 @@ import com.physmo.garnet.Texture;
 import com.physmo.garnet.Utils;
 import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
-import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorUtils;
 
 import java.io.InputStream;
 
@@ -78,7 +78,7 @@ public class SpriteDrawingExample extends GarnetApp {
 
         Graphics graphics = garnet.getGraphics();
 
-        graphics.setColor(Color.WHITE.toInt());
+        graphics.setColor(ColorUtils.WHITE);
 
         // Draw unscaled sprites using sprite sheet
         graphics.setScale(1);
@@ -95,16 +95,16 @@ public class SpriteDrawingExample extends GarnetApp {
 
         // Draw scaled and tinted sprites using sprite sheet
         graphics.setScale(3);
-        graphics.setColor(Color.RED.toInt());
+        graphics.setColor(ColorUtils.RED);
         graphics.drawImage(tileSheet1, 0, 60, 1, 0);
-        graphics.setColor(Color.GREEN.toInt());
+        graphics.setColor(ColorUtils.GREEN);
         graphics.drawImage(tileSheet1, 64, 60, 1, 0);
-        graphics.setColor(Color.YELLOW.toInt());
+        graphics.setColor(ColorUtils.YELLOW);
         graphics.drawImage(tileSheet1, 128, 60, 1, 0);
 
         // Using draw order
         graphics.setScale(4);
-        graphics.setColor(Color.WHITE.toInt());
+        graphics.setColor(ColorUtils.WHITE);
         graphics.setDrawOrder(BACKGROUND_LAYER);
         graphics.drawImage(tileSheet2, 0, 70, 5, 2);
         graphics.setDrawOrder(FOREGROUND_LAYER);
@@ -117,7 +117,7 @@ public class SpriteDrawingExample extends GarnetApp {
 
         graphics.drawLine(0, 0, 100, 100);
 
-        graphics.setColor(Color.GREEN.toInt());
+        graphics.setColor(ColorUtils.GREEN);
         graphics.drawRect(30, 30, 30, 30);
     }
 
