@@ -1,9 +1,10 @@
-package com.physmo.garnetexamples.graphics;
+package com.physmo.garnetexamples.text;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
+import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.regularfont.RegularFont;
-import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorUtils;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class RegularFontExample extends GarnetApp {
@@ -27,7 +28,7 @@ public class RegularFontExample extends GarnetApp {
     @Override
     public void init(Garnet garnet) {
         regularFont = new RegularFont("regularfonts/12x12Font.png", 12, 12);
-        garnet.getGraphics().setBackgroundColor(Color.SUNSET_BLUE.toInt());
+        garnet.getGraphics().setBackgroundColor(ColorUtils.SUNSET_BLUE);
     }
 
     @Override
@@ -35,30 +36,28 @@ public class RegularFontExample extends GarnetApp {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
 
-        garnet.getGraphics().setScale(2);
-        garnet.getGraphics().setColor(Color.SUNSET_GREEN.toInt());
+        g.setScale(2);
+        g.setColor(ColorUtils.SUNSET_GREEN);
         regularFont.drawText(garnet.getGraphics(), "Regular font", 0, 10);
 
-        garnet.getGraphics().setScale(3);
-        garnet.getGraphics().setColor(Color.SUNSET_YELLOW.toInt());
+        g.setScale(3);
+        g.setColor(ColorUtils.SUNSET_YELLOW);
         regularFont.drawText(garnet.getGraphics(), "example", 0, 26);
 
-        garnet.getGraphics().setScale(1);
-        garnet.getGraphics().setColor(Color.SUNSET_GREEN.toInt());
+        g.setScale(1);
+        g.setColor(ColorUtils.SUNSET_GREEN);
         regularFont.setHorizontalPad(2);
         regularFont.drawText(garnet.getGraphics(), "horizontal pad 2", 0, 140);
 
-        garnet.getGraphics().setScale(1);
-        garnet.getGraphics().setColor(Color.SUNSET_YELLOW.toInt());
+        g.setScale(1);
+        g.setColor(ColorUtils.SUNSET_YELLOW);
         regularFont.setHorizontalPad(-3);
         regularFont.drawText(garnet.getGraphics(), "horizontal pad -3 minimum", 0, 180);
 
         regularFont.setHorizontalPad(0);
 
-
-        garnet.getGraphics().render();
     }
 
 }

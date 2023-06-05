@@ -1,12 +1,11 @@
 package com.physmo.garnetexamples.games.invaders.components;
 
 import com.physmo.garnet.Garnet;
-import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnetexamples.games.invaders.GameData;
 import com.physmo.garnetexamples.games.invaders.Resources;
 import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorUtils;
 import com.physmo.garnettoolkit.scene.SceneManager;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
@@ -15,8 +14,8 @@ public class ComponentHud extends Component {
     Resources resources;
     GameData gameData;
     Garnet garnet;
-    TileSheet tileSheet;
-    int textColor = Color.YELLOW.toInt();
+
+    int textColor = ColorUtils.YELLOW;
     double textFlash = 0;
     ComponentGameLogic gameLogic;
     CollisionSystem collisionSystem;
@@ -32,7 +31,6 @@ public class ComponentHud extends Component {
         resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
 
-        tileSheet = parent.getContext().getObjectByType(TileSheet.class);
         gameLogic = parent.getContext().getComponent(ComponentGameLogic.class);
         collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
     }
@@ -56,8 +54,8 @@ public class ComponentHud extends Component {
         int textX = (windowWidth / 2) - (stringWidth / 2);
         int textY = (windowHeight / 2) - (16 / 2);
 
-        if (((int) (textFlash * 10)) % 2 == 0) graphics.setColor(Color.RED.toInt());
-        else graphics.setColor(Color.BLUE.toInt());
+        if (((int) (textFlash * 10)) % 2 == 0) graphics.setColor(ColorUtils.RED);
+        else graphics.setColor(ColorUtils.BLUE);
 
         resources.getBitmapFont().drawText(graphics, text, textX, textY);
         graphics.setScale(prevScale);
@@ -113,11 +111,11 @@ public class ComponentHud extends Component {
         int ySpan = (garnet.getDisplay().getWindowHeight() / scale) / numY;
         int xSpan = (garnet.getDisplay().getWindowWidth() / scale) / numX;
         graphics.setScale(scale);
-        graphics.setColor(new Color(0.5F, 1, 0.5f, 0.1f).toInt());
+        graphics.setColor(ColorUtils.asRGBA(0.5F, 1, 0.5f, 0.1f));
         for (int y = -1; y <= numY; y++) {
             for (int x = -1; x <= numX; x++) {
                 int offset = (int) (overlayScroll * ySpan);
-                graphics.drawImage(tileSheet, (x * xSpan) - (xSpan / 2), y * ySpan + offset, 2, 2);
+                graphics.drawImage(resources.getSpriteTilesheet(), (x * xSpan) - (xSpan / 2), y * ySpan + offset, 2, 2);
             }
         }
     }

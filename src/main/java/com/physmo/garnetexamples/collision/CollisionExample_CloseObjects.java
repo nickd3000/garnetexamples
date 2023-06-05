@@ -7,7 +7,7 @@ import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnettoolkit.Context;
 import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorUtils;
 import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 import com.physmo.garnettoolkit.simplecollision.RelativeObject;
@@ -22,12 +22,11 @@ import java.util.Random;
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class CollisionExample_CloseObjects extends GarnetApp {
 
-    static int width = 800;
     static int height = 600;
+    static int width = 800;
     String imageFileName = "space.png";
     TileSheet tileSheet;
     Texture texture;
-    Graphics graphics;
     Context context;
     double scale = 2;
     Random random = new Random(12345);
@@ -55,7 +54,7 @@ public class CollisionExample_CloseObjects extends GarnetApp {
 
         texture = Texture.loadTexture(imageFileName);
         tileSheet = new TileSheet(texture, 16, 16);
-        graphics = garnet.getGraphics();
+        Graphics graphics = garnet.getGraphics();
         graphics.addTexture(texture);
         context.add(tileSheet);
         context.add(graphics);
@@ -98,16 +97,13 @@ public class CollisionExample_CloseObjects extends GarnetApp {
     }
 
     @Override
-    public void draw() {
-        graphics.setBackgroundColor(new Color(0.3f, 0.2f, 0.3f, 1.0f).toInt());
+    public void draw(Graphics g) {
+        g.setBackgroundColor(ColorUtils.asRGBA(0.3f, 0.2f, 0.3f, 1.0f));
         context.draw();
 
         garnet.getDebugDrawer().setUserString("closeObjectTestCount:", String.valueOf(closeObjectTestCount));
 
-        graphics.setScale(scale);
-
-        graphics.render();
-
+        g.setScale(scale);
     }
 
 }

@@ -2,6 +2,7 @@ package com.physmo.garnetexamples;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
+import com.physmo.garnet.graphics.Graphics;
 
 public class HelloWorld extends GarnetApp {
 
@@ -30,9 +31,8 @@ public class HelloWorld extends GarnetApp {
     }
 
     @Override
-    public void draw() {
-        garnet.getGraphics().drawCircle(200, 200, 100, 100);
-        garnet.getGraphics().drawCircle(200, 200, 110, 150);
-        garnet.getGraphics().render();
+    public void draw(Graphics g) {
+        g.drawCircle(200, 200, 100, 100);
+        g.drawCircle(200, 200, 110, 150);
     }
 }

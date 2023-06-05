@@ -6,7 +6,7 @@ import com.physmo.garnet.Texture;
 import com.physmo.garnet.Utils;
 import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
-import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorUtils;
 import com.physmo.garnettoolkit.curve.CurveType;
 import com.physmo.garnettoolkit.curve.StandardCurve;
 
@@ -18,7 +18,6 @@ public class CurveMotionExample extends GarnetApp {
     String imageFileName = "space.png";
     TileSheet tileSheet;
     Texture texture;
-    Graphics graphics;
     double x = 0;
     int dir = 1;
     double pos = 0;
@@ -48,8 +47,7 @@ public class CurveMotionExample extends GarnetApp {
         InputStream inputStream = Utils.getFileFromResourceAsStream(imageFileName);
         texture = Texture.loadTexture(inputStream);
         tileSheet = new TileSheet(texture, 16, 16);
-        graphics = garnet.getGraphics();
-        graphics.addTexture(texture);
+        garnet.getGraphics().addTexture(texture);
 
         standardCurve_EASE_IN_SINE = new StandardCurve(CurveType.EASE_IN_SINE);
         standardCurve_LINE_DOWN = new StandardCurve(CurveType.LINE_DOWN);
@@ -71,25 +69,23 @@ public class CurveMotionExample extends GarnetApp {
     }
 
     @Override
-    public void draw() {
-        graphics.setColor(Color.GREEN.toInt());
-        graphics.setScale(2);
+    public void draw(Graphics g) {
+        g.setColor(ColorUtils.GREEN);
+        g.setScale(2);
         double width = 200 - 32;
         int y = 2;
 
         x = standardCurve_EASE_IN_SINE.value(pos);
-        graphics.drawImage(tileSheet, (int) (x * width), (y++) * 16, 2, 2);
+        g.drawImage(tileSheet, (int) (x * width), (y++) * 16, 2, 2);
         x = standardCurve_LINE_DOWN.value(pos);
-        graphics.drawImage(tileSheet, (int) (x * width), (y++) * 16, 2, 2);
+        g.drawImage(tileSheet, (int) (x * width), (y++) * 16, 2, 2);
         x = StandardCurve.LINE_UP.value(pos);
-        graphics.drawImage(tileSheet, (int) (x * width), (y++) * 16, 2, 2);
+        g.drawImage(tileSheet, (int) (x * width), (y++) * 16, 2, 2);
         x = standardCurve_LINE_FLAT.value(pos);
-        graphics.drawImage(tileSheet, (int) (x * width), (y++) * 16, 2, 2);
+        g.drawImage(tileSheet, (int) (x * width), (y++) * 16, 2, 2);
         x = standardCurve_EASE_OUT_SINE.value(pos);
-        graphics.drawImage(tileSheet, (int) (x * width), (y++) * 16, 2, 2);
+        g.drawImage(tileSheet, (int) (x * width), (y++) * 16, 2, 2);
 
-
-        graphics.render();
     }
 
 }

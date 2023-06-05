@@ -4,7 +4,7 @@ import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.Vector3;
-import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorUtils;
 
 public class FloatingInvaderComponent extends Component {
     Vector3 velocity;
@@ -19,7 +19,7 @@ public class FloatingInvaderComponent extends Component {
         this.width = width;
         this.height = height;
 
-        color = new Color((float) Math.random(), (float) Math.random(), (float) Math.random(), 1f).toInt();
+        color = ColorUtils.asRGBA((float) Math.random(), (float) Math.random(), (float) Math.random(), 1f);
     }
 
     @Override

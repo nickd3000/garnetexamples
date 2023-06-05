@@ -7,7 +7,7 @@ import com.physmo.garnet.Utils;
 import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.input.Input;
-import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorUtils;
 
 import java.io.InputStream;
 
@@ -17,7 +17,6 @@ public class MouseExample extends GarnetApp {
     String imageFileName = "space.png";
     TileSheet tileSheet;
     Texture texture;
-    Graphics graphics;
     Input input;
     boolean mousePressed = false;
     double scale = 3;
@@ -42,8 +41,7 @@ public class MouseExample extends GarnetApp {
         InputStream inputStream = Utils.getFileFromResourceAsStream(imageFileName);
         texture = Texture.loadTexture(inputStream);
         tileSheet = new TileSheet(texture, 16, 16);
-        graphics = garnet.getGraphics();
-        graphics.addTexture(texture);
+        garnet.getGraphics().addTexture(texture);
         input = garnet.getInput();
         garnet.getDebugDrawer().setVisible(true);
     }
@@ -54,7 +52,7 @@ public class MouseExample extends GarnetApp {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
 
         int[] mp, mps;
 
@@ -64,14 +62,12 @@ public class MouseExample extends GarnetApp {
         garnet.getDebugDrawer().setUserString("Mouse pos:        ", String.format("%d,%d", mp[0], mp[1]));
         garnet.getDebugDrawer().setUserString("Mouse pos scaled: ", String.format("%d,%d", mps[0], mps[1]));
 
-        graphics.setScale(scale);
+        g.setScale(scale);
 
-        if (mousePressed) graphics.setColor(Color.SUNSET_RED.toInt());
-        else graphics.setColor(Color.SUNSET_YELLOW.toInt());
+        if (mousePressed) g.setColor(ColorUtils.SUNSET_RED);
+        else g.setColor(ColorUtils.SUNSET_YELLOW);
 
-        graphics.drawImage(tileSheet, mps[0] - 8, mps[1] - 8, 2, 2);
-
-        graphics.render();
+        g.drawImage(tileSheet, mps[0] - 8, mps[1] - 8, 2, 2);
 
     }
 

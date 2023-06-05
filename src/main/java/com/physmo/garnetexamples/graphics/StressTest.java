@@ -8,7 +8,7 @@ import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnetexamples.graphics.support.FloatingInvaderComponent;
 import com.physmo.garnettoolkit.Context;
 import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorUtils;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class StressTest extends GarnetApp {
@@ -16,8 +16,6 @@ public class StressTest extends GarnetApp {
     String imageFileName = "space.png";
     TileSheet tileSheet;
     Texture texture;
-    Graphics graphics;
-
     int numSprites = 25000;
     Context context;
 
@@ -39,19 +37,14 @@ public class StressTest extends GarnetApp {
     public void init(Garnet garnet) {
         context = new Context();
 
-
+        // Load the texture
         texture = Texture.loadTexture(imageFileName);
         tileSheet = new TileSheet(texture, 16, 16);
-        graphics = garnet.getGraphics();
-        graphics.addTexture(texture);
-
-        // Configure the debug text.
-        garnet.getDebugDrawer().setScale(2);
-        garnet.getDebugDrawer().setUserString("Sprite count:", String.valueOf(numSprites));
+        garnet.getGraphics().addTexture(texture);
 
         // Add the tilesheet and graphics object to the context so the sprite entities can access them.
         context.add(tileSheet);
-        context.add(graphics);
+        context.add(garnet.getGraphics());
 
         // Create a number of entities and add them to the context.
         for (int i = 0; i < numSprites; i++) {
@@ -60,6 +53,9 @@ public class StressTest extends GarnetApp {
             context.add(gameObject);
         }
 
+        // Configure the debug text.
+        garnet.getDebugDrawer().setScale(2);
+        garnet.getDebugDrawer().setUserString("Sprite count:", String.valueOf(numSprites));
         garnet.getDebugDrawer().setVisible(true);
     }
 
@@ -69,13 +65,11 @@ public class StressTest extends GarnetApp {
     }
 
     @Override
-    public void draw() {
-        graphics.setColor(Color.GREEN.toInt());
-        graphics.setScale(1);
+    public void draw(Graphics g) {
+        g.setColor(ColorUtils.GREEN);
+        g.setScale(1);
 
         context.draw();
-
-        graphics.render();
     }
 
 }

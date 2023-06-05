@@ -3,17 +3,13 @@ package com.physmo.garnetexamples.graphics;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.Texture;
-import com.physmo.garnet.Utils;
 import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
-import com.physmo.garnettoolkit.color.Color;
-
-import java.io.InputStream;
+import com.physmo.garnettoolkit.color.ColorUtils;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class SpriteDrawingExample extends GarnetApp {
 
-    // TODO: make relative
     private static final String fileName1 = "space.PNG";
     private static final String fileName2 = "prototypeArt.PNG";
 
@@ -44,13 +40,12 @@ public class SpriteDrawingExample extends GarnetApp {
 
     @Override
     public void init(Garnet garnet) {
-        InputStream inputStream = Utils.getFileFromResourceAsStream(fileName1);
-        texture1 = Texture.loadTexture(inputStream);
+
+        texture1 = Texture.loadTexture(fileName1);
         tileSheet1 = new TileSheet(texture1, 16, 16);
         garnet.getGraphics().addTexture(texture1);
 
-        InputStream inputStream2 = Utils.getFileFromResourceAsStream(fileName2);
-        texture2 = Texture.loadTexture(inputStream2);
+        texture2 = Texture.loadTexture(fileName2);
         tileSheet2 = new TileSheet(texture2, 16, 16);
         garnet.getGraphics().addTexture(texture2);
 
@@ -68,12 +63,8 @@ public class SpriteDrawingExample extends GarnetApp {
     }
 
     @Override
-    public void draw() {
-
+    public void draw(Graphics g) {
         drawTestSpriteBuilder();
-
-        garnet.getGraphics().render();
-
     }
 
     private void drawTestSpriteBuilder() {
@@ -82,7 +73,7 @@ public class SpriteDrawingExample extends GarnetApp {
 
         Graphics graphics = garnet.getGraphics();
 
-        graphics.setColor(Color.WHITE.toInt());
+        graphics.setColor(ColorUtils.WHITE);
 
         // Draw unscaled sprites using sprite sheet
         graphics.setScale(1);
@@ -99,16 +90,16 @@ public class SpriteDrawingExample extends GarnetApp {
 
         // Draw scaled and tinted sprites using sprite sheet
         graphics.setScale(3);
-        graphics.setColor(Color.RED.toInt());
+        graphics.setColor(ColorUtils.RED);
         graphics.drawImage(tileSheet1, 0, 60, 1, 0);
-        graphics.setColor(Color.GREEN.toInt());
+        graphics.setColor(ColorUtils.GREEN);
         graphics.drawImage(tileSheet1, 64, 60, 1, 0);
-        graphics.setColor(Color.YELLOW.toInt());
+        graphics.setColor(ColorUtils.YELLOW);
         graphics.drawImage(tileSheet1, 128, 60, 1, 0);
 
         // Using draw order
         graphics.setScale(4);
-        graphics.setColor(Color.WHITE.toInt());
+        graphics.setColor(ColorUtils.WHITE);
         graphics.setDrawOrder(BACKGROUND_LAYER);
         graphics.drawImage(tileSheet2, 0, 70, 5, 2);
         graphics.setDrawOrder(FOREGROUND_LAYER);
@@ -121,8 +112,12 @@ public class SpriteDrawingExample extends GarnetApp {
 
         graphics.drawLine(0, 0, 100, 100);
 
-        graphics.setColor(Color.GREEN.toInt());
+        graphics.setColor(ColorUtils.GREEN);
         graphics.drawRect(30, 30, 30, 30);
+
+        graphics.setColor(ColorUtils.SUNSET_BLUE);
+        graphics.filledRect(70, 30, 30, 30);
+
     }
 
     private void drawNew() {

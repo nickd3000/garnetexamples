@@ -6,16 +6,14 @@ import com.physmo.garnet.Utils;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.input.Input;
 import com.physmo.garnet.regularfont.RegularFont;
-import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorUtils;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class SimpleSoundExample extends GarnetApp {
 
-    Graphics graphics;
     RegularFont regularFont;
     int soundA;
     int soundB;
-
 
     public SimpleSoundExample(Garnet garnet, String name) {
         super(garnet, name);
@@ -34,8 +32,6 @@ public class SimpleSoundExample extends GarnetApp {
 
     @Override
     public void init(Garnet garnet) {
-        graphics = garnet.getGraphics();
-
         regularFont = new RegularFont("regularfonts/12x12Font.png", 12, 12);
 
         soundA = garnet.getSound().loadSound(Utils.getPathForResource(this, "sounds/laserShoot-3.wav"));
@@ -56,19 +52,18 @@ public class SimpleSoundExample extends GarnetApp {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
 
-        graphics.setColor(Color.GREEN.toInt());
-        graphics.setScale(2);
+        g.setColor(ColorUtils.GREEN);
+        g.setScale(2);
 
-        graphics.setColor(Color.SUNSET_BLUE.toInt());
+        g.setColor(ColorUtils.SUNSET_BLUE);
 
         regularFont.setHorizontalPad(-4);
 
-        regularFont.drawText(graphics, "Left / Right mouse", 20, 20);
-        regularFont.drawText(graphics, "button to play", 20, 35);
-        regularFont.drawText(graphics, "sounds", 20, 50);
-        graphics.render();
+        regularFont.drawText(g, "Left / Right mouse", 20, 20);
+        regularFont.drawText(g, "button to play", 20, 35);
+        regularFont.drawText(g, "sounds", 20, 50);
 
     }
 

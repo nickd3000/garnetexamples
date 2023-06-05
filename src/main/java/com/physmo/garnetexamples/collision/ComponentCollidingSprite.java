@@ -4,7 +4,7 @@ import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.Vector3;
-import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorUtils;
 import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
 import com.physmo.garnettoolkit.simplecollision.RelativeObject;
 
@@ -64,10 +64,10 @@ public class ComponentCollidingSprite extends Component {
     @Override
     public void draw() {
         //graphics.setScale(3);
-        if (mode == 0) graphics.setColor(Color.SUNSET_GREEN.toInt());
-        if (mode == 1) graphics.setColor(Color.SUNSET_ORANGE.toInt());
-        if (mode == 2) graphics.setColor(Color.SUNSET_RED.toInt());
-        if (mode == 3) graphics.setColor(Color.SUNSET_BLUE.toInt());
+        if (mode == 0) graphics.setColor(ColorUtils.SUNSET_GREEN);
+        if (mode == 1) graphics.setColor(ColorUtils.SUNSET_ORANGE);
+        if (mode == 2) graphics.setColor(ColorUtils.SUNSET_RED);
+        if (mode == 3) graphics.setColor(ColorUtils.SUNSET_BLUE);
         graphics.drawImage(tileSheet, (int) parent.getTransform().x, (int) parent.getTransform().y, 2, 2);
     }
 }

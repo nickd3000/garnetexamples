@@ -16,7 +16,6 @@ public class TileGridExample extends GarnetApp {
     String imageFileName = "prototypeArt.png";
     TileSheet tileSheet;
     Texture texture;
-    Graphics graphics;
     double scrollX = 0;
     double scrollY = 0;
     int scrollDir = 3;
@@ -49,8 +48,8 @@ public class TileGridExample extends GarnetApp {
 
         texture = Texture.loadTexture(imageFileName);
         tileSheet = new TileSheet(texture, 16, 16);
-        graphics = garnet.getGraphics();
-        graphics.addTexture(texture);
+
+        garnet.getGraphics().addTexture(texture);
 
         wallTileID = tileSheet.getTileIndexFromCoords(0, 7);
         grassTileID = tileSheet.getTileIndexFromCoords(1, 7);
@@ -103,18 +102,15 @@ public class TileGridExample extends GarnetApp {
     }
 
     @Override
-    public void draw() {
-
-        tileGridDrawer.draw(graphics, 16, 16);
+    public void draw(Graphics g) {
+        tileGridDrawer.draw(g, 16, 16);
 
         int[] pos = tileGridDrawer.translateMapToScreenPosition(16, 16);
-        graphics.setActiveClipRect(tileGridDrawer.getClipRectId());
-        graphics.drawImage(tileSheet, pos[0], pos[1], 0, 0);
+        g.setActiveClipRect(tileGridDrawer.getClipRectId());
+        g.drawImage(tileSheet, pos[0], pos[1], 0, 0);
 
-        graphics.disableClipRect();
-        graphics.setScale(scale);
-
-        graphics.render();
+        g.disableClipRect();
+        g.setScale(scale);
     }
 
 }

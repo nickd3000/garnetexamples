@@ -4,7 +4,7 @@ import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.Texture;
 import com.physmo.garnet.graphics.Graphics;
-import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorUtils;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class ClipWindowExample extends GarnetApp {
@@ -13,8 +13,6 @@ public class ClipWindowExample extends GarnetApp {
 
     Texture texture;
     double time = 0;
-    Graphics graphics;
-
 
     public ClipWindowExample(Garnet garnet, String name) {
         super(garnet, name);
@@ -35,7 +33,7 @@ public class ClipWindowExample extends GarnetApp {
 
         texture = Texture.loadTexture(fileName);
 
-        graphics = garnet.getGraphics();
+        Graphics graphics = garnet.getGraphics();
 
         graphics.addTexture(texture);
 
@@ -48,15 +46,11 @@ public class ClipWindowExample extends GarnetApp {
     }
 
     @Override
-    public void draw() {
-
-        drawTestSpriteBuilder();
-
-        graphics.render();
-
+    public void draw(Graphics g) {
+        drawTestSpriteBuilder(g);
     }
 
-    private void drawTestSpriteBuilder() {
+    private void drawTestSpriteBuilder(Graphics graphics) {
 
         int offset1 = (int) (Math.sin(time * 3) * 50) - 50;
         int offset2 = (int) (Math.cos(time * 4) * 50) - 50;
@@ -67,10 +61,10 @@ public class ClipWindowExample extends GarnetApp {
         graphics.setDrawOrder(1);
 
         graphics.disableClipRect();
-        graphics.setColor(Color.WHITE.toInt());
+        graphics.setColor(ColorUtils.WHITE);
         graphics.drawImage(texture, offset1, 0);
         graphics.setActiveClipRect(1);
-        graphics.setColor(Color.GREEN.toInt());
+        graphics.setColor(ColorUtils.GREEN);
         graphics.drawImage(texture, 0, offset2);
         graphics.disableClipRect();
 

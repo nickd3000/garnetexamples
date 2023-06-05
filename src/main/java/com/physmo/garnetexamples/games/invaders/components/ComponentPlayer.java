@@ -2,15 +2,14 @@ package com.physmo.garnetexamples.games.invaders.components;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
-import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.input.InputAction;
 import com.physmo.garnetexamples.games.invaders.Constants;
 import com.physmo.garnetexamples.games.invaders.InvadersEntityFactory;
 import com.physmo.garnetexamples.games.invaders.Resources;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.color.Color;
 import com.physmo.garnettoolkit.color.ColorSupplierLinear;
+import com.physmo.garnettoolkit.color.ColorUtils;
 import com.physmo.garnettoolkit.curve.CurveType;
 import com.physmo.garnettoolkit.curve.StandardCurve;
 import com.physmo.garnettoolkit.particle.Emitter;
@@ -39,7 +38,6 @@ public class ComponentPlayer extends Component {
     boolean flashOn = false;
 
     ComponentGameLogic gameLogic;
-    TileSheet tileSheet;
     Resources resources;
     CollisionSystem collisionSystem;
 
@@ -53,7 +51,7 @@ public class ComponentPlayer extends Component {
         shootParticleTemplate.setLifeTime(0.2, 0.8);
         shootParticleTemplate.setSpeed(10, 50);
         shootParticleTemplate.setPositionJitter(1.1);
-        shootParticleTemplate.setColorSupplier(new ColorSupplierLinear(new Color(1, 0, 1, 0.5f), new Color(0, 1, 1, 0)));
+        shootParticleTemplate.setColorSupplier(new ColorSupplierLinear(ColorUtils.asRGBA(1, 0, 1, 0.5f), ColorUtils.asRGBA(0, 1, 1, 0)));
         shootParticleTemplate.setSpeedCurve(new StandardCurve(CurveType.LINE_DOWN));
 
         particleManager = parent.getContext().getObjectByType(ParticleManager.class);
@@ -64,7 +62,6 @@ public class ComponentPlayer extends Component {
 
         collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
 
-        tileSheet = parent.getContext().getObjectByType(TileSheet.class);
         gameLogic = parent.getContext().getComponent(ComponentGameLogic.class);
 
         resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
@@ -106,7 +103,7 @@ public class ComponentPlayer extends Component {
         if (bulletCoolDown > 0) return;
 
         GameObject playerMissile = InvadersEntityFactory.addPlayerMissile(parent.getContext(), collisionSystem, parent.getTransform().x, parent.getTransform().y);
-        garnet.getSound().playSound(resources.soundLaserId);
+        garnet.getSound().playSound(resources.soundIdLaser);
         if (playerMissile != null) {
 
             bulletCoolDown = BULLET_COOL_DOWN;
@@ -126,32 +123,8 @@ public class ComponentPlayer extends Component {
 
         garnet.getGraphics().setScale(2);
         garnet.getGraphics().setColor(drawCol);
-        garnet.getGraphics().drawImage(tileSheet, (int) (parent.getTransform().x) - 8,
+        garnet.getGraphics().drawImage(resources.getSpriteTilesheet(), (int) (parent.getTransform().x) - 8,
                 (int) (parent.getTransform().y) - 8, 0, 2);
     }
-//
-//    @Override
-//    public Rect collisionGetRegion() {
-//        Rect rect = new Rect(parent.getTransform().x - 8, parent.getTransform().y, 16, 10);
-//        return rect;
-//    }
-//
-//    @Override
-//    public void collisionCallback(CollisionPacket collisionPacket) {
-//        GameObject otherObject = collisionPacket.targetEntity.collisionGetGameObject();
-//
-//        if (otherObject.getTags().contains(Constants.ENEMY_MISSILE)) {
-//            gameLogic.playerGotHit();
-//        }
-//    }
-//
-//    @Override
-//    public void proximityCallback(RelativeObject relativeObject) {
-//
-//    }
-//
-//    @Override
-//    public GameObject collisionGetGameObject() {
-//        return parent;
-//    }
+
 }

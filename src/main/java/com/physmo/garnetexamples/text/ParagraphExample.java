@@ -1,4 +1,4 @@
-package com.physmo.garnetexamples.graphics;
+package com.physmo.garnetexamples.text;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
@@ -6,7 +6,7 @@ import com.physmo.garnet.ParagraphDrawer;
 import com.physmo.garnet.bitmapfont.BitmapFont;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.regularfont.RegularFont;
-import com.physmo.garnettoolkit.color.Color;
+import com.physmo.garnettoolkit.color.ColorUtils;
 
 import java.io.IOException;
 
@@ -15,6 +15,8 @@ public class ParagraphExample extends GarnetApp {
 
     RegularFont regularFont;
     BitmapFont bitmapFont;
+    ParagraphDrawer bitmapFontParagraphDrawer;
+    ParagraphDrawer regularFontParagraphDrawer;
 
     public ParagraphExample(Garnet garnet, String name) {
         super(garnet, name);
@@ -34,7 +36,7 @@ public class ParagraphExample extends GarnetApp {
     public void init(Garnet garnet) {
         regularFont = new RegularFont("regularfonts/12x12Font.png", 12, 12);
         regularFont.setHorizontalPad(-5);
-        garnet.getGraphics().setBackgroundColor(Color.SUNSET_BLUE.toInt());
+        garnet.getGraphics().setBackgroundColor(ColorUtils.SUNSET_BLUE);
 
         String bitmapFontImagePath = "bitmapfonts/SmallFont12.png";
         String bitmapFontDefinitionPath = "bitmapfonts/SmallFont12.fnt";
@@ -44,6 +46,9 @@ public class ParagraphExample extends GarnetApp {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        bitmapFontParagraphDrawer = new ParagraphDrawer(bitmapFont);
+        regularFontParagraphDrawer = new ParagraphDrawer(regularFont);
     }
 
     @Override
@@ -51,26 +56,24 @@ public class ParagraphExample extends GarnetApp {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
 
         String paragraphText = "The quick brown fox \n jumps over the lazy dogs. The quick brown fox jumps over the lazy dogs.";
-        Graphics graphics = garnet.getGraphics();
-        graphics.setScale(2);
-        graphics.setColor(Color.SUNSET_GREEN.toInt());
+        String paragraphText2 = "Move the mouse to change the width of this paragraph.\n The paragraph drawer returns the total height of the lines in the drawn paragraph.";
+
+        g.setScale(2);
+        g.setColor(ColorUtils.SUNSET_GREEN);
         //regularFont.drawText(garnet.getGraphics(), "Regular font", 0, 10);
 
-        ParagraphDrawer paragraphDrawer = new ParagraphDrawer(regularFont);
-        paragraphDrawer.drawParagraph(graphics, paragraphText, 200, 200, 0, 0);
+        regularFontParagraphDrawer.drawParagraph(g, paragraphText, 200, 200, 0, 0);
 
         int[] mp = garnet.getInput().getMousePositionScaled(2);
-        paragraphDrawer.drawParagraph(graphics, paragraphText, mp[0], 200, 0, 60);
+        regularFontParagraphDrawer.drawParagraph(g, paragraphText, mp[0], 200, 0, 60);
 
-        ParagraphDrawer paragraphDrawerBitmapFont = new ParagraphDrawer(bitmapFont);
-        paragraphDrawerBitmapFont.setPadY(4);
-        int ph = paragraphDrawerBitmapFont.drawParagraph(graphics, paragraphText, mp[0], 200, 0, 200);
-        graphics.drawRect(0, 200, mp[0], ph);
+        bitmapFontParagraphDrawer.setPadY(4);
+        int ph = bitmapFontParagraphDrawer.drawParagraph(g, paragraphText2, mp[0], 200, 0, 200);
+        g.drawRect(0, 200, mp[0], ph);
 
-        graphics.render();
     }
 
 }
