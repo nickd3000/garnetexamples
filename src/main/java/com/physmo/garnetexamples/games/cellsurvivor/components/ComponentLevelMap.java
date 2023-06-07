@@ -60,7 +60,6 @@ public class ComponentLevelMap extends Component {
         tileGridData = new TileGridData(mapWidth, mapHeight);
         tileGridDrawer = new TileGridDrawer().setData(tileGridData).setWindowSize(windowWidth, windowHeight).setTileSize(16, 16).setTileSheet(resources.getSpritesTilesheet()).setScale((int) scale);
 
-        // 1,7
         int grass = resources.getSpritesTilesheet().getTileIndexFromCoords(1, 7);
         int flower = resources.getSpritesTilesheet().getTileIndexFromCoords(2, 7);
         for (int y = 0; y < mapHeight; y++) {

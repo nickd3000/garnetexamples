@@ -1,8 +1,8 @@
 package com.physmo.garnetexamples.games.cellsurvivor;
 
-import com.physmo.garnet.Texture;
-import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.graphics.Texture;
+import com.physmo.garnet.graphics.TileSheet;
 
 public class Resources {
     String spritesFileName = "prototypeArt.png";

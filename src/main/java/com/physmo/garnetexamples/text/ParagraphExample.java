@@ -2,10 +2,10 @@ package com.physmo.garnetexamples.text;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
-import com.physmo.garnet.ParagraphDrawer;
-import com.physmo.garnet.bitmapfont.BitmapFont;
 import com.physmo.garnet.graphics.Graphics;
-import com.physmo.garnet.regularfont.RegularFont;
+import com.physmo.garnet.text.BitmapFont;
+import com.physmo.garnet.text.ParagraphDrawer;
+import com.physmo.garnet.text.RegularFont;
 import com.physmo.garnettoolkit.color.ColorUtils;
 
 import java.io.IOException;

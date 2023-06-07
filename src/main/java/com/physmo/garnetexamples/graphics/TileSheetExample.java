@@ -2,9 +2,9 @@ package com.physmo.garnetexamples.graphics;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
-import com.physmo.garnet.Texture;
-import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.graphics.Texture;
+import com.physmo.garnet.graphics.TileSheet;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class TileSheetExample extends GarnetApp {
@@ -13,6 +13,10 @@ public class TileSheetExample extends GarnetApp {
     Texture texture;
     double xPos = 0;
     double scale = 4;
+
+    int RED = 0xff5555ff;
+    int GREEN = 0x55ff55ff;
+    int BLUE = 0x5555ffff;
 
     public TileSheetExample(Garnet garnet, String name) {
         super(garnet, name);
@@ -46,12 +50,17 @@ public class TileSheetExample extends GarnetApp {
     public void draw(Graphics g) {
         g.setScale(scale);
 
+        // Retrieve the current mouse position.
         int[] mousePosition = garnet.getInput().getMousePositionScaled(scale);
 
-        g.setColor(0xaaff22ff);
+
+        g.setColor(RED);
         g.drawImage(tileSheet, (int) xPos, 5, 2, 2);
 
-        g.setColor(0xaa22ffff);
+        g.setColor(GREEN);
+        g.drawImage(tileSheet.getSubImage(2, 2), (int) xPos + 20, 5);
+
+        g.setColor(BLUE);
         g.drawImage(tileSheet, mousePosition[0], mousePosition[1], 2, 2);
     }
 }

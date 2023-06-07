@@ -3,7 +3,7 @@ package com.physmo.garnetexamples.text;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.graphics.Graphics;
-import com.physmo.garnet.regularfont.RegularFont;
+import com.physmo.garnet.text.RegularFont;
 import com.physmo.garnettoolkit.color.ColorUtils;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
