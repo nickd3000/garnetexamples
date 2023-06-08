@@ -43,6 +43,7 @@ public class SimpleSoundExample extends GarnetApp {
 
     @Override
     public void tick(double delta) {
+
         if (garnet.getInput().isMouseButtonFirstPress(Input.MOUSE_BUTTON_LEFT)) {
             garnet.getSound().playSound(soundA);
         }
@@ -65,6 +66,12 @@ public class SimpleSoundExample extends GarnetApp {
         regularFont.drawText(g, "button to play", 20, 35);
         regularFont.drawText(g, "sounds", 20, 50);
 
+    }
+
+    public float clamp(float v) {
+        if (v < 0) return 0;
+        if (v > 1) return 1;
+        return v;
     }
 
 }

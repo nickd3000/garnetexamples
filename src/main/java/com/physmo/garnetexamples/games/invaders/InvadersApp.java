@@ -34,6 +34,8 @@ public class InvadersApp extends GarnetApp {
         SceneManager.addScene(new SubScenePause("pause"));
 
         SceneManager.setActiveScene("menu");
+
+        garnet.getSound().setMasterVolume(0.2f);
     }
 
     @Override
