@@ -58,21 +58,25 @@ public class ParagraphExample extends GarnetApp {
     @Override
     public void draw(Graphics g) {
 
-        String paragraphText = "The quick brown fox \n jumps over the lazy dogs. The quick brown fox jumps over the lazy dogs.";
+        String paragraphText = "The Paragraph() class can be used to display a large string of text that is constrained to a specified width and height.";
         String paragraphText2 = "Move the mouse to change the width of this paragraph.\n The paragraph drawer returns the total height of the lines in the drawn paragraph.";
+        String paragraphWithLineBreaks = "There's a line break in the middle of the next word: bro\nken. And now 3 line breaks \n\n\n [end]";
 
         g.setScale(2);
         g.setColor(ColorUtils.SUNSET_GREEN);
         //regularFont.drawText(garnet.getGraphics(), "Regular font", 0, 10);
 
-        regularFontParagraphDrawer.drawParagraph(g, paragraphText, 200, 200, 0, 0);
+        regularFontParagraphDrawer.setPadY(3);
+        regularFontParagraphDrawer.drawParagraph(g, paragraphText, 200 - 10, 150, 10, 10);
+
+
+        g.setColor(ColorUtils.SUNSET_YELLOW);
+        regularFontParagraphDrawer.drawParagraph(g, paragraphWithLineBreaks, 200 - 10, 200, 210, 10);
 
         int[] mp = garnet.getInput().getMousePositionScaled(2);
-        regularFontParagraphDrawer.drawParagraph(g, paragraphText, mp[0], 200, 0, 60);
-
         bitmapFontParagraphDrawer.setPadY(4);
-        int ph = bitmapFontParagraphDrawer.drawParagraph(g, paragraphText2, mp[0], 200, 0, 200);
-        g.drawRect(0, 200, mp[0], ph);
+        int ph = bitmapFontParagraphDrawer.drawParagraph(g, paragraphText2, mp[0], 200, 10, 150);
+        g.drawRect(10, 150, mp[0], ph);
 
     }
 
