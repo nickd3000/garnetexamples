@@ -61,7 +61,7 @@ public class SoundVolumeExample extends GarnetApp {
 
         if (time > timeBetweenSounds) {
             time = 0;
-            garnet.getSound().playSound(soundA, volume);
+            garnet.getSound().playSound(soundA, volume, 0);
         }
 
     }

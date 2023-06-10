@@ -16,7 +16,7 @@ public class StressTest extends GarnetApp {
     String imageFileName = "space.png";
     TileSheet tileSheet;
     Texture texture;
-    int numSprites = 25000;
+    int numSprites = 25000 / 2;
     Context context;
 
     public StressTest(Garnet garnet, String name) {
@@ -56,6 +56,7 @@ public class StressTest extends GarnetApp {
         // Configure the debug text.
         garnet.getDebugDrawer().setScale(2);
         garnet.getDebugDrawer().setUserString("Sprite count:", String.valueOf(numSprites));
+        garnet.getDebugDrawer().setDrawFps(true);
         garnet.getDebugDrawer().setVisible(true);
     }
 
@@ -70,6 +71,9 @@ public class StressTest extends GarnetApp {
         g.setScale(1);
 
         context.draw();
+
+        g.setColor(0x00000070);
+        g.filledRect(0, 0, 640, 80);
     }
 
 }

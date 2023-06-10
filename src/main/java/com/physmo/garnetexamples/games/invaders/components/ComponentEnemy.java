@@ -36,45 +36,15 @@ public class ComponentEnemy extends Component {
     int soundExplosionId;
     int soundShieldHitId;
     int soundEnemyFireId;
+    ComponentGameLogic gameLogic;
 
     public ComponentEnemy(EnemyType enemyType) {
         this.enemyType = enemyType;
     }
 
     @Override
-    public void tick(double delta) {
-
-        ComponentGameLogic gameLogic = parent.getContext().getComponent(ComponentGameLogic.class);
-
-        double speed = gameLogic.moveSpeed * delta;
-
-        if (gameLogic.enemyDir == 1) {
-            parent.getTransform().x += speed;
-        } else {
-            parent.getTransform().x -= speed;
-        }
-
-        if (parent.getTransform().x > 320 - 16) {
-            gameLogic.changeEnemyDir(-1);
-        }
-        if (parent.getTransform().x < 16) {
-            gameLogic.changeEnemyDir(1);
-        }
-
-        fireDelay -= delta;
-        if (fireDelay < 0) {
-            if (enemyType == EnemyType.shooter && gameLogic.enemiesCanShoot()) fireMissile();
-            resetFireDelay();
-        }
-    }
-
-    private void fireMissile() {
-        garnet.getSound().playSound(soundEnemyFireId);
-        InvadersEntityFactory.addEnemyMissile(parent.getContext(), collisionSystem, parent.getTransform().x, parent.getTransform().y);
-    }
-
-    @Override
     public void init() {
+        gameLogic = parent.getContext().getComponent(ComponentGameLogic.class);
 
         collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
 
@@ -107,8 +77,52 @@ public class ComponentEnemy extends Component {
         soundEnemyFireId = resources.soundIdEnemyFire;
     }
 
+    @Override
+    public void tick(double delta) {
+
+
+        double speed = gameLogic.moveSpeed * delta;
+
+        if (gameLogic.enemyDir == 1) {
+            parent.getTransform().x += speed;
+        } else {
+            parent.getTransform().x -= speed;
+        }
+
+        if (parent.getTransform().x > 320 - 16) {
+            gameLogic.changeEnemyDir(-1);
+        }
+        if (parent.getTransform().x < 16) {
+            gameLogic.changeEnemyDir(1);
+        }
+
+        fireDelay -= delta;
+        if (fireDelay < 0) {
+            if (enemyType == EnemyType.shooter && gameLogic.enemiesCanShoot()) fireMissile();
+            resetFireDelay();
+        }
+    }
+
+    private void fireMissile() {
+        garnet.getSound().playSound(soundEnemyFireId);
+        InvadersEntityFactory.addEnemyMissile(parent.getContext(), collisionSystem, parent.getTransform().x, parent.getTransform().y);
+    }
+
     public void resetFireDelay() {
         fireDelay = 2 + Math.random() * 4;
+    }
+
+    @Override
+    public void draw() {
+        if (!parent.isActive()) return;
+
+        ComponentEnemy component = parent.getComponent(ComponentEnemy.class);
+        if (component.enemyType == EnemyType.basic) garnet.getGraphics().setColor(basicCol);
+        if (component.enemyType == EnemyType.armoured) garnet.getGraphics().setColor(armoredCol);
+        if (component.enemyType == EnemyType.shooter) garnet.getGraphics().setColor(shooterCol);
+        garnet.getGraphics().setScale(2);
+        garnet.getGraphics().drawImage(resources.getSpriteTilesheet(), (int) (parent.getTransform().x) - 8, (int) (parent.getTransform().y) - 8, 2, 2);
+
     }
 
     private void handleBulletHit(double bulletDamage) {
@@ -120,7 +134,6 @@ public class ComponentEnemy extends Component {
         if (health <= 0) handleDying();
         else garnet.getSound().playSound(soundShieldHitId);
     }
-
 
     private void handleDying() {
         ColliderComponent colliderComponent = parent.getComponent(ColliderComponent.class);
@@ -136,19 +149,6 @@ public class ComponentEnemy extends Component {
         parent.getContext().getObjectByType(ParticleManager.class).addEmitter(emitter);
 
         garnet.getSound().playSound(soundExplosionId);
-    }
-
-    @Override
-    public void draw() {
-        if (!parent.isActive()) return;
-
-        ComponentEnemy component = parent.getComponent(ComponentEnemy.class);
-        if (component.enemyType == EnemyType.basic) garnet.getGraphics().setColor(basicCol);
-        if (component.enemyType == EnemyType.armoured) garnet.getGraphics().setColor(armoredCol);
-        if (component.enemyType == EnemyType.shooter) garnet.getGraphics().setColor(shooterCol);
-        garnet.getGraphics().setScale(2);
-        garnet.getGraphics().drawImage(resources.getSpriteTilesheet(), (int) (parent.getTransform().x) - 8, (int) (parent.getTransform().y) - 8, 2, 2);
-
     }
 
 }

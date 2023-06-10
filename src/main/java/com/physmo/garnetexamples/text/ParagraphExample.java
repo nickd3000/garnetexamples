@@ -61,7 +61,6 @@ public class ParagraphExample extends GarnetApp {
         String paragraphText = "The Paragraph() class can be used to display a large string of text that is constrained to a specified width and height.";
         String paragraphText2 = "Move the mouse to change the width of this paragraph.\n The paragraph drawer returns the total height of the lines in the drawn paragraph.";
         String paragraphWithLineBreaks = "There's a line break in the middle of the next word: bro\nken. And now 3 line breaks \n\n\n [end]";
-
         g.setScale(2);
         g.setColor(ColorUtils.SUNSET_GREEN);
         //regularFont.drawText(garnet.getGraphics(), "Regular font", 0, 10);
