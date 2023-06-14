@@ -38,6 +38,10 @@ public class TileSheetExample extends GarnetApp {
         tileSheet = new TileSheet(texture, 16, 16);
         Graphics graphics = garnet.getGraphics();
         graphics.addTexture(texture);
+
+        garnet.getDebugDrawer().setColor(0xff00ffff);
+        garnet.getDebugDrawer().setVisible(true);
+        garnet.getDebugDrawer().setDrawMouseCoords(true);
     }
 
     @Override
