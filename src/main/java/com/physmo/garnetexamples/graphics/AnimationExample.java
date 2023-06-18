@@ -77,7 +77,7 @@ public class AnimationExample extends GarnetApp {
         graphics.setColor(ColorUtils.WHITE);
 
         // Draw unscaled sprites using sprite sheet
-        graphics.setScale(3);
+        graphics.setZoom(3);
         graphics.drawImage(animation1.getImage(), 0, 10);
         graphics.drawImage(animation2.getImage(), 0, 10 + 30);
         graphics.drawImage(animation3.getImage(), 0, 10 + 60);

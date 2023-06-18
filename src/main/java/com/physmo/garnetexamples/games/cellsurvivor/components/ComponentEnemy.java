@@ -97,6 +97,6 @@ public class ComponentEnemy extends Component {
 
         double rotation = Math.sin(rollAngle) * 10;
 
-        spriteHelper.drawSpriteInMap(x, y, 5, 0, rotation);
+        spriteHelper.drawSpriteInMap(x, y, 5, 0); //, rotation);
     }
 }

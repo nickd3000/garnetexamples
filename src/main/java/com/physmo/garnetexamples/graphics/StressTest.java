@@ -68,7 +68,7 @@ public class StressTest extends GarnetApp {
     @Override
     public void draw(Graphics g) {
         g.setColor(ColorUtils.GREEN);
-        g.setScale(1);
+        g.setZoom(1);
 
         context.draw();
 

@@ -113,7 +113,7 @@ public class CollisionExample extends GarnetApp {
         }
 
 
-        g.setScale(scale);
+        g.setZoom(scale);
 
     }
 

@@ -56,7 +56,7 @@ public class SimpleSoundExample extends GarnetApp {
     public void draw(Graphics g) {
 
         g.setColor(ColorUtils.GREEN);
-        g.setScale(2);
+        g.setZoom(2);
 
         g.setColor(ColorUtils.SUNSET_BLUE);
 

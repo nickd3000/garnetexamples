@@ -44,30 +44,13 @@ public class ComponentHud extends Component {
         if (overlayScroll > 1) overlayScroll -= 1;
     }
 
-    private void drawBanner(String text, double scale) {
-        Graphics graphics = garnet.getGraphics();
-        double prevScale = graphics.getScale();
-        graphics.setScale(scale);
-        int stringWidth = resources.getBitmapFont().getStringWidth(text);
-        int windowWidth = (int) (garnet.getDisplay().getWindowWidth() / scale);
-        int windowHeight = (int) (garnet.getDisplay().getWindowHeight() / scale);
-        int textX = (windowWidth / 2) - (stringWidth / 2);
-        int textY = (windowHeight / 2) - (16 / 2);
-
-        if (((int) (textFlash * 10)) % 2 == 0) graphics.setColor(ColorUtils.RED);
-        else graphics.setColor(ColorUtils.BLUE);
-
-        resources.getBitmapFont().drawText(graphics, text, textX, textY);
-        graphics.setScale(prevScale);
-    }
-
     @Override
     public void draw() {
 
-        double prevScale = garnet.getGraphics().getScale();
+        double prevScale = garnet.getGraphics().getZoom();
 
         garnet.getGraphics().setColor(textColor);
-        garnet.getGraphics().setScale(2);
+        garnet.getGraphics().setZoom(2);
         resources.getBitmapFont().drawText(garnet.getGraphics(), "Score:" + gameData.currentScore, 10, 10);
         resources.getBitmapFont().drawText(garnet.getGraphics(), "Lives:" + gameData.lives, 10 + 250, 10);
 
@@ -89,16 +72,33 @@ public class ComponentHud extends Component {
         }
 
 
-        garnet.getGraphics().setScale(1);
+        garnet.getGraphics().setZoom(1);
         garnet.getGraphics().setColor(textColor);
         double fps = garnet.getGameClock().getFps();
         double lps = garnet.getGameClock().getLps();
         String clock = "fps:" + fps + "  lps:" + lps + " objects:" + parent.getContext().getObjectCount();
         clock += " colliders:" + collisionSystem.getSize();
-        garnet.getGraphics().setScale(1);
+        garnet.getGraphics().setZoom(1);
         resources.getBitmapFont().drawText(garnet.getGraphics(), clock, 10, 26 + 20);
 
-        garnet.getGraphics().setScale(prevScale);
+        garnet.getGraphics().setZoom(prevScale);
+    }
+
+    private void drawBanner(String text, double scale) {
+        Graphics graphics = garnet.getGraphics();
+        double prevScale = graphics.getZoom();
+        graphics.setZoom(scale);
+        int stringWidth = resources.getBitmapFont().getStringWidth(text);
+        int windowWidth = (int) (garnet.getDisplay().getWindowWidth() / scale);
+        int windowHeight = (int) (garnet.getDisplay().getWindowHeight() / scale);
+        int textX = (windowWidth / 2) - (stringWidth / 2);
+        int textY = (windowHeight / 2) - (16 / 2);
+
+        if (((int) (textFlash * 10)) % 2 == 0) graphics.setColor(ColorUtils.RED);
+        else graphics.setColor(ColorUtils.BLUE);
+
+        resources.getBitmapFont().drawText(graphics, text, textX, textY);
+        graphics.setZoom(prevScale);
     }
 
     // draw some big transparent invader sprites scrolling across the screen
@@ -110,7 +110,7 @@ public class ComponentHud extends Component {
         int numX = 5;
         int ySpan = (garnet.getDisplay().getWindowHeight() / scale) / numY;
         int xSpan = (garnet.getDisplay().getWindowWidth() / scale) / numX;
-        graphics.setScale(scale);
+        graphics.setZoom(scale);
         graphics.setColor(ColorUtils.asRGBA(0.5F, 1, 0.5f, 0.1f));
         for (int y = -1; y <= numY; y++) {
             for (int x = -1; x <= numX; x++) {

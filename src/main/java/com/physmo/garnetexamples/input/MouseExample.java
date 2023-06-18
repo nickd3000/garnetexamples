@@ -65,7 +65,7 @@ public class MouseExample extends GarnetApp {
         garnet.getDebugDrawer().setUserString("Mouse pos scaled: ", String.format("%d,%d", mps[0], mps[1]));
         garnet.getDebugDrawer().setUserString("Mouse normalised: ", String.format("%.2f,%.2f", mpn[0], mpn[1]));
 
-        g.setScale(scale);
+        g.setZoom(scale);
 
         if (mousePressed) g.setColor(ColorUtils.SUNSET_RED);
         else g.setColor(ColorUtils.SUNSET_YELLOW);

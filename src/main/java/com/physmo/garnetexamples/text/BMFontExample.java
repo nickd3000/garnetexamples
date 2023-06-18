@@ -49,11 +49,11 @@ public class BMFontExample extends GarnetApp {
     @Override
     public void draw(Graphics g) {
 
-        g.setScale(2);
+        g.setZoom(2);
         g.setColor(ColorUtils.SUNSET_GREEN);
         bmfFont.drawText(g, "hello", 0, 10);
 
-        g.setScale(3);
+        g.setZoom(3);
         g.setColor(ColorUtils.SUNSET_YELLOW);
         bmfFont.drawText(g, "hello but bigger", 0, 20);
 

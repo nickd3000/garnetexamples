@@ -1,6 +1,7 @@
 package com.physmo.garnetexamples.games.cellsurvivor.components;
 
 import com.physmo.garnet.Garnet;
+import com.physmo.garnet.graphics.Camera;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.tilegrid.TileGridData;
 import com.physmo.garnet.tilegrid.TileGridDrawer;
@@ -13,6 +14,7 @@ import com.physmo.garnettoolkit.Vector3;
 import com.physmo.garnettoolkit.scene.SceneManager;
 
 public class ComponentLevelMap extends Component {
+
     TileGridData tileGridData;
     TileGridDrawer tileGridDrawer;
     int mapWidth = 100;
@@ -22,26 +24,17 @@ public class ComponentLevelMap extends Component {
     Graphics graphics;
     Garnet garnet;
     GameObject player;
-    double scrollX = 0;
-    double scrollY = 0;
+//    double scrollX = 0;
+//    double scrollY = 0;
 
-    int windowWidth = 300;
-    int windowHeight = 200;
+    int windowWidth = 640 - 20;
+    int windowHeight = 480 - 20;
+
+    Camera camera;
 
     public ComponentLevelMap() {
 
 
-    }
-
-    @Override
-    public void tick(double t) {
-
-        Vector3 playerPos = player.getTransform();
-        double dx = playerPos.x - (scrollX + (windowWidth / 2));
-        double dy = playerPos.y - (scrollY + (windowHeight / 2));
-        double speed = 5.0 * t;
-        scrollX += dx * speed;
-        scrollY += dy * speed;
     }
 
     public TileGridDrawer getTileGridDrawer() {
@@ -58,7 +51,12 @@ public class ComponentLevelMap extends Component {
         resources = parent.getContext().getObjectByType(Resources.class);
 
         tileGridData = new TileGridData(mapWidth, mapHeight);
-        tileGridDrawer = new TileGridDrawer().setData(tileGridData).setWindowSize(windowWidth, windowHeight).setTileSize(16, 16).setTileSheet(resources.getSpritesTilesheet()).setScale((int) scale);
+        tileGridDrawer = new TileGridDrawer()
+                .setData(tileGridData)
+                //.setWindowSize(windowWidth, windowHeight)
+                .setTileSize(16, 16)
+                .setTileSheet(resources.getSpritesTilesheet())
+                .setScale((int) scale).setCameraId(Constants.tileGridCameraId);
 
         int grass = resources.getSpritesTilesheet().getTileIndexFromCoords(1, 7);
         int flower = resources.getSpritesTilesheet().getTileIndexFromCoords(2, 7);
@@ -69,13 +67,38 @@ public class ComponentLevelMap extends Component {
             }
         }
 
+        camera = garnet.getGraphics().getCameraManager().getCamera(Constants.tileGridCameraId);
+        camera.setWidth(windowWidth);
+        camera.setHeight(windowHeight);
+        camera.setWindowY(10);
+        camera.setWindowX(10);
+        camera.setClipActive(true);
+        //camera.setX(-50);
+        camera.setDrawDebugInfo(true);
+
         player = parent.getContext().getObjectByTag(Constants.TAG_PLAYER);
+    }
+
+    @Override
+    public void tick(double t) {
+
+        Vector3 playerPos = player.getTransform();
+        double scrollX = camera.getX();
+        double scrollY = camera.getY();
+        double dx = playerPos.x - (scrollX + ((windowWidth / scale) / 2));
+        double dy = playerPos.y - (scrollY + ((windowHeight / scale) / 2));
+        double speed = 5.0 * t;
+        camera.scroll(dx * speed, dy * speed);
+//        scrollX += dx * speed;
+//        scrollY += dy * speed;
+
     }
 
     @Override
     public void draw() {
         tileGridDrawer.setScale(2);
-        tileGridDrawer.setScroll(scrollX, scrollY);
+        //tileGridDrawer.setScroll(scrollX, scrollY);
+
         tileGridDrawer.draw(graphics, 20, 20);
 
 //        Rect visibleMapExtents = getVisibleMapExtents();
@@ -83,16 +106,17 @@ public class ComponentLevelMap extends Component {
     }
 
     public Rect getVisibleMapExtents() {
-        Rect rect = new Rect();
+        double[] r = camera.getVisibleRect();
+        Rect rect = new Rect(r[0], r[1], r[2], r[3]);
 
-        double[] scrollPosition = tileGridDrawer.getScrollPosition();
-        rect.x = scrollPosition[0];
-        rect.y = scrollPosition[1];
-
-        int[] windowSizeInTiles = tileGridDrawer.getWindowSizeInTiles();
-        rect.w = (windowSizeInTiles[0] * 16);
-        rect.h = (windowSizeInTiles[1] * 16);
-
+//        double[] scrollPosition = tileGridDrawer.getScrollPosition();
+//        rect.x = scrollPosition[0];
+//        rect.y = scrollPosition[1];
+//
+//        int[] windowSizeInTiles = tileGridDrawer.getWindowSizeInTiles();
+//        rect.w = (windowSizeInTiles[0] * 16);
+//        rect.h = (windowSizeInTiles[1] * 16);
+//
 
         return rect;
     }

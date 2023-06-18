@@ -71,7 +71,7 @@ public class CurveMotionExample extends GarnetApp {
     @Override
     public void draw(Graphics g) {
         g.setColor(ColorUtils.GREEN);
-        g.setScale(2);
+        g.setZoom(2);
         double width = 200 - 32;
         int y = 2;
 

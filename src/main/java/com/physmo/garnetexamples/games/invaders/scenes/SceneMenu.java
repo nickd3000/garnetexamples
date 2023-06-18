@@ -33,7 +33,7 @@ public class SceneMenu extends Scene {
     @Override
     public void draw() {
         garnet.getGraphics().setColor(textColor);
-        garnet.getGraphics().setScale(2);
+        garnet.getGraphics().setZoom(2);
         resources.getBitmapFont().drawText(garnet.getGraphics(), "Garnet Example Project", 20, 20);
         resources.getBitmapFont().drawText(garnet.getGraphics(), "Invaders", 20, 100);
     }

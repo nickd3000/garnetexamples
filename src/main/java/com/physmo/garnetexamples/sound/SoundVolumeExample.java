@@ -69,7 +69,7 @@ public class SoundVolumeExample extends GarnetApp {
     @Override
     public void draw(Graphics g) {
 
-        g.setScale(1);
+        g.setZoom(1);
 
         g.setColor(ColorUtils.SUNSET_GREEN);
 

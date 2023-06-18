@@ -52,7 +52,7 @@ public class TileSheetExample extends GarnetApp {
 
     @Override
     public void draw(Graphics g) {
-        g.setScale(scale);
+        g.setZoom(scale);
 
         // Retrieve the current mouse position.
         int[] mousePosition = garnet.getInput().getMousePositionScaled(scale);
