@@ -5,7 +5,7 @@ import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.Utils;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.input.Input;
-import com.physmo.garnet.regularfont.RegularFont;
+import com.physmo.garnet.text.RegularFont;
 import com.physmo.garnettoolkit.color.ColorUtils;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
@@ -43,6 +43,7 @@ public class SimpleSoundExample extends GarnetApp {
 
     @Override
     public void tick(double delta) {
+
         if (garnet.getInput().isMouseButtonFirstPress(Input.MOUSE_BUTTON_LEFT)) {
             garnet.getSound().playSound(soundA);
         }
@@ -55,7 +56,7 @@ public class SimpleSoundExample extends GarnetApp {
     public void draw(Graphics g) {
 
         g.setColor(ColorUtils.GREEN);
-        g.setScale(2);
+        g.setZoom(2);
 
         g.setColor(ColorUtils.SUNSET_BLUE);
 
@@ -65,6 +66,12 @@ public class SimpleSoundExample extends GarnetApp {
         regularFont.drawText(g, "button to play", 20, 35);
         regularFont.drawText(g, "sounds", 20, 50);
 
+    }
+
+    public float clamp(float v) {
+        if (v < 0) return 0;
+        if (v > 1) return 1;
+        return v;
     }
 
 }

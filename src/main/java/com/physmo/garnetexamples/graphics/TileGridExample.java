@@ -2,9 +2,10 @@ package com.physmo.garnetexamples.graphics;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
-import com.physmo.garnet.Texture;
-import com.physmo.garnet.drawablebatch.TileSheet;
+import com.physmo.garnet.graphics.Camera;
 import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.graphics.Texture;
+import com.physmo.garnet.graphics.TileSheet;
 import com.physmo.garnet.tilegrid.TileGridData;
 import com.physmo.garnet.tilegrid.TileGridDrawer;
 
@@ -13,6 +14,7 @@ import java.util.Random;
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class TileGridExample extends GarnetApp {
 
+    static int tileGridCameraId = 1;
     String imageFileName = "prototypeArt.png";
     TileSheet tileSheet;
     Texture texture;
@@ -20,14 +22,12 @@ public class TileGridExample extends GarnetApp {
     double scrollY = 0;
     int scrollDir = 3;
     double scrollTimer = 0;
-    int scale = 2;
-
     TileGridDrawer tileGridDrawer;
     TileGridData tileGridData;
     Random random = new Random();
-
     int wallTileID;
     int grassTileID;
+    Camera camera;
 
     public TileGridExample(Garnet garnet, String name) {
         super(garnet, name);
@@ -49,7 +49,9 @@ public class TileGridExample extends GarnetApp {
         texture = Texture.loadTexture(imageFileName);
         tileSheet = new TileSheet(texture, 16, 16);
 
-        garnet.getGraphics().addTexture(texture);
+        Graphics graphics = garnet.getGraphics();
+
+        graphics.addTexture(texture);
 
         wallTileID = tileSheet.getTileIndexFromCoords(0, 7);
         grassTileID = tileSheet.getTileIndexFromCoords(1, 7);
@@ -60,11 +62,20 @@ public class TileGridExample extends GarnetApp {
         tileGridData = new TileGridData(mapWidth, mapHeight);
         tileGridDrawer = new TileGridDrawer()
                 .setData(tileGridData)
-                .setWindowSize(100, 100)
                 .setTileSize(16, 16)
                 .setTileSheet(tileSheet)
-                .setScale(scale);
+                .setCameraId(tileGridCameraId);
 
+        camera = graphics.getCameraManager().getCamera(tileGridCameraId);
+        camera.setWidth(400 - 20)
+                .setHeight(400 - 20)
+                .setWindowX(10)
+                .setWindowY(10)
+                .setClipActive(true)
+                .setDrawDebugInfo(true)
+                .setZoom(2);
+
+        graphics.setActiveCamera(tileGridCameraId);
 
         for (int y = 0; y < mapHeight; y++) {
             for (int x = 0; x < mapWidth; x++) {
@@ -90,27 +101,23 @@ public class TileGridExample extends GarnetApp {
             scrollTimer = 3 + random.nextInt(3);
         }
 
-        int[] scrollExtents = tileGridDrawer.getScrollExtents();
+        int[] scrollExtents = new int[]{100, 100};//tileGridDrawer.getScrollExtents();
         if (scrollX <= 0 && scrollDir == 1) scrollTimer = 0;
         if (scrollY <= 0 && scrollDir == 3) scrollTimer = 0;
         if (scrollX >= scrollExtents[0] && scrollDir == 0) scrollTimer = 0;
         if (scrollY >= scrollExtents[1] && scrollDir == 2) scrollTimer = 0;
 
+        camera.setX(scrollX);
+        camera.setY(scrollY);
         //System.out.println("extents "+scrollExtents[0]+", "+scrollExtents[1]);
 
-        tileGridDrawer.setScroll(scrollX, scrollY);
+        //tileGridDrawer.setScroll(scrollX, scrollY);
     }
 
     @Override
     public void draw(Graphics g) {
-        tileGridDrawer.draw(g, 16, 16);
-
-        int[] pos = tileGridDrawer.translateMapToScreenPosition(16, 16);
-        g.setActiveClipRect(tileGridDrawer.getClipRectId());
-        g.drawImage(tileSheet, pos[0], pos[1], 0, 0);
-
-        g.disableClipRect();
-        g.setScale(scale);
+        tileGridDrawer.draw(g, 0, 0);
+        g.drawImage(tileSheet.getSubImage(0, 0), 64, 86);
     }
 
 }

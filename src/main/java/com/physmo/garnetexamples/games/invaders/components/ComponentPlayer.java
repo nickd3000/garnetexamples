@@ -103,7 +103,14 @@ public class ComponentPlayer extends Component {
         if (bulletCoolDown > 0) return;
 
         GameObject playerMissile = InvadersEntityFactory.addPlayerMissile(parent.getContext(), collisionSystem, parent.getTransform().x, parent.getTransform().y);
-        garnet.getSound().playSound(resources.soundIdLaser);
+
+        float soundVolume = 0.5f;
+        float soundPan = 0.0f;
+
+        soundPan = Utils.remapRange((float) parent.getTransform().x, 0, 200, -1, 1);
+
+        garnet.getSound().playSound(resources.soundIdLaser, soundVolume, soundPan);
+
         if (playerMissile != null) {
 
             bulletCoolDown = BULLET_COOL_DOWN;
@@ -121,7 +128,7 @@ public class ComponentPlayer extends Component {
         boolean invincible = gameLogic.playerIsInvincible() | gameLogic.playerIsInvincible();
         if (flashOn && invincible) drawCol = playerColorB;
 
-        garnet.getGraphics().setScale(2);
+
         garnet.getGraphics().setColor(drawCol);
         garnet.getGraphics().drawImage(resources.getSpriteTilesheet(), (int) (parent.getTransform().x) - 8,
                 (int) (parent.getTransform().y) - 8, 0, 2);

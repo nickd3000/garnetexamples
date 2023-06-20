@@ -2,10 +2,10 @@ package com.physmo.garnetexamples.text;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
-import com.physmo.garnet.ParagraphDrawer;
-import com.physmo.garnet.bitmapfont.BitmapFont;
 import com.physmo.garnet.graphics.Graphics;
-import com.physmo.garnet.regularfont.RegularFont;
+import com.physmo.garnet.text.BitmapFont;
+import com.physmo.garnet.text.ParagraphDrawer;
+import com.physmo.garnet.text.RegularFont;
 import com.physmo.garnettoolkit.color.ColorUtils;
 
 import java.io.IOException;
@@ -58,21 +58,27 @@ public class ParagraphExample extends GarnetApp {
     @Override
     public void draw(Graphics g) {
 
-        String paragraphText = "The quick brown fox \n jumps over the lazy dogs. The quick brown fox jumps over the lazy dogs.";
+        String paragraphText = "The Paragraph() class can be used to display a large string of text that is constrained to a specified width and height.\n";
         String paragraphText2 = "Move the mouse to change the width of this paragraph.\n The paragraph drawer returns the total height of the lines in the drawn paragraph.";
-
-        g.setScale(2);
+        String paragraphWithLineBreaks = "There's a line break in the middle of the next word: bro\nken. And now 3 line breaks \n\n\n [end]";
+        g.setZoom(1);
         g.setColor(ColorUtils.SUNSET_GREEN);
         //regularFont.drawText(garnet.getGraphics(), "Regular font", 0, 10);
 
-        regularFontParagraphDrawer.drawParagraph(g, paragraphText, 200, 200, 0, 0);
+        regularFontParagraphDrawer.setPadY(3);
+        regularFont.setScale(2);
+        regularFontParagraphDrawer.drawParagraph(g, paragraphText, 400 - 10, 150, 10, 10);
 
-        int[] mp = garnet.getInput().getMousePositionScaled(2);
-        regularFontParagraphDrawer.drawParagraph(g, paragraphText, mp[0], 200, 0, 60);
 
+        g.setColor(ColorUtils.SUNSET_YELLOW);
+        regularFont.setScale(3);
+        regularFontParagraphDrawer.drawParagraph(g, paragraphWithLineBreaks, 400 - 10, 200, 410, 10);
+
+        int[] mp = garnet.getInput().getMousePositionScaled(1);
         bitmapFontParagraphDrawer.setPadY(4);
-        int ph = bitmapFontParagraphDrawer.drawParagraph(g, paragraphText2, mp[0], 200, 0, 200);
-        g.drawRect(0, 200, mp[0], ph);
+        bitmapFont.setScale(2);
+        int ph = bitmapFontParagraphDrawer.drawParagraph(g, paragraphText2 + paragraphText2, mp[0], 200, 10, 250);
+        g.drawRect(10, 250, mp[0], ph);
 
     }
 

@@ -2,9 +2,9 @@ package com.physmo.garnetexamples.collision;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
-import com.physmo.garnet.Texture;
-import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.graphics.Texture;
+import com.physmo.garnet.graphics.TileSheet;
 import com.physmo.garnettoolkit.Context;
 import com.physmo.garnettoolkit.GameObject;
 import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
@@ -113,7 +113,7 @@ public class CollisionExample extends GarnetApp {
         }
 
 
-        g.setScale(scale);
+        g.setZoom(scale);
 
     }
 

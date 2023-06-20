@@ -2,10 +2,10 @@ package com.physmo.garnetexamples.misc;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
-import com.physmo.garnet.Texture;
 import com.physmo.garnet.Utils;
-import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.graphics.Texture;
+import com.physmo.garnet.graphics.TileSheet;
 import com.physmo.garnettoolkit.color.ColorUtils;
 import com.physmo.garnettoolkit.curve.CurveType;
 import com.physmo.garnettoolkit.curve.StandardCurve;
@@ -71,7 +71,7 @@ public class CurveMotionExample extends GarnetApp {
     @Override
     public void draw(Graphics g) {
         g.setColor(ColorUtils.GREEN);
-        g.setScale(2);
+        g.setZoom(2);
         double width = 200 - 32;
         int y = 2;
 

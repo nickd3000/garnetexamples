@@ -1,11 +1,11 @@
 package com.physmo.garnetexamples.games.invaders;
 
 import com.physmo.garnet.Garnet;
-import com.physmo.garnet.Texture;
 import com.physmo.garnet.Utils;
-import com.physmo.garnet.bitmapfont.BitmapFont;
-import com.physmo.garnet.drawablebatch.TileSheet;
-import com.physmo.garnet.regularfont.RegularFont;
+import com.physmo.garnet.graphics.Texture;
+import com.physmo.garnet.graphics.TileSheet;
+import com.physmo.garnet.text.BitmapFont;
+import com.physmo.garnet.text.RegularFont;
 
 import java.io.IOException;
 

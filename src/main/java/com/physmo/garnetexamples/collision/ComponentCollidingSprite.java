@@ -1,7 +1,7 @@
 package com.physmo.garnetexamples.collision;
 
-import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.graphics.TileSheet;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.Vector3;
 import com.physmo.garnettoolkit.color.ColorUtils;

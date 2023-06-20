@@ -2,10 +2,10 @@ package com.physmo.garnetexamples.input;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
-import com.physmo.garnet.Texture;
 import com.physmo.garnet.Utils;
-import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.graphics.Texture;
+import com.physmo.garnet.graphics.TileSheet;
 import com.physmo.garnet.input.Input;
 import com.physmo.garnettoolkit.color.ColorUtils;
 
@@ -55,14 +55,17 @@ public class MouseExample extends GarnetApp {
     public void draw(Graphics g) {
 
         int[] mp, mps;
+        double[] mpn;
 
         mps = input.getMousePositionScaled(scale);
         mp = input.getMousePosition();
+        mpn = input.getMousePositionNormalised();
 
         garnet.getDebugDrawer().setUserString("Mouse pos:        ", String.format("%d,%d", mp[0], mp[1]));
         garnet.getDebugDrawer().setUserString("Mouse pos scaled: ", String.format("%d,%d", mps[0], mps[1]));
+        garnet.getDebugDrawer().setUserString("Mouse normalised: ", String.format("%.2f,%.2f", mpn[0], mpn[1]));
 
-        g.setScale(scale);
+        g.setZoom(scale);
 
         if (mousePressed) g.setColor(ColorUtils.SUNSET_RED);
         else g.setColor(ColorUtils.SUNSET_YELLOW);

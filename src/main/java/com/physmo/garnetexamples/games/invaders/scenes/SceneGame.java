@@ -1,9 +1,10 @@
 package com.physmo.garnetexamples.games.invaders.scenes;
 
 import com.physmo.garnet.Garnet;
-import com.physmo.garnet.Texture;
-import com.physmo.garnet.drawablebatch.TileSheet;
+import com.physmo.garnet.graphics.Camera;
 import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.graphics.Texture;
+import com.physmo.garnet.graphics.TileSheet;
 import com.physmo.garnetexamples.games.invaders.GameData;
 import com.physmo.garnetexamples.games.invaders.InvadersEntityFactory;
 import com.physmo.garnetexamples.games.invaders.components.ComponentGameLogic;
@@ -26,13 +27,12 @@ public class SceneGame extends Scene {
 
     boolean showCollisionInfo = false;
     CollisionSystem collisionSystem;
+    TileSheet tileSheet;
+    Texture texture;
 
     public SceneGame(String name) {
         super(name);
     }
-
-    TileSheet tileSheet;
-    Texture texture;
 
     @Override
     public void init() {
@@ -63,6 +63,9 @@ public class SceneGame extends Scene {
         initParticleManager();
         graphics = garnet.getGraphics();
         graphics.setBackgroundColor(ColorUtils.SUNSET_BLUE);
+
+        Camera activeCamera = graphics.getCameraManager().getActiveCamera();
+        activeCamera.setZoom(2);
     }
 
     public void injectCollisionDrawer(CollisionSystem collisionSystem) {
@@ -78,19 +81,6 @@ public class SceneGame extends Scene {
             graphics.drawRect(x, y, w, h);
         });
     }
-
-    public void initParticleManager() {
-        ParticleManager particleManager = new ParticleManager(1000);
-        particleManager.setParticleDrawer(p -> {
-            float pAge = (float) (p.age / p.lifeTime);
-            garnet.getGraphics().setColor(p.colorSupplier.getColor(pAge));
-            garnet.getGraphics().drawImage(tileSheet, (int) (p.position.x) - 8,
-                    (int) (p.position.y) - 8, 3, 0);
-        });
-
-        context.add(particleManager);
-    }
-
 
     public void createEntities() {
         GameObject player = new GameObject("player");
@@ -119,6 +109,17 @@ public class SceneGame extends Scene {
         context.add(gameLogic);
     }
 
+    public void initParticleManager() {
+        ParticleManager particleManager = new ParticleManager(1000);
+        particleManager.setParticleDrawer(p -> {
+            float pAge = (float) (p.age / p.lifeTime);
+            garnet.getGraphics().setColor(p.colorSupplier.getColor(pAge));
+            garnet.getGraphics().drawImage(tileSheet, (int) (p.position.x) - 8,
+                    (int) (p.position.y) - 8, 3, 0);
+        });
+
+        context.add(particleManager);
+    }
 
     @Override
     public void tick(double delta) {

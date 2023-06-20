@@ -2,9 +2,8 @@ package com.physmo.garnetexamples.graphics;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
-import com.physmo.garnet.Texture;
 import com.physmo.garnet.graphics.Graphics;
-import com.physmo.garnettoolkit.color.ColorUtils;
+import com.physmo.garnet.graphics.Texture;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class ClipWindowExample extends GarnetApp {
@@ -37,7 +36,7 @@ public class ClipWindowExample extends GarnetApp {
 
         graphics.addTexture(texture);
 
-        graphics.addClipRect(1, 50, 50, 300, 300);
+        //graphics.addClipRect(1, 50, 50, 300, 300);
     }
 
     @Override
@@ -57,16 +56,16 @@ public class ClipWindowExample extends GarnetApp {
 
         // Draw unscaled sprites using sprite sheet
 
-        graphics.setScale(2);
+        graphics.setZoom(2);
         graphics.setDrawOrder(1);
 
-        graphics.disableClipRect();
-        graphics.setColor(ColorUtils.WHITE);
-        graphics.drawImage(texture, offset1, 0);
-        graphics.setActiveClipRect(1);
-        graphics.setColor(ColorUtils.GREEN);
-        graphics.drawImage(texture, 0, offset2);
-        graphics.disableClipRect();
+//        graphics.disableClipRect();
+//        graphics.setColor(ColorUtils.WHITE);
+//        graphics.drawImage(texture, offset1, 0);
+//        graphics.setActiveClipRect(1);
+//        graphics.setColor(ColorUtils.GREEN);
+//        graphics.drawImage(texture, 0, offset2);
+//        graphics.disableClipRect();
 
     }
 

@@ -2,9 +2,9 @@ package com.physmo.garnetexamples.graphics;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
-import com.physmo.garnet.Texture;
-import com.physmo.garnet.drawablebatch.TileSheet;
 import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.graphics.Texture;
+import com.physmo.garnet.graphics.TileSheet;
 import com.physmo.garnetexamples.graphics.support.FloatingInvaderComponent;
 import com.physmo.garnettoolkit.Context;
 import com.physmo.garnettoolkit.GameObject;
@@ -16,7 +16,7 @@ public class StressTest extends GarnetApp {
     String imageFileName = "space.png";
     TileSheet tileSheet;
     Texture texture;
-    int numSprites = 25000;
+    int numSprites = 25000 / 2;
     Context context;
 
     public StressTest(Garnet garnet, String name) {
@@ -56,6 +56,7 @@ public class StressTest extends GarnetApp {
         // Configure the debug text.
         garnet.getDebugDrawer().setScale(2);
         garnet.getDebugDrawer().setUserString("Sprite count:", String.valueOf(numSprites));
+        garnet.getDebugDrawer().setDrawFps(true);
         garnet.getDebugDrawer().setVisible(true);
     }
 
@@ -67,9 +68,12 @@ public class StressTest extends GarnetApp {
     @Override
     public void draw(Graphics g) {
         g.setColor(ColorUtils.GREEN);
-        g.setScale(1);
+        g.setZoom(1);
 
         context.draw();
+
+        g.setColor(0x00000070);
+        g.filledRect(0, 0, 640, 80);
     }
 
 }
