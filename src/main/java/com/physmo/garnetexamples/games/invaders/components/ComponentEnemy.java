@@ -120,7 +120,6 @@ public class ComponentEnemy extends Component {
         if (component.enemyType == EnemyType.basic) garnet.getGraphics().setColor(basicCol);
         if (component.enemyType == EnemyType.armoured) garnet.getGraphics().setColor(armoredCol);
         if (component.enemyType == EnemyType.shooter) garnet.getGraphics().setColor(shooterCol);
-        garnet.getGraphics().setZoom(2);
         garnet.getGraphics().drawImage(resources.getSpriteTilesheet(), (int) (parent.getTransform().x) - 8, (int) (parent.getTransform().y) - 8, 2, 2);
 
     }

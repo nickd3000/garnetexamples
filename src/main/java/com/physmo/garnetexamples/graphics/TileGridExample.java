@@ -22,7 +22,6 @@ public class TileGridExample extends GarnetApp {
     double scrollY = 0;
     int scrollDir = 3;
     double scrollTimer = 0;
-    int scale = 2;
     TileGridDrawer tileGridDrawer;
     TileGridData tileGridData;
     Random random = new Random();
@@ -50,7 +49,9 @@ public class TileGridExample extends GarnetApp {
         texture = Texture.loadTexture(imageFileName);
         tileSheet = new TileSheet(texture, 16, 16);
 
-        garnet.getGraphics().addTexture(texture);
+        Graphics graphics = garnet.getGraphics();
+
+        graphics.addTexture(texture);
 
         wallTileID = tileSheet.getTileIndexFromCoords(0, 7);
         grassTileID = tileSheet.getTileIndexFromCoords(1, 7);
@@ -61,20 +62,20 @@ public class TileGridExample extends GarnetApp {
         tileGridData = new TileGridData(mapWidth, mapHeight);
         tileGridDrawer = new TileGridDrawer()
                 .setData(tileGridData)
-                //.setWindowSize(100, 100)
                 .setTileSize(16, 16)
                 .setTileSheet(tileSheet)
-                .setScale(scale)
                 .setCameraId(tileGridCameraId);
 
-        camera = garnet.getGraphics().getCameraManager().getCamera(tileGridCameraId);
-        camera.setWidth(400);
-        camera.setHeight(400);
-        camera.setWindowY(0);
-        camera.setWindowY(0);
-        camera.setClipActive(true);
-        camera.setX(-50);
-        camera.setDrawDebugInfo(true);
+        camera = graphics.getCameraManager().getCamera(tileGridCameraId);
+        camera.setWidth(400 - 20)
+                .setHeight(400 - 20)
+                .setWindowX(10)
+                .setWindowY(10)
+                .setClipActive(true)
+                .setDrawDebugInfo(true)
+                .setZoom(2);
+
+        graphics.setActiveCamera(tileGridCameraId);
 
         for (int y = 0; y < mapHeight; y++) {
             for (int x = 0; x < mapWidth; x++) {
@@ -116,14 +117,7 @@ public class TileGridExample extends GarnetApp {
     @Override
     public void draw(Graphics g) {
         tileGridDrawer.draw(g, 0, 0);
-
-        //int[] pos = tileGridDrawer.translateMapToScreenPosition(16, 16);
-        int prevCameraId = g.getCameraManager().getActiveCameraId();
-        g.setActiveCamera(tileGridDrawer.getCameraId());
-        g.drawImage(tileSheet, 16, 16, 0, 0);
-
-        g.setActiveCamera(prevCameraId);
-        g.setZoom(scale);
+        g.drawImage(tileSheet.getSubImage(0, 0), 64, 86);
     }
 
 }

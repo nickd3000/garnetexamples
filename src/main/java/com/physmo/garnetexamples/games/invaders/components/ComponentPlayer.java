@@ -128,7 +128,7 @@ public class ComponentPlayer extends Component {
         boolean invincible = gameLogic.playerIsInvincible() | gameLogic.playerIsInvincible();
         if (flashOn && invincible) drawCol = playerColorB;
 
-        garnet.getGraphics().setZoom(2);
+
         garnet.getGraphics().setColor(drawCol);
         garnet.getGraphics().drawImage(resources.getSpriteTilesheet(), (int) (parent.getTransform().x) - 8,
                 (int) (parent.getTransform().y) - 8, 0, 2);

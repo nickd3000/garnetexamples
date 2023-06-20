@@ -1,6 +1,7 @@
 package com.physmo.garnetexamples.games.invaders.scenes;
 
 import com.physmo.garnet.Garnet;
+import com.physmo.garnet.graphics.Camera;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.graphics.Texture;
 import com.physmo.garnet.graphics.TileSheet;
@@ -62,6 +63,9 @@ public class SceneGame extends Scene {
         initParticleManager();
         graphics = garnet.getGraphics();
         graphics.setBackgroundColor(ColorUtils.SUNSET_BLUE);
+
+        Camera activeCamera = graphics.getCameraManager().getActiveCamera();
+        activeCamera.setZoom(2);
     }
 
     public void injectCollisionDrawer(CollisionSystem collisionSystem) {

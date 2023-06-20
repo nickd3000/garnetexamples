@@ -78,6 +78,8 @@ public class ComponentPlayer extends Component {
                 target.getComponent(ComponentCrystal.class).requestKill();
             }
         });
+
+        parent.getTransform().set(300, 200, 0);
     }
 
     @Override

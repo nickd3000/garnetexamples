@@ -2,6 +2,7 @@ package com.physmo.garnetexamples.games.invaders.components;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.text.BitmapFont;
 import com.physmo.garnetexamples.games.invaders.GameData;
 import com.physmo.garnetexamples.games.invaders.Resources;
 import com.physmo.garnettoolkit.Component;
@@ -11,15 +12,19 @@ import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 public class ComponentHud extends Component {
 
+    final int BANNER_SCALE = 3;
+    final int SCORE_SCALE = 1;
     Resources resources;
     GameData gameData;
     Garnet garnet;
+    ComponentGameLogic gameLogic;
+    CollisionSystem collisionSystem;
+    BitmapFont bitmapFont;
 
     int textColor = ColorUtils.YELLOW;
     double textFlash = 0;
-    ComponentGameLogic gameLogic;
-    CollisionSystem collisionSystem;
     double overlayScroll = 0;
+
 
     public ComponentHud() {
 
@@ -33,6 +38,8 @@ public class ComponentHud extends Component {
 
         gameLogic = parent.getContext().getComponent(ComponentGameLogic.class);
         collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
+        bitmapFont = resources.getBitmapFont();
+
     }
 
     @Override
@@ -47,12 +54,10 @@ public class ComponentHud extends Component {
     @Override
     public void draw() {
 
-        double prevScale = garnet.getGraphics().getZoom();
-
         garnet.getGraphics().setColor(textColor);
-        garnet.getGraphics().setZoom(2);
-        resources.getBitmapFont().drawText(garnet.getGraphics(), "Score:" + gameData.currentScore, 10, 10);
-        resources.getBitmapFont().drawText(garnet.getGraphics(), "Lives:" + gameData.lives, 10 + 250, 10);
+        bitmapFont.setScale(SCORE_SCALE);
+        bitmapFont.drawText(garnet.getGraphics(), "Score:" + gameData.currentScore, 10, 10);
+        bitmapFont.drawText(garnet.getGraphics(), "Lives:" + gameData.lives, 10 + 250, 10);
 
 
         String textGetReady = "Get Ready!";
@@ -71,23 +76,20 @@ public class ComponentHud extends Component {
             drawOverlay();
         }
 
-
-        garnet.getGraphics().setZoom(1);
         garnet.getGraphics().setColor(textColor);
         double fps = garnet.getGameClock().getFps();
         double lps = garnet.getGameClock().getLps();
         String clock = "fps:" + fps + "  lps:" + lps + " objects:" + parent.getContext().getObjectCount();
         clock += " colliders:" + collisionSystem.getSize();
-        garnet.getGraphics().setZoom(1);
-        resources.getBitmapFont().drawText(garnet.getGraphics(), clock, 10, 26 + 20);
 
-        garnet.getGraphics().setZoom(prevScale);
+        bitmapFont.setScale(0.7);
+        bitmapFont.drawText(garnet.getGraphics(), clock, 10, 220);
+
     }
 
     private void drawBanner(String text, double scale) {
         Graphics graphics = garnet.getGraphics();
-        double prevScale = graphics.getZoom();
-        graphics.setZoom(scale);
+
         int stringWidth = resources.getBitmapFont().getStringWidth(text);
         int windowWidth = (int) (garnet.getDisplay().getWindowWidth() / scale);
         int windowHeight = (int) (garnet.getDisplay().getWindowHeight() / scale);
@@ -97,8 +99,9 @@ public class ComponentHud extends Component {
         if (((int) (textFlash * 10)) % 2 == 0) graphics.setColor(ColorUtils.RED);
         else graphics.setColor(ColorUtils.BLUE);
 
-        resources.getBitmapFont().drawText(graphics, text, textX, textY);
-        graphics.setZoom(prevScale);
+        bitmapFont.setScale(BANNER_SCALE);
+        bitmapFont.drawText(graphics, text, textX, textY);
+
     }
 
     // draw some big transparent invader sprites scrolling across the screen
@@ -110,7 +113,7 @@ public class ComponentHud extends Component {
         int numX = 5;
         int ySpan = (garnet.getDisplay().getWindowHeight() / scale) / numY;
         int xSpan = (garnet.getDisplay().getWindowWidth() / scale) / numX;
-        graphics.setZoom(scale);
+
         graphics.setColor(ColorUtils.asRGBA(0.5F, 1, 0.5f, 0.1f));
         for (int y = -1; y <= numY; y++) {
             for (int x = -1; x <= numX; x++) {

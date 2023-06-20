@@ -20,14 +20,12 @@ public class SpriteHelper extends Component {
     public void drawSpriteInMap(double x, double y, double tileX, double tileY) {
         g.setActiveCamera(Constants.tileGridCameraId);
         g.setColor(spriteColor);
-        g.setZoom(2);
         g.drawImage(resources.getSpritesTilesheet(), x, y, (int) tileX, (int) tileY);
     }
 
     public void drawSpriteInMap(int x, int y, int tileX, int tileY, double angle) {
         g.setActiveCamera(Constants.tileGridCameraId);
         g.setColor(spriteColor);
-        g.setZoom(2);
         g.drawImage(resources.getSpritesTilesheet(), x, y, tileX, tileY, angle);
     }
 
