@@ -7,6 +7,7 @@ import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.graphics.Texture;
 import com.physmo.garnet.graphics.TileSheet;
 import com.physmo.garnet.input.Input;
+import com.physmo.garnet.input.Mouse;
 import com.physmo.garnettoolkit.color.ColorUtils;
 
 import java.io.InputStream;
@@ -48,7 +49,7 @@ public class MouseExample extends GarnetApp {
 
     @Override
     public void tick(double delta) {
-        mousePressed = input.isMouseButtonPressed(Input.MOUSE_BUTTON_LEFT);
+        mousePressed = input.getMouse().isButtonPressed(Mouse.BUTTON_LEFT);
     }
 
     @Override
@@ -57,9 +58,9 @@ public class MouseExample extends GarnetApp {
         int[] mp, mps;
         double[] mpn;
 
-        mps = input.getMousePositionScaled(scale);
-        mp = input.getMousePosition();
-        mpn = input.getMousePositionNormalised();
+        mps = input.getMouse().getPositionScaled(scale);
+        mp = input.getMouse().getPosition();
+        mpn = input.getMouse().getPositionNormalised();
 
         garnet.getDebugDrawer().setUserString("Mouse pos:        ", String.format("%d,%d", mp[0], mp[1]));
         garnet.getDebugDrawer().setUserString("Mouse pos scaled: ", String.format("%d,%d", mps[0], mps[1]));

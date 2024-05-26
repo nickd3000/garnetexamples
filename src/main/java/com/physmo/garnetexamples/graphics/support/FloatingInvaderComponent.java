@@ -35,7 +35,7 @@ public class FloatingInvaderComponent extends Component {
     public void tick(double t) {
 
         Vector3 transform = parent.getTransform();
-        transform.addi(velocity);
+        transform.translate(velocity);
 
         // Screen wrapping
         if (transform.x > width) transform.x -= width;

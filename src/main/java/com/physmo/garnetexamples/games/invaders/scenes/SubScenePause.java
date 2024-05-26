@@ -31,7 +31,7 @@ public class SubScenePause extends Scene {
     @Override
     public void tick(double delta) {
 
-        if (garnet.getInput().isFirstPress(InputAction.MENU)) {
+        if (garnet.getInput().isActionKeyFirstPress(InputAction.MENU)) {
             SceneManager.popSubScene("pause");
         }
 

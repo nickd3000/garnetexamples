@@ -38,16 +38,16 @@ public class ComponentPlayer extends Component {
     public void tick(double t) {
         double speed = 30;
 
-        if (garnet.getInput().isPressed(InputAction.RIGHT)) {
+        if (garnet.getInput().isActionKeyPressed(InputAction.RIGHT)) {
             parent.getTransform().x += speed * t;
         }
-        if (garnet.getInput().isPressed(InputAction.LEFT)) {
+        if (garnet.getInput().isActionKeyPressed(InputAction.LEFT)) {
             parent.getTransform().x -= speed * t;
         }
-        if (garnet.getInput().isPressed(InputAction.UP)) {
+        if (garnet.getInput().isActionKeyPressed(InputAction.UP)) {
             parent.getTransform().y -= speed * t;
         }
-        if (garnet.getInput().isPressed(InputAction.DOWN)) {
+        if (garnet.getInput().isActionKeyPressed(InputAction.DOWN)) {
             parent.getTransform().y += speed * t;
         }
 

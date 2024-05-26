@@ -51,7 +51,7 @@ public class SoundVolumeExample extends GarnetApp {
     @Override
     public void tick(double delta) {
 
-        double[] mousePosition = garnet.getInput().getMousePositionNormalised();
+        double[] mousePosition = garnet.getInput().getMouse().getPositionNormalised();
         volume = (float) mousePosition[0];
         masterVolume = (float) mousePosition[1];
 

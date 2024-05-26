@@ -25,7 +25,7 @@ public class SceneMenu extends Scene {
 
     @Override
     public void tick(double delta) {
-        if (garnet.getInput().isPressed(InputAction.FIRE1)) {
+        if (garnet.getInput().isActionKeyPressed(InputAction.FIRE1)) {
             SceneManager.setActiveScene("game");
         }
     }

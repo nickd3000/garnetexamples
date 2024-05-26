@@ -6,10 +6,9 @@ import com.physmo.garnet.graphics.Camera;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.graphics.Texture;
 import com.physmo.garnet.graphics.TileSheet;
+import com.physmo.garnet.input.Mouse;
 import com.physmo.garnet.tilegrid.TileGridData;
 import com.physmo.garnet.tilegrid.TileGridDrawer;
-
-import java.util.Random;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class TileGridExample extends GarnetApp {
@@ -20,11 +19,10 @@ public class TileGridExample extends GarnetApp {
     Texture texture;
     double scrollX = 0;
     double scrollY = 0;
-    int scrollDir = 3;
-    double scrollTimer = 0;
+
     TileGridDrawer tileGridDrawer;
     TileGridData tileGridData;
-    Random random = new Random();
+
     int wallTileID;
     int grassTileID;
     Camera camera;
@@ -77,6 +75,7 @@ public class TileGridExample extends GarnetApp {
 
         graphics.setActiveCamera(tileGridCameraId);
 
+        // Fill the tile map with grass and walls
         for (int y = 0; y < mapHeight; y++) {
             for (int x = 0; x < mapWidth; x++) {
                 int tileId = grassTileID;//random.nextInt(5);
@@ -90,28 +89,30 @@ public class TileGridExample extends GarnetApp {
 
     @Override
     public void tick(double delta) {
-        scrollTimer -= delta;
-        double scrollSpeed = 45;
-        if (scrollDir == 0) scrollX += delta * scrollSpeed;
-        if (scrollDir == 1) scrollX -= delta * scrollSpeed;
-        if (scrollDir == 2) scrollY += delta * scrollSpeed;
-        if (scrollDir == 3) scrollY -= delta * scrollSpeed;
-        if (scrollTimer <= 0) {
-            scrollDir = random.nextInt(4);
-            scrollTimer = 3 + random.nextInt(3);
-        }
 
-        int[] scrollExtents = new int[]{100, 100};//tileGridDrawer.getScrollExtents();
-        if (scrollX <= 0 && scrollDir == 1) scrollTimer = 0;
-        if (scrollY <= 0 && scrollDir == 3) scrollTimer = 0;
-        if (scrollX >= scrollExtents[0] && scrollDir == 0) scrollTimer = 0;
-        if (scrollY >= scrollExtents[1] && scrollDir == 2) scrollTimer = 0;
+        // Scroll tile window with middle mouse button.
+        if (garnet.getInput().getMouse().isButtonPressed(Mouse.BUTTON_MIDDLE)) {
+            int[] mousePosition = garnet.getInput().getMouse().getPosition();
+            scrollX = mousePosition[0];
+            scrollY = mousePosition[1];
+        }
 
         camera.setX(scrollX);
         camera.setY(scrollY);
-        //System.out.println("extents "+scrollExtents[0]+", "+scrollExtents[1]);
 
-        //tileGridDrawer.setScroll(scrollX, scrollY);
+        // Resize window with mouse.
+        if (garnet.getInput().getMouse().isButtonPressed(Mouse.BUTTON_LEFT)) {
+            int[] mousePosition = garnet.getInput().getMouse().getPosition();
+            camera.setWidth(mousePosition[0]);
+            camera.setHeight(mousePosition[1]);
+        }
+
+        // Move window with mouse (Right button)
+        if (garnet.getInput().getMouse().isButtonPressed(Mouse.BUTTON_RIGHT)) {
+            int[] mousePosition = garnet.getInput().getMouse().getPosition();
+            camera.setWindowX(mousePosition[0]);
+            camera.setWindowY(mousePosition[1]);
+        }
     }
 
     @Override

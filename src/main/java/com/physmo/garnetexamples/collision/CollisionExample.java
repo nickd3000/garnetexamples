@@ -83,7 +83,7 @@ public class CollisionExample extends GarnetApp {
     public void tick(double delta) {
         context.tick(delta);
 
-        int[] mps = garnet.getInput().getMousePositionScaled(scale);
+        int[] mps = garnet.getInput().getMouse().getPositionScaled(scale);
         List<GameObject> objectsByTag = context.getObjectsByTag("testobject");
         objectsByTag.get(0).getTransform().set(mps[0] - 8, mps[1] - 8, 0);
 
@@ -98,8 +98,8 @@ public class CollisionExample extends GarnetApp {
 
         int[] mp, mps;
 
-        mps = garnet.getInput().getMousePositionScaled(scale);
-        mp = garnet.getInput().getMousePosition();
+        mps = garnet.getInput().getMouse().getPositionScaled(scale);
+        mp = garnet.getInput().getMouse().getPosition();
         garnet.getDebugDrawer().setUserString("Mouse pos:       ", mp[0] + "," + mp[1]);
         garnet.getDebugDrawer().setUserString("Mouse pos scaled:", mps[0] + "," + mps[1]);
         garnet.getDebugDrawer().setUserString("collision checks:", String.valueOf(collisionSystem.getTestsPerFrame()));

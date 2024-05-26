@@ -5,6 +5,7 @@ import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.graphics.Texture;
 import com.physmo.garnet.graphics.TileSheet;
+import com.physmo.garnettoolkit.Utils;
 import com.physmo.garnettoolkit.color.ColorUtils;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
@@ -47,22 +48,18 @@ public class RotatedSpriteExample extends GarnetApp {
         if (x > 80) x = -16;
         angle += delta * 70;
 
-        garnet.getDebugDrawer().setUserString("LPS", Double.toString(garnet.getGameClock().getLps()));
-        garnet.getDebugDrawer().setUserString("x    ", String.valueOf(x));
-        garnet.getDebugDrawer().setUserString("angle", String.valueOf(angle));
+        garnet.getDebugDrawer().setUserString("LPS", Utils.numberToString(garnet.getGameClock().getLps()));
+        garnet.getDebugDrawer().setUserString("x    ", Utils.numberToString(x));
+        garnet.getDebugDrawer().setUserString("angle", Utils.numberToString(angle));
     }
 
     @Override
     public void draw(Graphics g) {
-        int[] mousePosition = garnet.getInput().getMousePosition();
-
-        g.setColor(ColorUtils.GREEN);
-        g.setZoom(scale);
-        g.drawImage(tileSheet, (int) x, 5, 2, 2);
+        int[] mousePosition = garnet.getInput().getMouse().getPosition();
 
         g.setColor(ColorUtils.YELLOW);
         g.setZoom(scale);
-        g.drawImage(tileSheet, 0, 0, 2, 2, angle);
+        g.drawImage(tileSheet, 20, 20, 2, 2, angle);
 
         g.setColor(ColorUtils.SUNSET_BLUE);
         g.drawImage(tileSheet, mousePosition[0], mousePosition[1], 2, 2, -angle / 2);
