@@ -112,7 +112,7 @@ public class ComponentGameLogic extends Component {
             }
         }
 
-        if (garnet.getInput().isFirstPress(InputAction.MENU)) {
+        if (garnet.getInput().isActionKeyFirstPress(InputAction.MENU)) {
             System.out.println("MENU");
             SceneManager.pushSubScene("pause");
         }

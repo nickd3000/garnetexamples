@@ -16,6 +16,7 @@ import com.physmo.garnettoolkit.particle.Emitter;
 import com.physmo.garnettoolkit.particle.ParticleManager;
 import com.physmo.garnettoolkit.particle.ParticleTemplate;
 import com.physmo.garnettoolkit.scene.SceneManager;
+import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 
@@ -66,6 +67,13 @@ public class ComponentPlayer extends Component {
 
         resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
 
+        ColliderComponent colliderComponent = parent.getComponent(ColliderComponent.class);
+        colliderComponent.setCallbackEnter(col -> {
+            if (col.hasTag(Constants.ENEMY_MISSILE)) {
+                System.out.println("player got hit");
+            }
+        });
+
         //soundLaser = garnet.getSound().loadSound(Utils.getPathForResource(this,"sounds/laserShoot-3.wav"));
     }
 
@@ -76,17 +84,17 @@ public class ComponentPlayer extends Component {
         boolean canMove = gameLogic.playerCanMove();
         boolean canShoot = gameLogic.playerCanShoot();
 
-        if (canMove && garnet.getInput().isPressed(InputAction.RIGHT)) {
+        if (canMove && garnet.getInput().isActionKeyPressed(InputAction.RIGHT)) {
             parent.getTransform().x += speed * delta;
             if (parent.getTransform().x > rightWall) parent.getTransform().x = rightWall;
         }
-        if (canMove && garnet.getInput().isPressed(InputAction.LEFT)) {
+        if (canMove && garnet.getInput().isActionKeyPressed(InputAction.LEFT)) {
             parent.getTransform().x -= speed * delta;
             if (parent.getTransform().x < leftWall) {
                 parent.getTransform().x = leftWall;
             }
         }
-        if (canShoot && garnet.getInput().isPressed(InputAction.FIRE1)) {
+        if (canShoot && garnet.getInput().isActionKeyPressed(InputAction.FIRE1)) {
             fireMissile();
         }
 

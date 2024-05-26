@@ -24,7 +24,10 @@ public class SimpleSpriteExample extends GarnetApp {
 
     @Override
     public void init(Garnet garnet) {
+        // Load texture
         texture = Texture.loadTexture("garnetCrystal.png");
+
+        // Add texture to graphics system.
         garnet.getGraphics().addTexture(texture);
     }
 
@@ -34,7 +37,7 @@ public class SimpleSpriteExample extends GarnetApp {
 
     @Override
     public void draw(Graphics g) {
-        int[] mousePosition = garnet.getInput().getMousePosition();
+        int[] mousePosition = garnet.getInput().getMouse().getPosition();
         g.drawImage(texture, mousePosition[0], mousePosition[1]);
     }
 }

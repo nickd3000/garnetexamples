@@ -11,6 +11,8 @@ import com.physmo.garnet.input.InputKeys;
 
 import java.io.InputStream;
 
+import static com.physmo.garnet.input.InputKeys.KEY_Z;
+
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class KeyboardExample extends GarnetApp {
 
@@ -18,7 +20,7 @@ public class KeyboardExample extends GarnetApp {
     TileSheet tileSheet;
     Texture texture;
 
-    boolean up, down, left, right;
+    boolean up, down, left, right, zKey;
 
     public KeyboardExample(Garnet garnet, String name) {
         super(garnet, name);
@@ -54,10 +56,17 @@ public class KeyboardExample extends GarnetApp {
 
     @Override
     public void tick(double delta) {
-        right = garnet.getInput().isPressed(InputAction.RIGHT);
-        left = garnet.getInput().isPressed(InputAction.LEFT);
-        up = garnet.getInput().isPressed(InputAction.UP);
-        down = garnet.getInput().isPressed(InputAction.DOWN);
+
+        // Detect action keys being pressed.
+        right = garnet.getInput().isActionKeyPressed(InputAction.RIGHT);
+        left = garnet.getInput().isActionKeyPressed(InputAction.LEFT);
+        up = garnet.getInput().isActionKeyPressed(InputAction.UP);
+        down = garnet.getInput().isActionKeyPressed(InputAction.DOWN);
+
+        // The raw keyboard data can also be checked without using the
+        // action key system as follows.
+        zKey = garnet.getInput().getKeyboard().getKeyboardState()[KEY_Z];
+
     }
 
     @Override
@@ -68,6 +77,8 @@ public class KeyboardExample extends GarnetApp {
         garnet.getDebugDrawer().setUserString("DOWN/S:  ", Boolean.toString(down));
         garnet.getDebugDrawer().setUserString("LEFT/A:  ", Boolean.toString(left));
         garnet.getDebugDrawer().setUserString("RIGHT/D: ", Boolean.toString(right));
+
+        garnet.getDebugDrawer().setUserString("Z KEY: ", Boolean.toString(zKey));
 
     }
 

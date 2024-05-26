@@ -17,6 +17,7 @@ import com.physmo.garnettoolkit.color.ColorUtils;
 import com.physmo.garnettoolkit.particle.ParticleManager;
 import com.physmo.garnettoolkit.scene.Scene;
 import com.physmo.garnettoolkit.scene.SceneManager;
+import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
 import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 public class SceneGame extends Scene {
@@ -25,7 +26,7 @@ public class SceneGame extends Scene {
     Garnet garnet;
     Graphics graphics;
 
-    boolean showCollisionInfo = false;
+    boolean showCollisionInfo = true;
     CollisionSystem collisionSystem;
     TileSheet tileSheet;
     Texture texture;
@@ -88,6 +89,10 @@ public class SceneGame extends Scene {
         player.setTransform(new Vector3(100, 200, 0));
         player.setActive(true);
         player.setVisible(true);
+
+        ColliderComponent collider = new ColliderComponent();
+        player.addComponent(collider);
+        collisionSystem.addCollidable(collider);
 
         context.add(player);
 

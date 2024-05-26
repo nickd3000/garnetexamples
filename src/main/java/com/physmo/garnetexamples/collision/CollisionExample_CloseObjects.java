@@ -89,7 +89,7 @@ public class CollisionExample_CloseObjects extends GarnetApp {
     public void tick(double delta) {
         context.tick(delta);
 
-        int[] mps = garnet.getInput().getMousePositionScaled(scale);
+        int[] mps = garnet.getInput().getMouse().getPositionScaled(scale);
         List<GameObject> objectsByTag = context.getObjectsByTag("testobject");
         objectsByTag.get(0).getTransform().set(mps[0] - 8, mps[1] - 8, 0);
 

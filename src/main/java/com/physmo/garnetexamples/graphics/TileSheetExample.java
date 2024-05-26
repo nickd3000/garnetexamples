@@ -55,17 +55,19 @@ public class TileSheetExample extends GarnetApp {
         g.setZoom(scale);
 
         // Retrieve the current mouse position.
-        int[] mousePosition = garnet.getInput().getMousePositionScaled(scale);
+        int[] mp = garnet.getInput().getMouse().getPositionScaled(scale);
 
 
+        // Draw sprite by specifying the row and column where the sub image is.
         g.setColor(RED);
         g.drawImage(tileSheet, (int) xPos, 5, 2, 2);
 
+        // Draw sprite using the getSubImage helper function.
         g.setColor(GREEN);
         g.drawImage(tileSheet.getSubImage(2, 2), (int) xPos + 20, 5);
 
         g.setColor(BLUE);
-        g.drawImage(tileSheet, mousePosition[0], mousePosition[1], 2, 2);
+        g.drawImage(tileSheet, mp[0], mp[1], 2, 2);
     }
 }
 

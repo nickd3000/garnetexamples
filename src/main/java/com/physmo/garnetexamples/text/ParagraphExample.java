@@ -74,7 +74,7 @@ public class ParagraphExample extends GarnetApp {
         regularFont.setScale(3);
         regularFontParagraphDrawer.drawParagraph(g, paragraphWithLineBreaks, 400 - 10, 200, 410, 10);
 
-        int[] mp = garnet.getInput().getMousePositionScaled(1);
+        int[] mp = garnet.getInput().getMouse().getPositionScaled(1);
         bitmapFontParagraphDrawer.setPadY(4);
         bitmapFont.setScale(2);
         int ph = bitmapFontParagraphDrawer.drawParagraph(g, paragraphText2 + paragraphText2, mp[0], 200, 10, 250);

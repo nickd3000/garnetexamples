@@ -2,6 +2,7 @@ package com.physmo.garnetexamples.games.cellsurvivor.components;
 
 import com.physmo.garnetexamples.games.cellsurvivor.Constants;
 import com.physmo.garnetexamples.games.cellsurvivor.EntityFactory;
+import com.physmo.garnetexamples.games.cellsurvivor.Resources;
 import com.physmo.garnettoolkit.Component;
 import com.physmo.garnettoolkit.GameObject;
 import com.physmo.garnettoolkit.Vector3;
@@ -24,6 +25,7 @@ public class ComponentEnemy extends Component {
 
     SpriteHelper spriteHelper;
     double rollAngle = 0;
+    Resources resources;
 
     @Override
     public void init() {
@@ -42,14 +44,18 @@ public class ComponentEnemy extends Component {
             }
         });
 
+        resources = parent.getContext().getObjectByType(Resources.class);
+
         rollAngle = Math.random() * 360;
+
+
     }
 
     @Override
     public void tick(double t) {
         double speed = 10;
 
-        parent.getTransform().addi(moveDir.scale(speed * t));
+        parent.getTransform().translate(moveDir.scale(speed * t));
 
         moveDirTimeout -= t;
         if (moveDirTimeout < 0) {
@@ -77,6 +83,8 @@ public class ComponentEnemy extends Component {
             collisionSystem.removeCollidable(collidable);
             parent.destroy();
 
+            resources.addToScore(100);
+
             EntityFactory.addCrystal(parent.getContext(), collisionSystem, (int) parent.getTransform().x, (int) parent.getTransform().y);
         }
 
@@ -97,6 +105,6 @@ public class ComponentEnemy extends Component {
 
         double rotation = Math.sin(rollAngle) * 10;
 
-        spriteHelper.drawSpriteInMap(x, y, 5, 0); //, rotation);
+        spriteHelper.drawSpriteInMap(x, y, 5, 0, rotation);
     }
 }

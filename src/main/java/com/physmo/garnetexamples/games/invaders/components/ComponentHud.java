@@ -108,9 +108,9 @@ public class ComponentHud extends Component {
     private void drawOverlay() {
         Graphics graphics = garnet.getGraphics();
 
-        int scale = 5;
-        int numY = 5;
-        int numX = 5;
+        int scale = 2;
+        int numY = 20;
+        int numX = 20;
         int ySpan = (garnet.getDisplay().getWindowHeight() / scale) / numY;
         int xSpan = (garnet.getDisplay().getWindowWidth() / scale) / numX;
 

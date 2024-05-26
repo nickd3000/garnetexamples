@@ -22,9 +22,10 @@ public class InvadersEntityFactory {
         addColliderToGameObject(collisionSystem, entity);
 
         entity.setTransform(new Vector3(x, y, 0));
-        entity.setActive(true);
-        entity.setVisible(true);
-        entity.addTag(Constants.ENEMY_TAG);
+        entity.setActive(true)
+                .setVisible(true)
+                .addTag(Constants.ENEMY_TAG);
+
         context.add(entity);
     }
 

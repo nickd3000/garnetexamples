@@ -4,7 +4,7 @@ import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.Utils;
 import com.physmo.garnet.graphics.Graphics;
-import com.physmo.garnet.input.Input;
+import com.physmo.garnet.input.Mouse;
 import com.physmo.garnettoolkit.color.ColorUtils;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
@@ -39,8 +39,8 @@ public class PrimitiveDrawingExample extends GarnetApp {
 
         g.setColor(ColorUtils.WHITE);
 
-        double[] mpn = garnet.getInput().getMousePositionNormalised();
-        if (garnet.getInput().isMouseButtonPressed(Input.MOUSE_BUTTON_LEFT)) {
+        double[] mpn = garnet.getInput().getMouse().getPositionNormalised();
+        if (garnet.getInput().getMouse().isButtonPressed(Mouse.BUTTON_LEFT)) {
             g.setZoom(1 + (mpn[0] * 0.5));
         } else {
             g.setZoom(1);

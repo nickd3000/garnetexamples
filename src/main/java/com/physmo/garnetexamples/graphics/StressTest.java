@@ -35,6 +35,7 @@ public class StressTest extends GarnetApp {
 
     @Override
     public void init(Garnet garnet) {
+        // Create a context to hold game objects
         context = new Context();
 
         // Load the texture
@@ -42,7 +43,7 @@ public class StressTest extends GarnetApp {
         tileSheet = new TileSheet(texture, 16, 16);
         garnet.getGraphics().addTexture(texture);
 
-        // Add the tilesheet and graphics object to the context so the sprite entities can access them.
+        // Add the tileSheet and graphics object to the context so the sprite entities can access them.
         context.add(tileSheet);
         context.add(garnet.getGraphics());
 
@@ -62,6 +63,7 @@ public class StressTest extends GarnetApp {
 
     @Override
     public void tick(double delta) {
+        // Tick all game objects in the context
         context.tick(delta);
     }
 
@@ -70,6 +72,7 @@ public class StressTest extends GarnetApp {
         g.setColor(ColorUtils.GREEN);
         g.setZoom(1);
 
+        // Draw all game objects in the context
         context.draw();
 
         g.setColor(0x00000070);

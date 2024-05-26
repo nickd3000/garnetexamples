@@ -1,7 +1,9 @@
 package com.physmo.garnetexamples.games.cellsurvivor;
 
 import com.physmo.garnet.Garnet;
+import com.physmo.garnet.graphics.Camera;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentEnemySpawner;
+import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentHud;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentLevelMap;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentPlayer;
 import com.physmo.garnetexamples.games.cellsurvivor.components.SpriteHelper;
@@ -61,6 +63,28 @@ public class SceneGame extends Scene {
 
         GameObject enemySpawnerObject = new GameObject("enemySpawner").addComponent(new ComponentEnemySpawner());
         context.add(enemySpawnerObject);
+
+        GameObject hud = new GameObject("hud").addComponent(new ComponentHud());
+        context.add(hud);
+
+        // Configure cameras
+        Camera camera1 = garnet.getGraphics().getCameraManager().getCamera(Constants.tileGridCameraId);
+        camera1.setWidth(garnet.getDisplay().getWindowWidth())
+                .setHeight(garnet.getDisplay().getWindowHeight())
+                .setWindowY(40)
+                .setWindowX(10)
+                .setClipActive(true)
+                .setDrawDebugInfo(true)
+                .setZoom(2.0);
+
+        Camera camera2 = garnet.getGraphics().getCameraManager().getCamera(Constants.scorePanelCameraId);
+        camera2.setWidth(garnet.getDisplay().getWindowWidth())
+                .setHeight(40)
+                .setWindowY(0)
+                .setWindowX(0)
+                .setClipActive(true)
+                .setDrawDebugInfo(true)
+                .setZoom(2.0);
     }
 
     @Override

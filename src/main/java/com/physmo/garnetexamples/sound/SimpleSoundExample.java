@@ -4,7 +4,7 @@ import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.Utils;
 import com.physmo.garnet.graphics.Graphics;
-import com.physmo.garnet.input.Input;
+import com.physmo.garnet.input.Mouse;
 import com.physmo.garnet.text.RegularFont;
 import com.physmo.garnettoolkit.color.ColorUtils;
 
@@ -44,10 +44,10 @@ public class SimpleSoundExample extends GarnetApp {
     @Override
     public void tick(double delta) {
 
-        if (garnet.getInput().isMouseButtonFirstPress(Input.MOUSE_BUTTON_LEFT)) {
+        if (garnet.getInput().getMouse().isButtonFirstPress(Mouse.BUTTON_LEFT)) {
             garnet.getSound().playSound(soundA);
         }
-        if (garnet.getInput().isMouseButtonFirstPress(Input.MOUSE_BUTTON_RIGHT)) {
+        if (garnet.getInput().getMouse().isButtonFirstPress(Mouse.BUTTON_RIGHT)) {
             garnet.getSound().playSound(soundB);
         }
     }

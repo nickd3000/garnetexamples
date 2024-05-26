@@ -16,10 +16,10 @@ public class CameraExample extends GarnetApp {
     Texture texture;
 
     double scale = 1;
+    double angle = 0;
 
     int RED = 0xff5555ff;
     int GREEN = 0x55ff55ff;
-    int BLUE = 0x5555ffff;
 
     public CameraExample(Garnet garnet, String name) {
         super(garnet, name);
@@ -66,14 +66,14 @@ public class CameraExample extends GarnetApp {
 
     @Override
     public void tick(double delta) {
-
+        angle += delta * 60.0;
     }
 
     @Override
     public void draw(Graphics g) {
         g.setZoom(scale);
 
-        double[] mpn = garnet.getInput().getMousePositionNormalised();
+        double[] mpn = garnet.getInput().getMouse().getPositionNormalised();
 
         Camera camera1 = garnet.getGraphics().getCameraManager().getCamera(cameraId1);
         camera1.setX(mpn[0] * 150);
@@ -98,6 +98,8 @@ public class CameraExample extends GarnetApp {
         for (int i = 0; i < 8; i++) {
             g.drawImage(tileSheet.getSubImage(2, 2), i * 16, i * 16);
         }
+
+        g.drawImage(tileSheet, 16 * 3, 16, 2, 2, angle);
 
         // Draw a sprite at the lower right corner of the camera's visible window.
         Camera activeCamera = g.getCameraManager().getActiveCamera();

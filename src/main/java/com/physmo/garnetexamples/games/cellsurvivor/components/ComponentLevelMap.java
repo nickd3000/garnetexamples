@@ -64,13 +64,6 @@ public class ComponentLevelMap extends Component {
         }
 
         camera = garnet.getGraphics().getCameraManager().getCamera(Constants.tileGridCameraId);
-        camera.setWidth(windowWidth)
-                .setHeight(windowHeight)
-                .setWindowY(10)
-                .setWindowX(10)
-                .setClipActive(true)
-                .setDrawDebugInfo(true)
-                .setZoom(2.5);
 
         player = parent.getContext().getObjectByTag(Constants.TAG_PLAYER);
     }

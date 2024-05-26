@@ -25,21 +25,15 @@ public class ComponentCollidingSprite extends Component {
         graphics = parent.getContext().getObjectByType(Graphics.class);
 
         ColliderComponent component = parent.getComponent(ColliderComponent.class);
-        component.setCallbackEnter(target -> {
-            mode = 2;
-        });
+        component.setCallbackEnter(target -> mode = 2);
         component.setCallbackContinue(target -> {
             if (target.hasTag("testobject")) {
                 mode = 1;
             }
         });
-        component.setCallbackLeave(target -> {
-            mode = 3;
-        });
+        component.setCallbackLeave(target -> mode = 3);
         component.setCallbackProximity(relativeObject -> {
             closeObjects.add(relativeObject); // Just store for now and process the event in the tick function.
-
-
         });
     }
 
