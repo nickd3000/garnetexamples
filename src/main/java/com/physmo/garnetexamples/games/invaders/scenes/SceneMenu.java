@@ -3,9 +3,9 @@ package com.physmo.garnetexamples.games.invaders.scenes;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
 import com.physmo.garnet.input.InputAction;
+import com.physmo.garnet.toolkit.scene.Scene;
+import com.physmo.garnet.toolkit.scene.SceneManager;
 import com.physmo.garnetexamples.games.invaders.Resources;
-import com.physmo.garnettoolkit.scene.Scene;
-import com.physmo.garnettoolkit.scene.SceneManager;
 
 public class SceneMenu extends Scene {
 

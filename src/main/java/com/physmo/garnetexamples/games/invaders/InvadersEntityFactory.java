@@ -1,13 +1,13 @@
 package com.physmo.garnetexamples.games.invaders;
 
+import com.physmo.garnet.toolkit.Context;
+import com.physmo.garnet.toolkit.GameObject;
+import com.physmo.garnet.toolkit.Vector3;
+import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
+import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 import com.physmo.garnetexamples.games.invaders.components.ComponentEnemy;
 import com.physmo.garnetexamples.games.invaders.components.ComponentEnemyMissile;
 import com.physmo.garnetexamples.games.invaders.components.ComponentPlayerMissile;
-import com.physmo.garnettoolkit.Context;
-import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.Vector3;
-import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
-import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 public class InvadersEntityFactory {
 

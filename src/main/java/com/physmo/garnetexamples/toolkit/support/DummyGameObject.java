@@ -1,6 +1,6 @@
 package com.physmo.garnetexamples.toolkit.support;
 
-import com.physmo.garnettoolkit.GameObject;
+import com.physmo.garnet.toolkit.GameObject;
 
 public class DummyGameObject extends GameObject {
     public DummyGameObject(String name) {

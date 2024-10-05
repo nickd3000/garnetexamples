@@ -2,9 +2,9 @@ package com.physmo.garnetexamples.graphics.support;
 
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.graphics.TileSheet;
-import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.Vector3;
-import com.physmo.garnettoolkit.color.ColorUtils;
+import com.physmo.garnet.toolkit.Component;
+import com.physmo.garnet.toolkit.Vector3;
+import com.physmo.garnet.toolkit.color.ColorUtils;
 
 public class FloatingInvaderComponent extends Component {
     Vector3 velocity;

@@ -2,11 +2,11 @@ package com.physmo.garnetexamples.collision;
 
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.graphics.TileSheet;
-import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.Vector3;
-import com.physmo.garnettoolkit.color.ColorUtils;
-import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
-import com.physmo.garnettoolkit.simplecollision.RelativeObject;
+import com.physmo.garnet.toolkit.Component;
+import com.physmo.garnet.toolkit.Vector3;
+import com.physmo.garnet.toolkit.color.ColorUtils;
+import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
+import com.physmo.garnet.toolkit.simplecollision.RelativeObject;
 
 import java.util.ArrayList;
 import java.util.List;

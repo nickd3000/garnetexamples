@@ -5,20 +5,20 @@ import com.physmo.garnet.graphics.Camera;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.graphics.Texture;
 import com.physmo.garnet.graphics.TileSheet;
+import com.physmo.garnet.toolkit.GameObject;
+import com.physmo.garnet.toolkit.Rect;
+import com.physmo.garnet.toolkit.Vector3;
+import com.physmo.garnet.toolkit.color.ColorUtils;
+import com.physmo.garnet.toolkit.particle.ParticleManager;
+import com.physmo.garnet.toolkit.scene.Scene;
+import com.physmo.garnet.toolkit.scene.SceneManager;
+import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
+import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 import com.physmo.garnetexamples.games.invaders.GameData;
 import com.physmo.garnetexamples.games.invaders.InvadersEntityFactory;
 import com.physmo.garnetexamples.games.invaders.components.ComponentGameLogic;
 import com.physmo.garnetexamples.games.invaders.components.ComponentHud;
 import com.physmo.garnetexamples.games.invaders.components.ComponentPlayer;
-import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.Rect;
-import com.physmo.garnettoolkit.Vector3;
-import com.physmo.garnettoolkit.color.ColorUtils;
-import com.physmo.garnettoolkit.particle.ParticleManager;
-import com.physmo.garnettoolkit.scene.Scene;
-import com.physmo.garnettoolkit.scene.SceneManager;
-import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
-import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 public class SceneGame extends Scene {
 

@@ -1,8 +1,8 @@
 package com.physmo.garnetexamples.context;
 
+import com.physmo.garnet.toolkit.Context;
+import com.physmo.garnet.toolkit.GameObject;
 import com.physmo.garnetexamples.context.support.ContextExampleComponent;
-import com.physmo.garnettoolkit.Context;
-import com.physmo.garnettoolkit.GameObject;
 
 public class BasicContextExample {
     public static void main(String[] args) {

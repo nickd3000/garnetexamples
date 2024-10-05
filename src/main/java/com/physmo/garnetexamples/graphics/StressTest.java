@@ -5,10 +5,10 @@ import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.graphics.Texture;
 import com.physmo.garnet.graphics.TileSheet;
+import com.physmo.garnet.toolkit.Context;
+import com.physmo.garnet.toolkit.GameObject;
+import com.physmo.garnet.toolkit.color.ColorUtils;
 import com.physmo.garnetexamples.graphics.support.FloatingInvaderComponent;
-import com.physmo.garnettoolkit.Context;
-import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.color.ColorUtils;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class StressTest extends GarnetApp {

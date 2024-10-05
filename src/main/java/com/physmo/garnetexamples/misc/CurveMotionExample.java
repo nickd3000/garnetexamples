@@ -6,9 +6,9 @@ import com.physmo.garnet.Utils;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.graphics.Texture;
 import com.physmo.garnet.graphics.TileSheet;
-import com.physmo.garnettoolkit.color.ColorUtils;
-import com.physmo.garnettoolkit.curve.CurveType;
-import com.physmo.garnettoolkit.curve.StandardCurve;
+import com.physmo.garnet.toolkit.color.ColorUtils;
+import com.physmo.garnet.toolkit.curve.CurveType;
+import com.physmo.garnet.toolkit.curve.StandardCurve;
 
 import java.io.InputStream;
 

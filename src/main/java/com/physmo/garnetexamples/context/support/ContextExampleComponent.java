@@ -1,6 +1,6 @@
 package com.physmo.garnetexamples.context.support;
 
-import com.physmo.garnettoolkit.Component;
+import com.physmo.garnet.toolkit.Component;
 
 public class ContextExampleComponent extends Component {
     @Override

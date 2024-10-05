@@ -5,8 +5,8 @@ import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.graphics.Texture;
 import com.physmo.garnet.graphics.TileSheet;
-import com.physmo.garnettoolkit.Utils;
-import com.physmo.garnettoolkit.color.ColorUtils;
+import com.physmo.garnet.toolkit.Utils;
+import com.physmo.garnet.toolkit.color.ColorUtils;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class RotatedSpriteExample extends GarnetApp {

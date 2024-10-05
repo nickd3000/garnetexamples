@@ -3,11 +3,11 @@ package com.physmo.garnetexamples.games.invaders.components;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
+import com.physmo.garnet.toolkit.Component;
+import com.physmo.garnet.toolkit.scene.SceneManager;
+import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
+import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 import com.physmo.garnetexamples.games.invaders.Resources;
-import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.scene.SceneManager;
-import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
-import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 public class ComponentEnemyMissile extends Component {
     double speed = 100;

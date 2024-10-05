@@ -8,7 +8,7 @@ import com.physmo.garnet.graphics.Texture;
 import com.physmo.garnet.graphics.TileSheet;
 import com.physmo.garnet.input.Input;
 import com.physmo.garnet.input.Mouse;
-import com.physmo.garnettoolkit.color.ColorUtils;
+import com.physmo.garnet.toolkit.color.ColorUtils;
 
 import java.io.InputStream;
 

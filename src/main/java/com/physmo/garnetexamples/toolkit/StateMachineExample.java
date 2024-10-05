@@ -1,6 +1,6 @@
 package com.physmo.garnetexamples.toolkit;
 
-import com.physmo.garnettoolkit.stateMachine.StateMachine;
+import com.physmo.garnet.toolkit.stateMachine.StateMachine;
 
 public class StateMachineExample {
 

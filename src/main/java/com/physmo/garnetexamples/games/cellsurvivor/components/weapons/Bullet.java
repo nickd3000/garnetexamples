@@ -1,11 +1,11 @@
 package com.physmo.garnetexamples.games.cellsurvivor.components.weapons;
 
+import com.physmo.garnet.toolkit.Component;
+import com.physmo.garnet.toolkit.simplecollision.Collidable;
+import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
+import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 import com.physmo.garnetexamples.games.cellsurvivor.Constants;
 import com.physmo.garnetexamples.games.cellsurvivor.components.SpriteHelper;
-import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.simplecollision.Collidable;
-import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
-import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 public class Bullet extends Component {
 

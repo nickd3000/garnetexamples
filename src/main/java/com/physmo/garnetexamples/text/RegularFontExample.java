@@ -4,7 +4,7 @@ import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.text.RegularFont;
-import com.physmo.garnettoolkit.color.ColorUtils;
+import com.physmo.garnet.toolkit.color.ColorUtils;
 
 // NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
 public class RegularFontExample extends GarnetApp {

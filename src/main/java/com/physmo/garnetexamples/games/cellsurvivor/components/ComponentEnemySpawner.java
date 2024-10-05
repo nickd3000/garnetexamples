@@ -1,14 +1,14 @@
 package com.physmo.garnetexamples.games.cellsurvivor.components;
 
 import com.physmo.garnet.Garnet;
+import com.physmo.garnet.toolkit.Component;
+import com.physmo.garnet.toolkit.GameObject;
+import com.physmo.garnet.toolkit.Rect;
+import com.physmo.garnet.toolkit.Vector3;
+import com.physmo.garnet.toolkit.scene.SceneManager;
+import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 import com.physmo.garnetexamples.games.cellsurvivor.Constants;
 import com.physmo.garnetexamples.games.cellsurvivor.EntityFactory;
-import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.Rect;
-import com.physmo.garnettoolkit.Vector3;
-import com.physmo.garnettoolkit.scene.SceneManager;
-import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 import java.util.List;
 import java.util.Random;

@@ -5,12 +5,12 @@ import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.graphics.Texture;
 import com.physmo.garnet.graphics.TileSheet;
-import com.physmo.garnettoolkit.Context;
-import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.color.ColorUtils;
-import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
-import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
-import com.physmo.garnettoolkit.simplecollision.RelativeObject;
+import com.physmo.garnet.toolkit.Context;
+import com.physmo.garnet.toolkit.GameObject;
+import com.physmo.garnet.toolkit.color.ColorUtils;
+import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
+import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
+import com.physmo.garnet.toolkit.simplecollision.RelativeObject;
 
 import java.util.List;
 import java.util.Random;

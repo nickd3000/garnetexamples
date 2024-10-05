@@ -2,11 +2,11 @@ package com.physmo.garnetexamples.games.cellsurvivor.components;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.toolkit.Component;
+import com.physmo.garnet.toolkit.GameObject;
+import com.physmo.garnet.toolkit.scene.SceneManager;
 import com.physmo.garnetexamples.games.cellsurvivor.Constants;
 import com.physmo.garnetexamples.games.cellsurvivor.Resources;
-import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.scene.SceneManager;
 
 public class SpriteHelper extends Component {
     Resources resources;

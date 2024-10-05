@@ -1,11 +1,11 @@
 package com.physmo.garnetexamples.games.cellsurvivor;
 
+import com.physmo.garnet.toolkit.Context;
+import com.physmo.garnet.toolkit.GameObject;
+import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
+import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentCrystal;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentEnemy;
-import com.physmo.garnettoolkit.Context;
-import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
-import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 public class EntityFactory {
 

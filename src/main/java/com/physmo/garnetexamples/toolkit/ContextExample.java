@@ -1,8 +1,8 @@
 package com.physmo.garnetexamples.toolkit;
 
+import com.physmo.garnet.toolkit.Context;
 import com.physmo.garnetexamples.toolkit.support.DummyClass;
 import com.physmo.garnetexamples.toolkit.support.DummyGameObject;
-import com.physmo.garnettoolkit.Context;
 
 public class ContextExample {
 

@@ -1,9 +1,9 @@
 package com.physmo.garnetexamples.games.cellsurvivor.components;
 
-import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.simplecollision.Collidable;
-import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
-import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
+import com.physmo.garnet.toolkit.Component;
+import com.physmo.garnet.toolkit.simplecollision.Collidable;
+import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
+import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 
 public class ComponentCrystal extends Component {
     SpriteHelper spriteHelper;

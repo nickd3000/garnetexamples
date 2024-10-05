@@ -3,12 +3,12 @@ package com.physmo.garnetexamples.games.invaders.components;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.text.BitmapFont;
+import com.physmo.garnet.toolkit.Component;
+import com.physmo.garnet.toolkit.color.ColorUtils;
+import com.physmo.garnet.toolkit.scene.SceneManager;
+import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 import com.physmo.garnetexamples.games.invaders.GameData;
 import com.physmo.garnetexamples.games.invaders.Resources;
-import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.color.ColorUtils;
-import com.physmo.garnettoolkit.scene.SceneManager;
-import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 public class ComponentHud extends Component {
 

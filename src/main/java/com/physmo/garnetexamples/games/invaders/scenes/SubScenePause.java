@@ -5,8 +5,8 @@ import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
 import com.physmo.garnet.input.InputAction;
 import com.physmo.garnet.text.RegularFont;
-import com.physmo.garnettoolkit.scene.Scene;
-import com.physmo.garnettoolkit.scene.SceneManager;
+import com.physmo.garnet.toolkit.scene.Scene;
+import com.physmo.garnet.toolkit.scene.SceneManager;
 
 public class SubScenePause extends Scene {
 

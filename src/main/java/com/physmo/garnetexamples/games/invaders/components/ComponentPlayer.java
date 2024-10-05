@@ -3,21 +3,21 @@ package com.physmo.garnetexamples.games.invaders.components;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
 import com.physmo.garnet.input.InputAction;
+import com.physmo.garnet.toolkit.Component;
+import com.physmo.garnet.toolkit.GameObject;
+import com.physmo.garnet.toolkit.color.ColorSupplierLinear;
+import com.physmo.garnet.toolkit.color.ColorUtils;
+import com.physmo.garnet.toolkit.curve.CurveType;
+import com.physmo.garnet.toolkit.curve.StandardCurve;
+import com.physmo.garnet.toolkit.particle.Emitter;
+import com.physmo.garnet.toolkit.particle.ParticleManager;
+import com.physmo.garnet.toolkit.particle.ParticleTemplate;
+import com.physmo.garnet.toolkit.scene.SceneManager;
+import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
+import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 import com.physmo.garnetexamples.games.invaders.Constants;
 import com.physmo.garnetexamples.games.invaders.InvadersEntityFactory;
 import com.physmo.garnetexamples.games.invaders.Resources;
-import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.color.ColorSupplierLinear;
-import com.physmo.garnettoolkit.color.ColorUtils;
-import com.physmo.garnettoolkit.curve.CurveType;
-import com.physmo.garnettoolkit.curve.StandardCurve;
-import com.physmo.garnettoolkit.particle.Emitter;
-import com.physmo.garnettoolkit.particle.ParticleManager;
-import com.physmo.garnettoolkit.particle.ParticleTemplate;
-import com.physmo.garnettoolkit.scene.SceneManager;
-import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
-import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 
 public class ComponentPlayer extends Component {
