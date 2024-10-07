@@ -8,7 +8,7 @@ import com.physmo.garnet.toolkit.color.ColorUtils;
 
 import java.io.IOException;
 
-// NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
+// NOTE: On MacOS the following VM argument is required: -XstartOnFirstThread
 public class BMFontExample extends GarnetApp {
 
     BitmapFont bmfFont;

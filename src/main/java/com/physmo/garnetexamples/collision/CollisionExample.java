@@ -14,7 +14,7 @@ import com.physmo.garnet.toolkit.simplecollision.RelativeObject;
 import java.util.List;
 import java.util.Random;
 
-// NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
+// NOTE: On MacOS the following VM argument is required: -XstartOnFirstThread
 public class CollisionExample extends GarnetApp {
 
     static int width = 800;

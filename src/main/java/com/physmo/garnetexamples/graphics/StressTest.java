@@ -10,7 +10,7 @@ import com.physmo.garnet.toolkit.GameObject;
 import com.physmo.garnet.toolkit.color.ColorUtils;
 import com.physmo.garnetexamples.graphics.support.FloatingInvaderComponent;
 
-// NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
+// NOTE: On MacOS the following VM argument is required: -XstartOnFirstThread
 public class StressTest extends GarnetApp {
 
     String imageFileName = "space.png";

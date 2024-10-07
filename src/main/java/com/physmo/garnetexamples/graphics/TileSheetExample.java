@@ -6,7 +6,7 @@ import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.graphics.Texture;
 import com.physmo.garnet.graphics.TileSheet;
 
-// NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
+// NOTE: On MacOS the following VM argument is required: -XstartOnFirstThread
 public class TileSheetExample extends GarnetApp {
 
     TileSheet tileSheet;

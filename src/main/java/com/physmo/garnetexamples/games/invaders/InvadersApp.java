@@ -8,7 +8,7 @@ import com.physmo.garnetexamples.games.invaders.scenes.SceneGame;
 import com.physmo.garnetexamples.games.invaders.scenes.SceneMenu;
 import com.physmo.garnetexamples.games.invaders.scenes.SubScenePause;
 
-// NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
+// NOTE: On MacOS the following VM argument is required: -XstartOnFirstThread
 public class InvadersApp extends GarnetApp {
 
     public InvadersApp(Garnet garnet, String name) {

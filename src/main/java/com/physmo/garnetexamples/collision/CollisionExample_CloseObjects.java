@@ -19,7 +19,7 @@ import java.util.Random;
  * Example showing how to use the CollisionSystem to process objects that
  * are close to each other.
  */
-// NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
+// NOTE: On MacOS the following VM argument is required: -XstartOnFirstThread
 public class CollisionExample_CloseObjects extends GarnetApp {
 
     static int height = 600;

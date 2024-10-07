@@ -8,7 +8,7 @@ import com.physmo.garnet.input.Mouse;
 import com.physmo.garnet.text.RegularFont;
 import com.physmo.garnet.toolkit.color.ColorUtils;
 
-// NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
+// NOTE: On MacOS the following VM argument is required: -XstartOnFirstThread
 public class SimpleSoundExample extends GarnetApp {
 
     RegularFont regularFont;

@@ -10,7 +10,7 @@ import com.physmo.garnet.input.Mouse;
 import com.physmo.garnet.tilegrid.TileGridData;
 import com.physmo.garnet.tilegrid.TileGridDrawer;
 
-// NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
+// NOTE: On MacOS the following VM argument is required: -XstartOnFirstThread
 public class TileGridExample extends GarnetApp {
 
     static int tileGridCameraId = 1;

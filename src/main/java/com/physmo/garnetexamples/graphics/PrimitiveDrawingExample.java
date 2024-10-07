@@ -7,7 +7,7 @@ import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.input.Mouse;
 import com.physmo.garnet.toolkit.color.ColorUtils;
 
-// NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
+// NOTE: On MacOS the following VM argument is required: -XstartOnFirstThread
 public class PrimitiveDrawingExample extends GarnetApp {
 
     public PrimitiveDrawingExample(Garnet garnet, String name) {

@@ -4,7 +4,7 @@ import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.graphics.Graphics;
 
-// NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
+// NOTE: On MacOS the following VM argument is required: -XstartOnFirstThread
 public class GeneralStructure extends GarnetApp {
 
     public GeneralStructure(Garnet garnet, String name) {

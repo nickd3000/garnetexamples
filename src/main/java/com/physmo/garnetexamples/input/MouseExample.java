@@ -12,7 +12,7 @@ import com.physmo.garnet.toolkit.color.ColorUtils;
 
 import java.io.InputStream;
 
-// NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
+// NOTE: On MacOS the following VM argument is required: -XstartOnFirstThread
 public class MouseExample extends GarnetApp {
 
     String imageFileName = "space.png";

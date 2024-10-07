@@ -7,7 +7,7 @@ import com.physmo.garnet.graphics.Texture;
 import com.physmo.garnet.graphics.TileSheet;
 import com.physmo.garnet.toolkit.color.ColorUtils;
 
-// NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
+// NOTE: On MacOS the following VM argument is required: -XstartOnFirstThread
 public class SpriteDrawingExample extends GarnetApp {
 
     private static final String fileName1 = "space.PNG";

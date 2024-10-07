@@ -5,7 +5,7 @@ import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.graphics.Texture;
 
-// NOTE: on MacOS we need to add a vm argument: -XstartOnFirstThread
+// NOTE: On MacOS the following VM argument is required: -XstartOnFirstThread
 public class ClipWindowExample extends GarnetApp {
 
     private static final String fileName = "wood.png";
