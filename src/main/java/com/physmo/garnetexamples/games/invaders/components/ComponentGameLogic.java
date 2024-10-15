@@ -3,6 +3,7 @@ package com.physmo.garnetexamples.games.invaders.components;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
+import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.input.InputAction;
 import com.physmo.garnet.toolkit.Component;
 import com.physmo.garnet.toolkit.GameObject;
@@ -45,7 +46,7 @@ public class ComponentGameLogic extends Component {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
 
     }
 

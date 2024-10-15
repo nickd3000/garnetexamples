@@ -2,6 +2,7 @@ package com.physmo.garnetexamples.games.cellsurvivor;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.graphics.Camera;
+import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.toolkit.GameObject;
 import com.physmo.garnet.toolkit.scene.Scene;
 import com.physmo.garnet.toolkit.scene.SceneManager;
@@ -104,7 +105,7 @@ public class SceneGame extends Scene {
 
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
 
     }
 

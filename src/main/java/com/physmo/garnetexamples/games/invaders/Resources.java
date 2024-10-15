@@ -1,7 +1,7 @@
 package com.physmo.garnetexamples.games.invaders;
 
+import com.physmo.garnet.FileUtils;
 import com.physmo.garnet.Garnet;
-import com.physmo.garnet.Utils;
 import com.physmo.garnet.graphics.Texture;
 import com.physmo.garnet.graphics.TileSheet;
 import com.physmo.garnet.text.BitmapFont;
@@ -67,7 +67,7 @@ public class Resources {
     }
 
     public int loadSound(String path) {
-        return garnet.getSound().loadSound(Utils.getPathForResource(this, path));
+        return garnet.getSound().loadSound(FileUtils.getPathForResource(this, path));
     }
 
 }

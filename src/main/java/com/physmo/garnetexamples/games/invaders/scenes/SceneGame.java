@@ -1,14 +1,14 @@
 package com.physmo.garnetexamples.games.invaders.scenes;
 
+import com.physmo.garnet.ColorUtils;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.graphics.Camera;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.graphics.Texture;
 import com.physmo.garnet.graphics.TileSheet;
+import com.physmo.garnet.structure.Rect;
+import com.physmo.garnet.structure.Vector3;
 import com.physmo.garnet.toolkit.GameObject;
-import com.physmo.garnet.toolkit.Rect;
-import com.physmo.garnet.toolkit.Vector3;
-import com.physmo.garnet.toolkit.color.ColorUtils;
 import com.physmo.garnet.toolkit.particle.ParticleManager;
 import com.physmo.garnet.toolkit.scene.Scene;
 import com.physmo.garnet.toolkit.scene.SceneManager;
@@ -132,7 +132,7 @@ public class SceneGame extends Scene {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
 
     }
 

@@ -3,12 +3,12 @@ package com.physmo.garnetexamples.games.cellsurvivor.components;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.graphics.Camera;
 import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.structure.Rect;
+import com.physmo.garnet.structure.Vector3;
 import com.physmo.garnet.tilegrid.TileGridData;
 import com.physmo.garnet.tilegrid.TileGridDrawer;
 import com.physmo.garnet.toolkit.Component;
 import com.physmo.garnet.toolkit.GameObject;
-import com.physmo.garnet.toolkit.Rect;
-import com.physmo.garnet.toolkit.Vector3;
 import com.physmo.garnet.toolkit.scene.SceneManager;
 import com.physmo.garnetexamples.games.cellsurvivor.Constants;
 import com.physmo.garnetexamples.games.cellsurvivor.Resources;
@@ -84,7 +84,7 @@ public class ComponentLevelMap extends Component {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
         //tileGridDrawer.setScale(2);
         //tileGridDrawer.setScroll(scrollX, scrollY);
 

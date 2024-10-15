@@ -1,8 +1,9 @@
 package com.physmo.garnetexamples.games.invaders.components;
 
 
+import com.physmo.garnet.ColorUtils;
 import com.physmo.garnet.Garnet;
-import com.physmo.garnet.Utils;
+import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.toolkit.Component;
 import com.physmo.garnet.toolkit.scene.SceneManager;
 import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
@@ -15,7 +16,7 @@ public class ComponentPlayerMissile extends Component {
 
     Resources resources;
     Garnet garnet;
-    int color = Utils.floatToRgb(1, 0, 1, 1);
+    int color = ColorUtils.floatToRgb(1, 0, 1, 1);
     CollisionSystem collisionSystem;
     ColliderComponent colliderComponent;
 
@@ -54,7 +55,7 @@ public class ComponentPlayerMissile extends Component {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
         if (!parent.isActive()) return;
 
         garnet.getGraphics().setColor(color);

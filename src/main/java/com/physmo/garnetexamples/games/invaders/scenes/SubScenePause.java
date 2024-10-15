@@ -1,8 +1,9 @@
 package com.physmo.garnetexamples.games.invaders.scenes;
 
 
+import com.physmo.garnet.FileUtils;
 import com.physmo.garnet.Garnet;
-import com.physmo.garnet.Utils;
+import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.input.InputAction;
 import com.physmo.garnet.text.RegularFont;
 import com.physmo.garnet.toolkit.scene.Scene;
@@ -22,7 +23,7 @@ public class SubScenePause extends Scene {
     public void init() {
         System.out.println("init state pause");
 
-        String fontFileName = Utils.getPathForResource(this, fontName);
+        String fontFileName = FileUtils.getPathForResource(this, fontName);
         regularFont = new RegularFont(fontFileName, 12, 12);
 
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
@@ -38,7 +39,7 @@ public class SubScenePause extends Scene {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
 //        regularFont.clearSpriteBatch();
 //        regularFont.drawText("PAUSED", 20, 100, 3);
 //        regularFont.render();

@@ -45,6 +45,6 @@ public class InvadersApp extends GarnetApp {
 
     @Override
     public void draw(Graphics g) {
-        SceneManager.draw();
+        SceneManager.draw(g);
     }
 }

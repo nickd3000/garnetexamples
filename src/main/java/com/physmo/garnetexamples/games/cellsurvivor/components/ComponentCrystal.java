@@ -1,5 +1,6 @@
 package com.physmo.garnetexamples.games.cellsurvivor.components;
 
+import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.toolkit.Component;
 import com.physmo.garnet.toolkit.simplecollision.Collidable;
 import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
@@ -26,7 +27,7 @@ public class ComponentCrystal extends Component {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
         int x = (int) parent.getTransform().x;
         int y = (int) parent.getTransform().y;
 

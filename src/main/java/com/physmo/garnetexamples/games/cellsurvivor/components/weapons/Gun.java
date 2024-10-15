@@ -1,5 +1,6 @@
 package com.physmo.garnetexamples.games.cellsurvivor.components.weapons;
 
+import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.toolkit.Component;
 import com.physmo.garnet.toolkit.GameObject;
 import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
@@ -54,7 +55,7 @@ public class Gun extends Component {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
 
     }
 }

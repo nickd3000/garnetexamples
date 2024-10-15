@@ -1,10 +1,10 @@
 package com.physmo.garnetexamples.games.invaders.components;
 
+import com.physmo.garnet.ColorUtils;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.text.BitmapFont;
 import com.physmo.garnet.toolkit.Component;
-import com.physmo.garnet.toolkit.color.ColorUtils;
 import com.physmo.garnet.toolkit.scene.SceneManager;
 import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 import com.physmo.garnetexamples.games.invaders.GameData;
@@ -52,7 +52,7 @@ public class ComponentHud extends Component {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
 
         garnet.getGraphics().setColor(textColor);
         bitmapFont.setScale(SCORE_SCALE);

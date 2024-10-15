@@ -1,9 +1,10 @@
 package com.physmo.garnetexamples.games.cellsurvivor.components;
 
 import com.physmo.garnet.Garnet;
+import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.input.InputAction;
+import com.physmo.garnet.structure.Vector3;
 import com.physmo.garnet.toolkit.Component;
-import com.physmo.garnet.toolkit.Vector3;
 import com.physmo.garnet.toolkit.scene.SceneManager;
 import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
 import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
@@ -83,7 +84,7 @@ public class ComponentPlayer extends Component {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
         int x = (int) parent.getTransform().x;
         int y = (int) parent.getTransform().y;
 

@@ -46,7 +46,7 @@ public class SpriteHelper extends Component {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
 
     }
 }

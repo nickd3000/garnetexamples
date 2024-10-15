@@ -1,8 +1,8 @@
 package com.physmo.garnetexamples.games.invaders;
 
+import com.physmo.garnet.structure.Vector3;
 import com.physmo.garnet.toolkit.Context;
 import com.physmo.garnet.toolkit.GameObject;
-import com.physmo.garnet.toolkit.Vector3;
 import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
 import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 import com.physmo.garnetexamples.games.invaders.components.ComponentEnemy;

@@ -1,12 +1,13 @@
 package com.physmo.garnetexamples.games.invaders.components;
 
+import com.physmo.garnet.ColorUtils;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
+import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.input.InputAction;
 import com.physmo.garnet.toolkit.Component;
 import com.physmo.garnet.toolkit.GameObject;
 import com.physmo.garnet.toolkit.color.ColorSupplierLinear;
-import com.physmo.garnet.toolkit.color.ColorUtils;
 import com.physmo.garnet.toolkit.curve.CurveType;
 import com.physmo.garnet.toolkit.curve.StandardCurve;
 import com.physmo.garnet.toolkit.particle.Emitter;
@@ -23,8 +24,8 @@ import com.physmo.garnetexamples.games.invaders.Resources;
 public class ComponentPlayer extends Component {
 
     public static final double BULLET_COOL_DOWN = 0.2;
-    static int playerColor = Utils.floatToRgb(0.3f, 1f, 0.2f, 1f);
-    static int playerColorB = Utils.floatToRgb(1f, 0.2f, 1f, 1f);
+    static int playerColor = ColorUtils.floatToRgb(0.3f, 1f, 0.2f, 1f);
+    static int playerColorB = ColorUtils.floatToRgb(1f, 0.2f, 1f, 1f);
 
     double speed = 100;
     double bulletCoolDown = 0;
@@ -52,7 +53,7 @@ public class ComponentPlayer extends Component {
         shootParticleTemplate.setLifeTime(0.2, 0.8);
         shootParticleTemplate.setSpeed(10, 50);
         shootParticleTemplate.setPositionJitter(1.1);
-        shootParticleTemplate.setColorSupplier(new ColorSupplierLinear(ColorUtils.asRGBA(1, 0, 1, 0.5f), ColorUtils.asRGBA(0, 1, 1, 0)));
+        shootParticleTemplate.setColorSupplier(new ColorSupplierLinear(new int[]{ColorUtils.asRGBA(1, 0, 1, 0.5f), ColorUtils.asRGBA(0, 1, 1, 0)}));
         shootParticleTemplate.setSpeedCurve(new StandardCurve(CurveType.LINE_DOWN));
 
         particleManager = parent.getContext().getObjectByType(ParticleManager.class);
@@ -131,7 +132,7 @@ public class ComponentPlayer extends Component {
 
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
         int drawCol = playerColor;
         boolean invincible = gameLogic.playerIsInvincible() | gameLogic.playerIsInvincible();
         if (flashOn && invincible) drawCol = playerColorB;

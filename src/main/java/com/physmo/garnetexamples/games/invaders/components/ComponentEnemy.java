@@ -1,11 +1,11 @@
 package com.physmo.garnetexamples.games.invaders.components;
 
 
+import com.physmo.garnet.ColorUtils;
 import com.physmo.garnet.Garnet;
-import com.physmo.garnet.Utils;
+import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.toolkit.Component;
 import com.physmo.garnet.toolkit.color.ColorSupplierLinear;
-import com.physmo.garnet.toolkit.color.ColorUtils;
 import com.physmo.garnet.toolkit.curve.CurveType;
 import com.physmo.garnet.toolkit.curve.StandardCurve;
 import com.physmo.garnet.toolkit.particle.Emitter;
@@ -33,9 +33,9 @@ public class ComponentEnemy extends Component {
     CollisionSystem collisionSystem;
     Resources resources;
 
-    int basicCol = Utils.floatToRgb(0, 1, 0, 1);
-    int armoredCol = Utils.floatToRgb(0.5f, 0.6f, 0.7f, 1);
-    int shooterCol = Utils.floatToRgb(1, 0.5f, 0, 1);
+    int basicCol = ColorUtils.floatToRgb(0, 1, 0, 1);
+    int armoredCol = ColorUtils.floatToRgb(0.5f, 0.6f, 0.7f, 1);
+    int shooterCol = ColorUtils.floatToRgb(1, 0.5f, 0, 1);
 
     int soundExplosionId;
     int soundShieldHitId;
@@ -61,7 +61,7 @@ public class ComponentEnemy extends Component {
         explosionParticleTemplate.setLifeTime(0.2, 3);
         explosionParticleTemplate.setSpeed(30, 50);
         explosionParticleTemplate.setPositionJitter(2.1);
-        explosionParticleTemplate.setColorSupplier(new ColorSupplierLinear(ColorUtils.YELLOW, ColorUtils.asRGBA(1, 0, 0, 0)));
+        explosionParticleTemplate.setColorSupplier(new ColorSupplierLinear(new int[]{ColorUtils.YELLOW, ColorUtils.asRGBA(1, 0, 0, 0)}));
         explosionParticleTemplate.setSpeedCurve(new StandardCurve(CurveType.LINE_DOWN));
 
         parent.addTag(Constants.ENEMY_TAG);
@@ -117,7 +117,7 @@ public class ComponentEnemy extends Component {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
         if (!parent.isActive()) return;
 
         ComponentEnemy component = parent.getComponent(ComponentEnemy.class);
