@@ -2,10 +2,10 @@ package com.physmo.garnetexamples.games.invaders.scenes;
 
 import com.physmo.garnet.ColorUtils;
 import com.physmo.garnet.Garnet;
-import com.physmo.garnet.graphics.Camera;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.graphics.Texture;
 import com.physmo.garnet.graphics.TileSheet;
+import com.physmo.garnet.graphics.Viewport;
 import com.physmo.garnet.structure.Rect;
 import com.physmo.garnet.structure.Vector3;
 import com.physmo.garnet.toolkit.GameObject;
@@ -65,8 +65,8 @@ public class SceneGame extends Scene {
         graphics = garnet.getGraphics();
         graphics.setBackgroundColor(ColorUtils.SUNSET_BLUE);
 
-        Camera activeCamera = graphics.getCameraManager().getActiveCamera();
-        activeCamera.setZoom(2);
+        Viewport activeViewport = graphics.getViewportManager().getActiveViewport();
+        activeViewport.setZoom(2);
     }
 
     public void injectCollisionDrawer(CollisionSystem collisionSystem) {

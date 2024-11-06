@@ -6,15 +6,18 @@ import com.physmo.garnet.toolkit.simplecollision.Collidable;
 import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
 import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 import com.physmo.garnetexamples.games.cellsurvivor.Constants;
+import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentPlayerCapabilities;
 import com.physmo.garnetexamples.games.cellsurvivor.components.SpriteHelper;
 
 public class Bullet extends Component {
 
-    double speed = 80;
+    double baseSpeed = 50;
     double dx = 0, dy = 0;
     boolean killMe = false;
     double age = 0;
     SpriteHelper spriteHelper;
+    ColliderComponent colliderComponent;
+    ComponentPlayerCapabilities playerCapabilities;
 
     public void setDirection(double x, double y) {
         dx = x;
@@ -23,24 +26,31 @@ public class Bullet extends Component {
 
     @Override
     public void init() {
+        playerCapabilities = parent.getContext().getComponent(ComponentPlayerCapabilities.class);
+
+
         spriteHelper = parent.getContext().getComponent(SpriteHelper.class);
 
-        ColliderComponent colliderComponent = parent.getComponent(ColliderComponent.class);
+        colliderComponent = parent.getComponent(ColliderComponent.class);
 
         colliderComponent.setCallbackEnter(target -> {
             if (target.hasTag(Constants.TAG_ENEMY)) {
                 killMe = true;
+                //System.out.println("bullet hit enemy");
             }
         });
+
+
     }
 
     @Override
     public void tick(double t) {
         age += t;
-        parent.getTransform().x += dx * t * speed;
-        parent.getTransform().y += dy * t * speed;
+        double speedAdjuster = playerCapabilities.getProjectileSpeedAdjuster();
+        parent.getTransform().x += dx * t * baseSpeed * speedAdjuster;
+        parent.getTransform().y += dy * t * baseSpeed * speedAdjuster;
 
-        if (age > 3) killMe = true;
+        if (age > 5) killMe = true;
 
         if (killMe) {
             CollisionSystem collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
@@ -48,6 +58,9 @@ public class Bullet extends Component {
             collisionSystem.removeCollidable(collidable);
             parent.destroy();
         }
+
+        colliderComponent.setCollisionRegion(-2, -2, 4, 4);
+
     }
 
     @Override
@@ -55,6 +68,6 @@ public class Bullet extends Component {
         int x = (int) parent.getTransform().x;
         int y = (int) parent.getTransform().y;
 
-        spriteHelper.drawSpriteInMap(x, y, 1, 1);
+        spriteHelper.drawSpriteInMap(x - 8, y - 8, 0, 2);
     }
 }

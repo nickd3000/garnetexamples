@@ -1,19 +1,21 @@
-package com.physmo.garnetexamples.games.molepanic;
+package com.physmo.garnetexamples.games.dogmatrix;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.GarnetApp;
 import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.toolkit.scene.Scene;
 import com.physmo.garnet.toolkit.scene.SceneManager;
 
-public class MolePanic extends GarnetApp {
+public class DogMatrix extends GarnetApp {
 
-    public MolePanic(Garnet garnet, String name) {
+    public DogMatrix(Garnet garnet, String name) {
         super(garnet, name);
     }
 
     public static void main(String[] args) {
-        Garnet garnet = new Garnet(640, 480);
-        garnet.setApp(new MolePanic(garnet, "Mole Panic"));
+        // 384x216 scales to full screen well.
+        Garnet garnet = new Garnet(384, 216);
+        garnet.setApp(new DogMatrix(garnet, "Dog Matrix"));
 
         garnet.init();
         garnet.run();
@@ -21,18 +23,25 @@ public class MolePanic extends GarnetApp {
 
     @Override
     public void init(Garnet garnet) {
-        System.out.println("main init");
+        garnet.getDisplay().setWindowScale(3, true);
+        garnet.getDisplay().setWindowTitle("Dog Matrix");
+
+//        garnet.getDebugDrawer().setVisible(true);
+//        garnet.getDebugDrawer().setDrawFps(true);
+
         SceneManager.getSharedContext().add(garnet);
         SceneManager.getSharedContext().add(new GameData());
         SceneManager.getSharedContext().add(new Resources(garnet).init());
 
-        SceneManager.addScene(new SceneGame("game"));
+
+        Scene scene = new SceneGame("game");
+        SceneManager.addScene(scene);
         SceneManager.setActiveScene("game");
+
     }
 
     @Override
     public void tick(double delta) {
-
         SceneManager.tick(delta);
     }
 

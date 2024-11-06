@@ -18,13 +18,13 @@ public class SpriteHelper extends Component {
     int spriteColor = 0xffffffff;
 
     public void drawSpriteInMap(double x, double y, double tileX, double tileY) {
-        g.setActiveCamera(Constants.tileGridCameraId);
+        g.setActiveViewport(Constants.tileGridCameraId);
         g.setColor(spriteColor);
         g.drawImage(resources.getSpritesTilesheet(), x, y, (int) tileX, (int) tileY);
     }
 
     public void drawSpriteInMap(int x, int y, int tileX, int tileY, double angle) {
-        g.setActiveCamera(Constants.tileGridCameraId);
+        g.setActiveViewport(Constants.tileGridCameraId);
         g.setColor(spriteColor);
         g.drawImage(resources.getSpritesTilesheet(), x, y, tileX, tileY, angle);
     }

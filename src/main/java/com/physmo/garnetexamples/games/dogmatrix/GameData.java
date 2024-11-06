@@ -1,4 +1,4 @@
-package com.physmo.garnetexamples.games.molepanic;
+package com.physmo.garnetexamples.games.dogmatrix;
 
 public class GameData {
     public int highScore;

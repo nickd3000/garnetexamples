@@ -7,6 +7,7 @@ import com.physmo.garnet.structure.Vector3;
 import com.physmo.garnet.toolkit.Component;
 import com.physmo.garnet.toolkit.GameObject;
 import com.physmo.garnet.toolkit.scene.SceneManager;
+import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
 import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 import com.physmo.garnetexamples.games.cellsurvivor.Constants;
 import com.physmo.garnetexamples.games.cellsurvivor.EntityFactory;
@@ -84,6 +85,8 @@ public class ComponentEnemySpawner extends Component {
         for (GameObject gameObject : enemyList) {
             Vector3 transform = gameObject.getTransform();
             if (outsideVisibleMap(transform, visibleMapExtents)) {
+                ColliderComponent colliderComponent = gameObject.getComponent(ColliderComponent.class);
+                collisionSystem.removeCollidable(colliderComponent);
                 gameObject.destroy();
             }
         }

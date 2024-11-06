@@ -27,36 +27,49 @@ public class ComponentEnemy extends Component {
     SpriteHelper spriteHelper;
     double rollAngle = 0;
     Resources resources;
+    ColliderComponent collider;
+    double speed = 5;
+    int[] sprite = new int[2];
+    ComponentPlayerCapabilities playerCapabilities;
+    ComponentGameLogic gameLogic;
 
     @Override
     public void init() {
+        playerCapabilities = parent.getContext().getComponent(ComponentPlayerCapabilities.class);
 
         spriteHelper = parent.getContext().getComponent(SpriteHelper.class);
 
         player = parent.getContext().getObjectByTag(Constants.TAG_PLAYER);
 
-        ColliderComponent collider = parent.getComponent(ColliderComponent.class);
+        collider = parent.getComponent(ColliderComponent.class);
         collider.setCallbackProximity(relativeObject -> {
             closeObjects.add(relativeObject); // Just store for now and process the event in the tick function.
         });
         collider.setCallbackEnter(target -> {
             if (target.hasTag(Constants.TAG_BULLET)) {
-                health -= 55;
+                health -= 55 * playerCapabilities.getProjectilePowerAdjuster();
             }
         });
 
         resources = parent.getContext().getObjectByType(Resources.class);
+        gameLogic = parent.getContext().getComponent(ComponentGameLogic.class);
 
         rollAngle = Math.random() * 360;
 
+    }
 
+    public void setDetails(double speed, double health, int spriteX, int spriteY) {
+        this.speed = speed;
+        this.health = health;
+        this.sprite[0] = spriteX;
+        this.sprite[1] = spriteY;
     }
 
     @Override
     public void tick(double t) {
-        double speed = 10;
 
-        parent.getTransform().translate(moveDir.scale(speed * t));
+        parent.getTransform().x += moveDir.x * speed * t;
+        parent.getTransform().y += moveDir.y * speed * t;
 
         moveDirTimeout -= t;
         if (moveDirTimeout < 0) {
@@ -65,10 +78,8 @@ public class ComponentEnemy extends Component {
         }
 
         double minDist = 15;
-        double pushForce = 150;
+        double pushForce = 250;
         for (RelativeObject closeObject : closeObjects) {
-
-
             if (closeObject.distance > minDist) continue;
             Vector3 transform = parent.getTransform();
             double dx = closeObject.dx / closeObject.distance;
@@ -84,12 +95,16 @@ public class ComponentEnemy extends Component {
             collisionSystem.removeCollidable(collidable);
             parent.destroy();
 
-            resources.addToScore(100);
+            gameLogic.addToScore(100);
 
-            EntityFactory.addCrystal(parent.getContext(), collisionSystem, (int) parent.getTransform().x, (int) parent.getTransform().y);
+            if (Math.random() < 0.4 * playerCapabilities.getLuckMultiplier()) {
+                EntityFactory.addCrystal(parent.getContext(), collisionSystem, (int) parent.getTransform().x, (int) parent.getTransform().y);
+            }
         }
 
-        rollAngle += t * 20;
+        rollAngle += t * speed;
+
+        collider.setCollisionRegion(-6, -8, 12, 16);
     }
 
     private void calculateMoveDir() {
@@ -106,6 +121,6 @@ public class ComponentEnemy extends Component {
 
         double rotation = Math.sin(rollAngle) * 10;
 
-        spriteHelper.drawSpriteInMap(x, y, 5, 0, rotation);
+        spriteHelper.drawSpriteInMap(x, y, sprite[0], sprite[1], rotation);
     }
 }

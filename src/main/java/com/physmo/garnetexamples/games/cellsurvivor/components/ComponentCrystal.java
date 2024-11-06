@@ -31,7 +31,7 @@ public class ComponentCrystal extends Component {
         int x = (int) parent.getTransform().x;
         int y = (int) parent.getTransform().y;
 
-        spriteHelper.drawSpriteInMap(x, y, 0, 5);
+        spriteHelper.drawSpriteInMap(x - 8, y - 8, 7, 1);
     }
 
     public void requestKill() {
