@@ -1,17 +1,17 @@
 package com.physmo.garnetexamples.games.cellsurvivor.components;
 
 import com.physmo.garnet.Garnet;
-import com.physmo.garnet.graphics.Camera;
 import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.graphics.Viewport;
+import com.physmo.garnet.structure.Rect;
+import com.physmo.garnet.structure.Vector3;
 import com.physmo.garnet.tilegrid.TileGridData;
 import com.physmo.garnet.tilegrid.TileGridDrawer;
+import com.physmo.garnet.toolkit.Component;
+import com.physmo.garnet.toolkit.GameObject;
+import com.physmo.garnet.toolkit.scene.SceneManager;
 import com.physmo.garnetexamples.games.cellsurvivor.Constants;
 import com.physmo.garnetexamples.games.cellsurvivor.Resources;
-import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.Rect;
-import com.physmo.garnettoolkit.Vector3;
-import com.physmo.garnettoolkit.scene.SceneManager;
 
 public class ComponentLevelMap extends Component {
 
@@ -27,7 +27,7 @@ public class ComponentLevelMap extends Component {
     int windowWidth = 640 - 20;
     int windowHeight = 480 - 20;
 
-    Camera camera;
+    Viewport viewport;
 
     public ComponentLevelMap() {
 
@@ -52,10 +52,10 @@ public class ComponentLevelMap extends Component {
                 //.setWindowSize(windowWidth, windowHeight)
                 .setTileSize(16, 16).setTileSheet(resources.getSpritesTilesheet())
                 //.setScale((int) scale)
-                .setCameraId(Constants.tileGridCameraId);
+                .setViewportId(Constants.tileGridCameraId);
 
-        int grass = resources.getSpritesTilesheet().getTileIndexFromCoords(1, 7);
-        int flower = resources.getSpritesTilesheet().getTileIndexFromCoords(2, 7);
+        int grass = resources.getSpritesTilesheet().getTileIndexFromCoords(0, 1);
+        int flower = resources.getSpritesTilesheet().getTileIndexFromCoords(1, 1);
         for (int y = 0; y < mapHeight; y++) {
             for (int x = 0; x < mapWidth; x++) {
                 if (Math.random() < 0.98) tileGridData.setTileId(x, y, grass);
@@ -63,28 +63,28 @@ public class ComponentLevelMap extends Component {
             }
         }
 
-        camera = garnet.getGraphics().getCameraManager().getCamera(Constants.tileGridCameraId);
+        viewport = garnet.getGraphics().getViewportManager().getViewport(Constants.tileGridCameraId);
 
         player = parent.getContext().getObjectByTag(Constants.TAG_PLAYER);
     }
 
     @Override
     public void tick(double t) {
-        double zoom = camera.getZoom();
+        double zoom = viewport.getZoom();
         Vector3 playerPos = player.getTransform();
-        double scrollX = camera.getX();
-        double scrollY = camera.getY();
+        double scrollX = viewport.getX();
+        double scrollY = viewport.getY();
         double dx = playerPos.x - (scrollX + ((windowWidth / zoom) / 2));
         double dy = playerPos.y - (scrollY + ((windowHeight / zoom) / 2));
         double speed = 5.0 * t;
-        camera.scroll(dx * speed, dy * speed);
+        viewport.scroll(dx * speed, dy * speed);
 //        scrollX += dx * speed;
 //        scrollY += dy * speed;
 
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
         //tileGridDrawer.setScale(2);
         //tileGridDrawer.setScroll(scrollX, scrollY);
 
@@ -95,7 +95,7 @@ public class ComponentLevelMap extends Component {
     }
 
     public Rect getVisibleMapExtents() {
-        double[] r = camera.getVisibleRect();
+        double[] r = viewport.getVisibleRect();
         Rect rect = new Rect(r[0], r[1], r[2], r[3]);
 
 //        double[] scrollPosition = tileGridDrawer.getScrollPosition();

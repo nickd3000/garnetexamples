@@ -3,13 +3,14 @@ package com.physmo.garnetexamples.games.invaders.components;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.Utils;
+import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.input.InputAction;
+import com.physmo.garnet.toolkit.Component;
+import com.physmo.garnet.toolkit.GameObject;
+import com.physmo.garnet.toolkit.scene.SceneManager;
+import com.physmo.garnet.toolkit.stateMachine.StateMachine;
 import com.physmo.garnetexamples.games.invaders.Constants;
 import com.physmo.garnetexamples.games.invaders.GameData;
-import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.scene.SceneManager;
-import com.physmo.garnettoolkit.stateMachine.StateMachine;
 
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class ComponentGameLogic extends Component {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
 
     }
 

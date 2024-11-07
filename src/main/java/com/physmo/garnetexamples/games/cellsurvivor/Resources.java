@@ -7,20 +7,12 @@ import com.physmo.garnet.text.RegularFont;
 
 public class Resources {
     public static final String regularFontImagePath = "regularfonts/12x12Font.png";
-    String spritesFileName = "prototypeArt.png";
+    String spritesFileName = "cellsurvivor.png";
     Texture spritesTexture;
     TileSheet spritesTilesheet;
     Graphics graphics;
     RegularFont regularFont;
-    int currentScore = 0;
 
-    public int getCurrentScore() {
-        return currentScore;
-    }
-
-    public void setCurrentScore(int currentScore) {
-        this.currentScore = currentScore;
-    }
 
     public void init(Graphics graphics) {
         this.graphics = graphics;
@@ -46,7 +38,5 @@ public class Resources {
         return regularFont;
     }
 
-    public void addToScore(int i) {
-        setCurrentScore(getCurrentScore() + i);
-    }
+
 }

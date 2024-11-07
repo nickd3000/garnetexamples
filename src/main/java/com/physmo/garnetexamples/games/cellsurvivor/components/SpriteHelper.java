@@ -2,11 +2,11 @@ package com.physmo.garnetexamples.games.cellsurvivor.components;
 
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.toolkit.Component;
+import com.physmo.garnet.toolkit.GameObject;
+import com.physmo.garnet.toolkit.scene.SceneManager;
 import com.physmo.garnetexamples.games.cellsurvivor.Constants;
 import com.physmo.garnetexamples.games.cellsurvivor.Resources;
-import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.scene.SceneManager;
 
 public class SpriteHelper extends Component {
     Resources resources;
@@ -18,13 +18,13 @@ public class SpriteHelper extends Component {
     int spriteColor = 0xffffffff;
 
     public void drawSpriteInMap(double x, double y, double tileX, double tileY) {
-        g.setActiveCamera(Constants.tileGridCameraId);
+        g.setActiveViewport(Constants.tileGridCameraId);
         g.setColor(spriteColor);
         g.drawImage(resources.getSpritesTilesheet(), x, y, (int) tileX, (int) tileY);
     }
 
     public void drawSpriteInMap(int x, int y, int tileX, int tileY, double angle) {
-        g.setActiveCamera(Constants.tileGridCameraId);
+        g.setActiveViewport(Constants.tileGridCameraId);
         g.setColor(spriteColor);
         g.drawImage(resources.getSpritesTilesheet(), x, y, tileX, tileY, angle);
     }
@@ -46,7 +46,7 @@ public class SpriteHelper extends Component {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
 
     }
 }

@@ -1,14 +1,16 @@
 package com.physmo.garnetexamples.games.cellsurvivor.components;
 
 import com.physmo.garnet.Garnet;
+import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.structure.Rect;
+import com.physmo.garnet.structure.Vector3;
+import com.physmo.garnet.toolkit.Component;
+import com.physmo.garnet.toolkit.GameObject;
+import com.physmo.garnet.toolkit.scene.SceneManager;
+import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
+import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 import com.physmo.garnetexamples.games.cellsurvivor.Constants;
 import com.physmo.garnetexamples.games.cellsurvivor.EntityFactory;
-import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.Rect;
-import com.physmo.garnettoolkit.Vector3;
-import com.physmo.garnettoolkit.scene.SceneManager;
-import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 import java.util.List;
 import java.util.Random;
@@ -54,7 +56,7 @@ public class ComponentEnemySpawner extends Component {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
 
         Rect vme = componentLevelMap.getVisibleMapExtents();
         spriteHelper.drawSpriteInMap((int) vme.x, (int) vme.y, 3, 1);
@@ -83,6 +85,8 @@ public class ComponentEnemySpawner extends Component {
         for (GameObject gameObject : enemyList) {
             Vector3 transform = gameObject.getTransform();
             if (outsideVisibleMap(transform, visibleMapExtents)) {
+                ColliderComponent colliderComponent = gameObject.getComponent(ColliderComponent.class);
+                collisionSystem.removeCollidable(colliderComponent);
                 gameObject.destroy();
             }
         }

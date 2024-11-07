@@ -1,19 +1,23 @@
 package com.physmo.garnetexamples.games.cellsurvivor;
 
+import com.physmo.garnet.ColorUtils;
 import com.physmo.garnet.Garnet;
-import com.physmo.garnet.graphics.Camera;
+import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.graphics.Viewport;
+import com.physmo.garnet.structure.Rect;
+import com.physmo.garnet.toolkit.GameObject;
+import com.physmo.garnet.toolkit.scene.Scene;
+import com.physmo.garnet.toolkit.scene.SceneManager;
+import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
+import com.physmo.garnet.toolkit.simplecollision.RelativeObject;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentEnemySpawner;
+import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentGameLogic;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentHud;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentLevelMap;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentPlayer;
+import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentPlayerCapabilities;
 import com.physmo.garnetexamples.games.cellsurvivor.components.SpriteHelper;
 import com.physmo.garnetexamples.games.cellsurvivor.components.weapons.Gun;
-import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.scene.Scene;
-import com.physmo.garnettoolkit.scene.SceneManager;
-import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
-import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
-import com.physmo.garnettoolkit.simplecollision.RelativeObject;
 
 import java.util.List;
 import java.util.Random;
@@ -26,6 +30,9 @@ public class SceneGame extends Scene {
     Garnet garnet;
     ComponentLevelMap componentLevelMap;
     SpriteHelper spriteHelperComponent;
+    GameObject gameLogic;
+    ComponentPlayerCapabilities componentPlayerCapabilities;
+
 
     public SceneGame(String name) {
         super(name);
@@ -37,6 +44,17 @@ public class SceneGame extends Scene {
 
         collisionSystem = new CollisionSystem("d");
         context.add(collisionSystem);
+        collisionSystem.setCollisionDrawingCallback(collidable -> {
+            garnet.getGraphics().setDrawOrder(1);
+            Rect rect = collidable.collisionGetRegion();
+            float x = (float) rect.x;
+            float y = (float) rect.y;
+            float w = (float) rect.w;
+            float h = (float) rect.h;
+
+            garnet.getGraphics().setColor(ColorUtils.WHITE);
+            garnet.getGraphics().drawRect(x, y, w, h);
+        });
 
         GameObject levelMapObject = new GameObject("levelmap");
         componentLevelMap = new ComponentLevelMap();
@@ -46,9 +64,9 @@ public class SceneGame extends Scene {
 
         player = new GameObject("player").addComponent(new ComponentPlayer());
         player.addComponent(new Gun());
-        ColliderComponent collider = new ColliderComponent();
-        player.addComponent(collider);
-        collisionSystem.addCollidable(collider);
+        componentPlayerCapabilities = new ComponentPlayerCapabilities();
+        player.addComponent(componentPlayerCapabilities);
+        EntityFactory.addColliderToGameObject(collisionSystem, player);
         player.addTag(Constants.TAG_PLAYER);
         context.add(player);
 
@@ -68,8 +86,8 @@ public class SceneGame extends Scene {
         context.add(hud);
 
         // Configure cameras
-        Camera camera1 = garnet.getGraphics().getCameraManager().getCamera(Constants.tileGridCameraId);
-        camera1.setWidth(garnet.getDisplay().getWindowWidth())
+        Viewport viewport1 = garnet.getGraphics().getViewportManager().getViewport(Constants.tileGridCameraId);
+        viewport1.setWidth(garnet.getDisplay().getWindowWidth())
                 .setHeight(garnet.getDisplay().getWindowHeight())
                 .setWindowY(40)
                 .setWindowX(10)
@@ -77,14 +95,20 @@ public class SceneGame extends Scene {
                 .setDrawDebugInfo(true)
                 .setZoom(2.0);
 
-        Camera camera2 = garnet.getGraphics().getCameraManager().getCamera(Constants.scorePanelCameraId);
-        camera2.setWidth(garnet.getDisplay().getWindowWidth())
+        Viewport viewport2 = garnet.getGraphics().getViewportManager().getViewport(Constants.scorePanelCameraId);
+        viewport2.setWidth(garnet.getDisplay().getWindowWidth())
                 .setHeight(40)
                 .setWindowY(0)
                 .setWindowX(0)
                 .setClipActive(true)
                 .setDrawDebugInfo(true)
                 .setZoom(2.0);
+
+        garnet.getDebugDrawer().setVisible(true);
+
+        gameLogic = new GameObject("gameLogic");
+        gameLogic.addComponent(new ComponentGameLogic());
+        context.add(gameLogic);
     }
 
     @Override
@@ -95,7 +119,8 @@ public class SceneGame extends Scene {
         List<RelativeObject> nearestEnemies = collisionSystem.getNearestObjects(Constants.TAG_ENEMY, (int) player.getTransform().x, (int) player.getTransform().y, 60);
         player.getComponent(ComponentPlayer.class).setNearestEnemies(nearestEnemies);
 
-        List<RelativeObject> nearestCrystals = collisionSystem.getNearestObjects(Constants.TAG_CRYSTAL, (int) player.getTransform().x, (int) player.getTransform().y, 50);
+        double pickupRadius = 50 * componentPlayerCapabilities.getPickupRadiusMultiplier();
+        List<RelativeObject> nearestCrystals = collisionSystem.getNearestObjects(Constants.TAG_CRYSTAL, (int) player.getTransform().x, (int) player.getTransform().y, pickupRadius);
         player.getComponent(ComponentPlayer.class).setNearestCrystals(nearestCrystals);
 
         garnet.getDebugDrawer().setUserString("collisions", String.valueOf(collisionSystem.getTestsPerFrame()));
@@ -104,7 +129,7 @@ public class SceneGame extends Scene {
 
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
 
     }
 

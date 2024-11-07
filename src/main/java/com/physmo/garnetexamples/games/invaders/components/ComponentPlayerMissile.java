@@ -1,21 +1,22 @@
 package com.physmo.garnetexamples.games.invaders.components;
 
 
+import com.physmo.garnet.ColorUtils;
 import com.physmo.garnet.Garnet;
-import com.physmo.garnet.Utils;
+import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.toolkit.Component;
+import com.physmo.garnet.toolkit.scene.SceneManager;
+import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
+import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 import com.physmo.garnetexamples.games.invaders.Constants;
 import com.physmo.garnetexamples.games.invaders.Resources;
-import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.scene.SceneManager;
-import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
-import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
 
 public class ComponentPlayerMissile extends Component {
     double speed = 250;
 
     Resources resources;
     Garnet garnet;
-    int color = Utils.floatToRgb(1, 0, 1, 1);
+    int color = ColorUtils.floatToRgb(1, 0, 1, 1);
     CollisionSystem collisionSystem;
     ColliderComponent colliderComponent;
 
@@ -54,7 +55,7 @@ public class ComponentPlayerMissile extends Component {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
         if (!parent.isActive()) return;
 
         garnet.getGraphics().setColor(color);

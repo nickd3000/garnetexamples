@@ -1,9 +1,10 @@
 package com.physmo.garnetexamples.games.cellsurvivor.components;
 
-import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.simplecollision.Collidable;
-import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
-import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
+import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.toolkit.Component;
+import com.physmo.garnet.toolkit.simplecollision.Collidable;
+import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
+import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 
 public class ComponentCrystal extends Component {
     SpriteHelper spriteHelper;
@@ -26,11 +27,11 @@ public class ComponentCrystal extends Component {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
         int x = (int) parent.getTransform().x;
         int y = (int) parent.getTransform().y;
 
-        spriteHelper.drawSpriteInMap(x, y, 0, 5);
+        spriteHelper.drawSpriteInMap(x - 8, y - 8, 7, 1);
     }
 
     public void requestKill() {

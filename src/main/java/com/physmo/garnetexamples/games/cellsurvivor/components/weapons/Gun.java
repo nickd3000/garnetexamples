@@ -1,34 +1,44 @@
 package com.physmo.garnetexamples.games.cellsurvivor.components.weapons;
 
+import com.physmo.garnet.graphics.Graphics;
+import com.physmo.garnet.toolkit.Component;
+import com.physmo.garnet.toolkit.GameObject;
+import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
+import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
+import com.physmo.garnet.toolkit.simplecollision.RelativeObject;
 import com.physmo.garnetexamples.games.cellsurvivor.Constants;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentPlayer;
-import com.physmo.garnettoolkit.Component;
-import com.physmo.garnettoolkit.GameObject;
-import com.physmo.garnettoolkit.simplecollision.ColliderComponent;
-import com.physmo.garnettoolkit.simplecollision.CollisionSystem;
-import com.physmo.garnettoolkit.simplecollision.RelativeObject;
+import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentPlayerCapabilities;
 
 import java.util.List;
 import java.util.Random;
 
 public class Gun extends Component {
 
-    double cooldownPeriod = 0.2;
+    double cooldownPeriod = 1.0;
     double cooldown = cooldownPeriod;
     Random random = new Random();
     CollisionSystem collisionSystem;
+    ComponentPlayerCapabilities playerCapabilities;
 
     @Override
     public void init() {
+
         collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
+
+        playerCapabilities = parent.getContext().getComponent(ComponentPlayerCapabilities.class);
+
     }
 
     @Override
     public void tick(double t) {
         cooldown -= t;
         if (cooldown < 0) {
-            cooldown += cooldownPeriod;
-            fire();
+            cooldown += cooldownPeriod * playerCapabilities.getProjectileRateAdjuster();
+            int mult = playerCapabilities.getProjectileMultiplier();
+            for (int i = 0; i < mult; i++) {
+                fire();
+            }
         }
     }
 
@@ -54,7 +64,7 @@ public class Gun extends Component {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics g) {
 
     }
 }
