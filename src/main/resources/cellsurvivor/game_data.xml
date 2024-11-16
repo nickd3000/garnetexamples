@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<gameData>
+    <enemies>
+        <enemy id="0" name="Mummy" speed="0.8" health="200">
+            <sprite>10,7</sprite>
+        </enemy>
+        <enemy id="1" name="Snake" speed="0.1" health="20">
+            <sprite>10,3</sprite>
+        </enemy>
+        <enemy id="2" name="Goblin" speed="0.1" health="50">
+            <sprite>1,6</sprite>
+        </enemy>
+        <enemy id="3" name="Ogre 1" speed="0.1" health="250">
+            <sprite>1,8</sprite>
+        </enemy>
+        <enemy id="4" name="Ogre 2" speed="0.1" health="300">
+            <sprite>2,8</sprite>
+        </enemy>
+    </enemies>
+</gameData>
