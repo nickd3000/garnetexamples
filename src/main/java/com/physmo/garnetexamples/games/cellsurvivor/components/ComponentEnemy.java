@@ -4,6 +4,7 @@ import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.structure.Vector3;
 import com.physmo.garnet.toolkit.Component;
 import com.physmo.garnet.toolkit.GameObject;
+import com.physmo.garnet.toolkit.scene.SceneManager;
 import com.physmo.garnet.toolkit.simplecollision.Collidable;
 import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
 import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
@@ -32,10 +33,12 @@ public class ComponentEnemy extends Component {
     int[] sprite = new int[2];
     ComponentPlayerCapabilities playerCapabilities;
     ComponentGameLogic gameLogic;
+    ParticleFactory particleFactory;
 
     @Override
     public void init() {
         playerCapabilities = parent.getContext().getComponent(ComponentPlayerCapabilities.class);
+        particleFactory = parent.getContext().getComponent(ParticleFactory.class);
 
         spriteHelper = parent.getContext().getComponent(SpriteHelper.class);
 
@@ -51,7 +54,7 @@ public class ComponentEnemy extends Component {
             }
         });
 
-        resources = parent.getContext().getObjectByType(Resources.class);
+        resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
         gameLogic = parent.getContext().getComponent(ComponentGameLogic.class);
 
         rollAngle = Math.random() * 360;
@@ -99,6 +102,10 @@ public class ComponentEnemy extends Component {
 
             if (Math.random() < 0.4 * playerCapabilities.getLuckMultiplier()) {
                 EntityFactory.addCrystal(parent.getContext(), collisionSystem, (int) parent.getTransform().x, (int) parent.getTransform().y);
+            }
+
+            for (int i = 0; i < 5; i++) {
+                particleFactory.createParticle(particleFactory.lightSmoke, parent.getTransform());
             }
         }
 

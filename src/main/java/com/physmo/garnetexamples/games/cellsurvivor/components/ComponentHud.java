@@ -20,7 +20,7 @@ public class ComponentHud extends Component {
 
     @Override
     public void init() {
-        resources = parent.getContext().getObjectByType(Resources.class);
+        resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
         g = garnet.getGraphics();
         player = parent.getContext().getComponent(ComponentPlayer.class);
@@ -35,7 +35,7 @@ public class ComponentHud extends Component {
 
     @Override
     public void draw(Graphics g) {
-        g.setActiveViewport(Constants.scorePanelCameraId);
+        g.setActiveViewport(Constants.scorePanelViewportId);
         RegularFont regularFont = resources.getRegularFont();
         regularFont.setScale(1);
         g.setColor(ColorUtils.YELLOW);

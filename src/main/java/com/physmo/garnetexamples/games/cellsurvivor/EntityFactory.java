@@ -2,11 +2,18 @@ package com.physmo.garnetexamples.games.cellsurvivor;
 
 import com.physmo.garnet.toolkit.Context;
 import com.physmo.garnet.toolkit.GameObject;
+import com.physmo.garnet.toolkit.scene.SceneManager;
 import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
 import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentCrystal;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentEnemy;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentGameLogic;
+import com.physmo.garnetexamples.games.cellsurvivor.components.ProjectileType;
+import com.physmo.garnetexamples.games.cellsurvivor.components.weapons.Bullet;
+import com.physmo.garnetexamples.games.cellsurvivor.components.weapons.OrbitingBullet;
+import com.physmo.garnetexamples.games.cellsurvivor.gamedata.Enemy;
+
+import java.util.List;
 
 public class EntityFactory {
 
@@ -22,7 +29,7 @@ public class EntityFactory {
         ComponentGameLogic gameLogic = context.getComponent(ComponentGameLogic.class);
 
 
-        configureEnemy(gameLogic, enemyComponent, 1);
+        configureEnemy(context, gameLogic, enemyComponent, 1);
 
 
         context.add(enemy);
@@ -44,8 +51,11 @@ public class EntityFactory {
         context.add(entity);
     }
 
-    public static void configureEnemy(ComponentGameLogic gameLogic, ComponentEnemy enemy, int type) {
+    public static void configureEnemy(Context context, ComponentGameLogic gameLogic, ComponentEnemy enemy, int type) {
+
+        Resources resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
         int wave = gameLogic.getCurrentWave();
+
 
         //type = (int) ((Math.random() * 30)) % 5;
 
@@ -53,29 +63,69 @@ public class EntityFactory {
         if (Math.random() > 0.8) type += 1;
         type = type % 5;
 
-        // Mummy
-        if (type == 0) {
-            enemy.setDetails(5, 200, 10, 7);
+        List<Enemy> enemies = resources.getGameData().getEnemies();
+        Enemy enemyData = null;
+        for (Enemy e : enemies) {
+            if (e.getId() == type) {
+                enemyData = e;
+            }
         }
 
-        // Snake
-        if (type == 1) {
-            enemy.setDetails(20, 20, 10, 3);
-        }
+        enemy.setDetails(enemyData.getSpeed(), enemyData.getHealth(), 10, 7);
 
-        // Goblin
-        if (type == 2) {
-            enemy.setDetails(20, 50, 1, 6);
-        }
+//        // Mummy
+//        if (type == 0) {
+//            enemy.setDetails(12, 200, 10, 7);
+//        }
+//
+//        // Snake
+//        if (type == 1) {
+//            enemy.setDetails(13, 20, 10, 3);
+//        }
+//
+//        // Goblin
+//        if (type == 2) {
+//            enemy.setDetails(10, 50, 1, 6);
+//        }
+//
+//        // Ogre 1
+//        if (type == 3) {
+//            enemy.setDetails(10, 250, 1, 8);
+//        }
+//
+//        // Ogre 2
+//        if (type == 4) {
+//            enemy.setDetails(12, 350, 2, 8);
+//        }
+    }
 
-        // Ogre 1
-        if (type == 3) {
-            enemy.setDetails(2, 250, 1, 8);
-        }
+    public static void createSimpleBullet(Context context, CollisionSystem collisionSystem, double x, double y, double dx, double dy, double speed, ProjectileType type) {
+        Bullet bullet = new Bullet();
+        GameObject obj = new GameObject("bullet").addComponent(bullet);
+        ColliderComponent collider = new ColliderComponent();
+        obj.addComponent(collider);
+        obj.getTransform().set(x, y, 0);
+        bullet.setDirection(dx, dy);
+        bullet.setProjectileType(type);
+        bullet.setSpeed(speed);
 
-        // Ogre 2
-        if (type == 4) {
-            enemy.setDetails(2, 350, 2, 8);
-        }
+        obj.addTag(Constants.TAG_BULLET);
+        context.add(obj);
+
+        collisionSystem.addCollidable(collider);
+    }
+
+    public static void createOrbitingBullet(Context context, CollisionSystem collisionSystem, GameObject parent, double radius, double speed, int bulletNumber, int bulletGroupSize, ProjectileType type, double lifeTime) {
+
+        GameObject player = parent.getContext().getObjectByTag("player");
+
+        OrbitingBullet orbitingBullet = new OrbitingBullet(player, radius, speed, bulletNumber, bulletGroupSize, type, lifeTime);
+        GameObject obj = new GameObject("bullet").addComponent(orbitingBullet);
+        ColliderComponent collider = new ColliderComponent();
+        obj.addComponent(collider);
+
+        obj.addTag(Constants.TAG_BULLET);
+        context.add(obj);
+        collisionSystem.addCollidable(collider);
     }
 }

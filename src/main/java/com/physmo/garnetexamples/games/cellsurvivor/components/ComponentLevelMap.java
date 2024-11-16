@@ -24,8 +24,8 @@ public class ComponentLevelMap extends Component {
     Garnet garnet;
     GameObject player;
 
-    int windowWidth = 640 - 20;
-    int windowHeight = 480 - 20;
+    int windowWidth = 384 * 3;
+    int windowHeight = 216 * 3;
 
     Viewport viewport;
 
@@ -45,14 +45,14 @@ public class ComponentLevelMap extends Component {
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
         graphics = garnet.getGraphics();
 
-        resources = parent.getContext().getObjectByType(Resources.class);
+        resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
 
         tileGridData = new TileGridData(mapWidth, mapHeight);
         tileGridDrawer = new TileGridDrawer().setData(tileGridData)
                 //.setWindowSize(windowWidth, windowHeight)
                 .setTileSize(16, 16).setTileSheet(resources.getSpritesTilesheet())
                 //.setScale((int) scale)
-                .setViewportId(Constants.tileGridCameraId);
+                .setViewportId(Constants.tileGridViewportId);
 
         int grass = resources.getSpritesTilesheet().getTileIndexFromCoords(0, 1);
         int flower = resources.getSpritesTilesheet().getTileIndexFromCoords(1, 1);
@@ -63,7 +63,7 @@ public class ComponentLevelMap extends Component {
             }
         }
 
-        viewport = garnet.getGraphics().getViewportManager().getViewport(Constants.tileGridCameraId);
+        viewport = garnet.getGraphics().getViewportManager().getViewport(Constants.tileGridViewportId);
 
         player = parent.getContext().getObjectByTag(Constants.TAG_PLAYER);
     }
@@ -87,7 +87,8 @@ public class ComponentLevelMap extends Component {
     public void draw(Graphics g) {
         //tileGridDrawer.setScale(2);
         //tileGridDrawer.setScroll(scrollX, scrollY);
-
+        g.setColor(0xffffff);
+        g.setDrawOrder(Constants.DRAW_ORDER_GROUND);
         tileGridDrawer.draw(graphics, 20, 20);
 
 //        Rect visibleMapExtents = getVisibleMapExtents();

@@ -18,20 +18,26 @@ public class SpriteHelper extends Component {
     int spriteColor = 0xffffffff;
 
     public void drawSpriteInMap(double x, double y, double tileX, double tileY) {
-        g.setActiveViewport(Constants.tileGridCameraId);
+        g.setActiveViewport(Constants.tileGridViewportId);
         g.setColor(spriteColor);
         g.drawImage(resources.getSpritesTilesheet(), x, y, (int) tileX, (int) tileY);
     }
 
     public void drawSpriteInMap(int x, int y, int tileX, int tileY, double angle) {
-        g.setActiveViewport(Constants.tileGridCameraId);
+        g.setActiveViewport(Constants.tileGridViewportId);
         g.setColor(spriteColor);
+        g.drawImage(resources.getSpritesTilesheet(), x, y, tileX, tileY, angle);
+    }
+
+    public void drawSpriteInMap(int x, int y, int tileX, int tileY, double angle, int col) {
+        g.setActiveViewport(Constants.tileGridViewportId);
+        g.setColor(col);
         g.drawImage(resources.getSpritesTilesheet(), x, y, tileX, tileY, angle);
     }
 
     @Override
     public void init() {
-        resources = parent.getContext().getObjectByType(Resources.class);
+        resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
 
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
         g = garnet.getGraphics();

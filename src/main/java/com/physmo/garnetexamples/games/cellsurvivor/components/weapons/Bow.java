@@ -2,24 +2,25 @@ package com.physmo.garnetexamples.games.cellsurvivor.components.weapons;
 
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.toolkit.Component;
-import com.physmo.garnet.toolkit.GameObject;
-import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
 import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 import com.physmo.garnet.toolkit.simplecollision.RelativeObject;
-import com.physmo.garnetexamples.games.cellsurvivor.Constants;
+import com.physmo.garnetexamples.games.cellsurvivor.EntityFactory;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentPlayer;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentPlayerCapabilities;
+import com.physmo.garnetexamples.games.cellsurvivor.components.ProjectileType;
 
 import java.util.List;
 import java.util.Random;
 
-public class Gun extends Component {
+public class Bow extends Component implements Weapon {
 
     double cooldownPeriod = 1.0;
     double cooldown = cooldownPeriod;
     Random random = new Random();
     CollisionSystem collisionSystem;
     ComponentPlayerCapabilities playerCapabilities;
+    double projectileSpeed = 70;
+    int level = 0;
 
     @Override
     public void init() {
@@ -50,21 +51,26 @@ public class Gun extends Component {
     }
 
     public void createBullet(double x, double y, double dx, double dy) {
-        Bullet bullet = new Bullet();
-        GameObject obj = new GameObject("bullet").addComponent(bullet);
-        ColliderComponent collider = new ColliderComponent();
-        obj.addComponent(collider);
-        obj.getTransform().set(x, y, 0);
-        bullet.setDirection(dx, dy);
-
-        obj.addTag(Constants.TAG_BULLET);
-        parent.getContext().add(obj);
-
-        collisionSystem.addCollidable(collider);
+        EntityFactory.createSimpleBullet(parent.getContext(), collisionSystem, x, y, dx, dy, projectileSpeed, ProjectileType.BULLET);
     }
 
     @Override
     public void draw(Graphics g) {
 
+    }
+
+    @Override
+    public String getName() {
+        return "Short Bow";
+    }
+
+    @Override
+    public int getLevel() {
+        return level;
+    }
+
+    @Override
+    public void increaseLevel() {
+        level++;
     }
 }

@@ -19,7 +19,8 @@ public class ComponentEnemySpawner extends Component {
     SpriteHelper spriteHelper;
     Garnet garnet;
     CollisionSystem collisionSystem;
-    ComponentLevelMap componentLevelMap;
+    ComponentLevelMap levelMap;
+    ComponentGameLogic gameLogic;
     Random random = new Random();
     double spawnMargin = 32;
     double despawnMargin = 64;
@@ -33,7 +34,8 @@ public class ComponentEnemySpawner extends Component {
         spriteHelper = parent.getContext().getComponent(SpriteHelper.class);
         garnet = SceneManager.getSharedContext().getObjectByType(Garnet.class);
         collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
-        componentLevelMap = parent.getContext().getComponent(ComponentLevelMap.class);
+        levelMap = parent.getContext().getComponent(ComponentLevelMap.class);
+        gameLogic = parent.getContext().getComponent(ComponentGameLogic.class);
     }
 
     @Override
@@ -45,7 +47,7 @@ public class ComponentEnemySpawner extends Component {
             int numEnemies = enemyList.size();
             //EntityFactory.addEnemy(context, collisionSystem, random.nextInt(400), random.nextInt(400));
 
-            if (numEnemies < 100) {
+            if (numEnemies < gameLogic.getEnemyCountForCurrentWave()) {
                 enemySpawn();
             }
         }
@@ -58,7 +60,7 @@ public class ComponentEnemySpawner extends Component {
     @Override
     public void draw(Graphics g) {
 
-        Rect vme = componentLevelMap.getVisibleMapExtents();
+        Rect vme = levelMap.getVisibleMapExtents();
         spriteHelper.drawSpriteInMap((int) vme.x, (int) vme.y, 3, 1);
         spriteHelper.drawSpriteInMap((int) (vme.x + vme.w), (int) vme.y, 3, 1);
         spriteHelper.drawSpriteInMap((int) vme.x, (int) (vme.y + vme.h), 3, 1);
@@ -67,7 +69,7 @@ public class ComponentEnemySpawner extends Component {
     }
 
     public void enemySpawn() {
-        Rect visibleMapExtents = componentLevelMap.getVisibleMapExtents();
+        Rect visibleMapExtents = levelMap.getVisibleMapExtents();
 
         garnet.getDebugDrawer().setUserString("extents:",
                 String.format("%f %f %f %f", visibleMapExtents.x, visibleMapExtents.y, visibleMapExtents.w, visibleMapExtents.h));
@@ -79,7 +81,7 @@ public class ComponentEnemySpawner extends Component {
     }
 
     public void enemyDespawn(List<GameObject> enemyList) {
-        Rect visibleMapExtents = componentLevelMap.getVisibleMapExtents();
+        Rect visibleMapExtents = levelMap.getVisibleMapExtents();
 
         double margin = despawnMargin;
         for (GameObject gameObject : enemyList) {

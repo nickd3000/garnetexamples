@@ -3,7 +3,6 @@ package com.physmo.garnetexamples.games.cellsurvivor.components;
 import com.physmo.garnet.Garnet;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.input.InputAction;
-import com.physmo.garnet.structure.Vector3;
 import com.physmo.garnet.toolkit.Component;
 import com.physmo.garnet.toolkit.scene.SceneManager;
 import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
@@ -41,7 +40,7 @@ public class ComponentPlayer extends Component {
 
     @Override
     public void tick(double t) {
-        double speed = 30;
+        double speed = 40;
 
         if (garnet.getInput().isActionKeyPressed(InputAction.RIGHT)) {
             parent.getTransform().x += speed * t;
@@ -57,11 +56,14 @@ public class ComponentPlayer extends Component {
         }
 
         if (nearestCrystals != null) {
+//            for (RelativeObject nearestCrystal : nearestCrystals) {
+//                Vector3 transform = nearestCrystal.otherObject.collisionGetGameObject().getTransform();
+//                transform.x -= nearestCrystal.dx * 70.1 * t;
+//                transform.y -= nearestCrystal.dy * 70.1 * t;
+//            }
             for (RelativeObject nearestCrystal : nearestCrystals) {
-                Vector3 transform = nearestCrystal.otherObject.collisionGetGameObject().getTransform();
-
-                transform.x -= nearestCrystal.dx * 70.1 * t;
-                transform.y -= nearestCrystal.dy * 70.1 * t;
+                ComponentCrystal component = nearestCrystal.getOtherObject().collisionGetGameObject().getComponent(ComponentCrystal.class);
+                component.setHoming(true);
             }
         }
 
