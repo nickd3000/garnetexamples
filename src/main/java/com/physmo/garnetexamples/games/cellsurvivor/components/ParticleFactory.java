@@ -16,6 +16,7 @@ public class ParticleFactory extends Component {
     public ParticleTemplate wandTrail;
     public ParticleTemplate glaveTrail;
     public ParticleTemplate lightSmoke;
+    public ParticleTemplate flame;
 
     ParticleManager particleManager;
     SpriteHelper spriteHelper;
@@ -26,10 +27,10 @@ public class ParticleFactory extends Component {
         spriteHelper = parent.getContext().getComponent(SpriteHelper.class);
 
         wandTrail = new ParticleTemplate();
-        wandTrail.setLifeTime(0.2, 1.8);
+        wandTrail.setLifeTime(0.2, 1.0);
         wandTrail.setSpeed(10, 50);
         wandTrail.setPositionJitter(1.1);
-        wandTrail.setColorSupplier(new ColorSupplierLinear(new int[]{ColorUtils.asRGBA(1, 0, 1, 0.5f), ColorUtils.asRGBA(0, 1, 1, 0)}));
+        wandTrail.setColorSupplier(new ColorSupplierLinear(new int[]{ColorUtils.asRGBA(1, 0, 1, 0.9f), ColorUtils.asRGBA(0, 1, 1, 0)}));
         wandTrail.setSpeedCurve(new StandardCurve(CurveType.LINE_DOWN));
 
         ColorSupplierLinear glaveColor = new ColorSupplierLinear(
@@ -51,12 +52,23 @@ public class ParticleFactory extends Component {
         lightSmoke = new ParticleTemplate();
         lightSmoke.setLifeTime(2.2, 3.5);
         lightSmoke.setSpeed(10, 10);
-        lightSmoke.setPositionJitter(12.1);
-        lightSmoke.setColorSupplier(new ColorSupplierLinear(new int[]{ColorUtils.asRGBA(1, 1, 1, 0.8f), ColorUtils.asRGBA(1, 1, 1, 0)}));
+        lightSmoke.setPositionJitter(3.1);
+        lightSmoke.setColorSupplier(new ColorSupplierLinear(new int[]{ColorUtils.asRGBA(1, 1, 1, 0), ColorUtils.asRGBA(1, 1, 1, 0.8f), ColorUtils.asRGBA(1, 1, 1, 0)}));
         lightSmoke.setSpeedCurve(new StandardCurve(CurveType.LINE_DOWN));
         lightSmoke.setParticleDrawer(p -> {
             int col = p.colorSupplier.getColor(p.getTime());
             spriteHelper.drawSpriteInMap((int) p.position.x, (int) p.position.y, 11, 1, 0, col);
+        });
+
+        flame = new ParticleTemplate();
+        flame.setLifeTime(2.2, 3.5);
+        flame.setSpeed(10, 10);
+        flame.setPositionJitter(1.1);
+        flame.setColorSupplier(new ColorSupplierLinear(new int[]{ColorUtils.asRGBA(1, 1, 1, 0.8f), ColorUtils.asRGBA(1, 0, 0, 0)}));
+        flame.setSpeedCurve(new StandardCurve(CurveType.LINE_DOWN));
+        flame.setParticleDrawer(p -> {
+            int col = p.colorSupplier.getColor(p.getTime());
+            spriteHelper.drawSpriteInMap((int) p.position.x, (int) p.position.y, 0, 2, 0, col);
         });
     }
 

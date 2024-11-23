@@ -24,8 +24,8 @@ public class ComponentLevelMap extends Component {
     Garnet garnet;
     GameObject player;
 
-    int windowWidth = 384 * 3;
-    int windowHeight = 216 * 3;
+    int windowWidth = 384 * 2;
+    int windowHeight = 216 * 2;
 
     Viewport viewport;
 

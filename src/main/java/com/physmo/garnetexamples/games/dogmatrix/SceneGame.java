@@ -60,7 +60,7 @@ public class SceneGame extends Scene {
         int arenaHeight = 480;
 
 
-        // Configure cameras
+        // Configure viewports
         Viewport viewport1 = garnet.getGraphics().getViewportManager().getViewport(1);
         viewport1.setWidth(arenaWidth)
                 .setHeight(arenaHeight)

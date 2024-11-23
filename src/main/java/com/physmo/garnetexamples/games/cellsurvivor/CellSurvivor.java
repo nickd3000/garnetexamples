@@ -19,7 +19,7 @@ public class CellSurvivor extends GarnetApp {
         // 640 480
         // 384, 216
 
-        Garnet garnet = new Garnet(384 * 3, 216 * 3);
+        Garnet garnet = new Garnet(384 * 2, 216 * 2);
         garnet.setApp(new CellSurvivor(garnet, ""));
         garnet.init();
         garnet.run();

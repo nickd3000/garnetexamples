@@ -15,7 +15,7 @@ import com.physmo.garnetexamples.games.cellsurvivor.components.ParticleFactory;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ProjectileType;
 import com.physmo.garnetexamples.games.cellsurvivor.components.SpriteHelper;
 
-public class OrbitingBullet extends Component {
+public class OrbitingBullet extends Component implements DamageSupplier {
 
     double speed = 50;
     ProjectileType projectileType = ProjectileType.BULLET;
@@ -38,8 +38,9 @@ public class OrbitingBullet extends Component {
     ParticleTemplate glaveParticleTemplate;
     ParticleManager particleManager;
     double particleTimer = 0;
+    double damage;
 
-    public OrbitingBullet(GameObject orbitObject, double radius, double speed, int bulletNumber, int bulletGroupSize, ProjectileType type, double lifeTime) {
+    public OrbitingBullet(GameObject orbitObject, double radius, double speed, int bulletNumber, int bulletGroupSize, ProjectileType type, double lifeTime, double damage) {
         this.orbitObject = orbitObject;
         this.radius = radius;
         this.speed = speed;
@@ -47,6 +48,7 @@ public class OrbitingBullet extends Component {
         this.bulletGroupSize = bulletGroupSize;
         this.projectileType = type;
         this.lifeTime = lifeTime;
+        this.damage = damage;
 
         rotationAngle = ((Math.PI * 2) / bulletGroupSize) * bulletNumber;
 
@@ -103,9 +105,9 @@ public class OrbitingBullet extends Component {
         parent.getTransform().x = orbitObject.getTransform().x + dx;
         parent.getTransform().y = orbitObject.getTransform().y + dy;
 
-        if (bulletNumber == 0) {
-            System.out.println(" " + orbitObject.getPosition().x + " " + orbitObject.getPosition().y);
-        }
+//        if (bulletNumber == 0) {
+//            System.out.println(" " + orbitObject.getPosition().x + " " + orbitObject.getPosition().y);
+//        }
 
         if (age > lifeTime) killMe = true;
 
@@ -145,5 +147,14 @@ public class OrbitingBullet extends Component {
 
     public void setProjectileType(ProjectileType type) {
         this.projectileType = type;
+    }
+
+    @Override
+    public double getDamage() {
+        return damage;
+    }
+
+    public void setDamage(double damage) {
+        this.damage = damage;
     }
 }

@@ -11,7 +11,7 @@ import com.physmo.garnetexamples.games.cellsurvivor.components.ParticleFactory;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ProjectileType;
 import com.physmo.garnetexamples.games.cellsurvivor.components.SpriteHelper;
 
-public class Bullet extends Component {
+public class Bullet extends Component implements DamageSupplier {
 
     double speed = 50;
     ProjectileType projectileType = ProjectileType.BULLET;
@@ -22,6 +22,9 @@ public class Bullet extends Component {
     ColliderComponent colliderComponent;
     ComponentPlayerCapabilities playerCapabilities;
     ParticleFactory particleFactory;
+    int numEnemiesHit = 0;
+    int pierce = 1;
+    double damage = 1;
 
     public void setDirection(double x, double y) {
         dx = x;
@@ -40,7 +43,11 @@ public class Bullet extends Component {
 
         colliderComponent.setCallbackEnter(target -> {
             if (target.hasTag(Constants.TAG_ENEMY)) {
-                killMe = true;
+                numEnemiesHit++;
+                if (numEnemiesHit >= pierce) {
+                    killMe = true;
+                }
+
             }
         });
 
@@ -68,19 +75,15 @@ public class Bullet extends Component {
 
         colliderComponent.setCollisionRegion(-2, -2, 4, 4);
 
-        // Handle particles.
-//        if (projectileType == ProjectileType.MAGIC && Math.random()<0.3) {
-//            Emitter emitter = new Emitter(parent.getTransform(), 0.2, wandParticleTemplate);
-//            emitter.setEmitPerSecond(150);
-//            particleManager.addEmitter(emitter);
-//        }
 
-        if (projectileType == ProjectileType.MAGIC && Math.random() < 0.3) {
-//            Particle freeParticle = particleManager.getFreeParticle();
-//            if (freeParticle != null) {
-//                wandParticleTemplate.initParticle(freeParticle, parent.getTransform());
-//            }
+        if (projectileType == ProjectileType.MAGIC && Math.random() < 0.2) {
             particleFactory.createParticle(particleFactory.wandTrail, parent.getTransform());
+        }
+        if (projectileType == ProjectileType.FIREBALL && Math.random() < 0.1) {
+            particleFactory.createParticle(particleFactory.flame, parent.getTransform());
+        }
+        if (projectileType == ProjectileType.FIREBALL && Math.random() < 0.05) {
+            particleFactory.createParticle(particleFactory.lightSmoke, parent.getTransform());
         }
     }
 
@@ -89,11 +92,22 @@ public class Bullet extends Component {
         int x = (int) parent.getTransform().x;
         int y = (int) parent.getTransform().y;
 
+        //(vector3.getAngle() / (Math.PI * 2)) * 360;
+        double angle = (getAngle() / (Math.PI * 2)) * 360;
+
         if (projectileType == ProjectileType.BULLET) {
-            spriteHelper.drawSpriteInMap(x - 8, y - 8, 0, 2);
+            spriteHelper.drawSpriteInMap(x, y, 3, 2, angle);
         } else if (projectileType == ProjectileType.MAGIC) {
             spriteHelper.drawSpriteInMap(x - 8, y - 8, 2, 2);
+        } else if (projectileType == ProjectileType.FIREBALL) {
+            spriteHelper.drawSpriteInMap(x, y, 5, 2, angle);
         }
+    }
+
+    public double getAngle() {
+        double a = Math.atan2(-dx, -dy);
+        a = a > 0 ? (Math.PI * 2) - a : 0 - a;
+        return a;
     }
 
     public ProjectileType getProjectileType() {
@@ -102,5 +116,18 @@ public class Bullet extends Component {
 
     public void setProjectileType(ProjectileType type) {
         this.projectileType = type;
+    }
+
+    public void setPierce(int pierce) {
+        this.pierce = pierce;
+    }
+
+    @Override
+    public double getDamage() {
+        return damage;
+    }
+
+    public void setDamage(double damage) {
+        this.damage = damage;
     }
 }

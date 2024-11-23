@@ -12,6 +12,7 @@ import com.physmo.garnet.toolkit.simplecollision.RelativeObject;
 import com.physmo.garnetexamples.games.cellsurvivor.Constants;
 import com.physmo.garnetexamples.games.cellsurvivor.EntityFactory;
 import com.physmo.garnetexamples.games.cellsurvivor.Resources;
+import com.physmo.garnetexamples.games.cellsurvivor.components.weapons.DamageSupplier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,8 @@ public class ComponentEnemy extends Component {
     ComponentPlayerCapabilities playerCapabilities;
     ComponentGameLogic gameLogic;
     ParticleFactory particleFactory;
+    double hitFlashMax = 0.1;
+    double hitFlashTimer = 0;
 
     @Override
     public void init() {
@@ -50,7 +53,17 @@ public class ComponentEnemy extends Component {
         });
         collider.setCallbackEnter(target -> {
             if (target.hasTag(Constants.TAG_BULLET)) {
-                health -= 55 * playerCapabilities.getProjectilePowerAdjuster();
+
+                for (Component component : target.getComponents()) {
+                    if (component instanceof DamageSupplier damageSupplier) {
+
+                        health -= damageSupplier.getDamage();
+                        hitFlashTimer = hitFlashMax;
+                    }
+                }
+
+
+
             }
         });
 
@@ -112,6 +125,11 @@ public class ComponentEnemy extends Component {
         rollAngle += t * speed;
 
         collider.setCollisionRegion(-6, -8, 12, 16);
+
+        if (hitFlashTimer > 0) {
+            hitFlashTimer -= t;
+            if (hitFlashTimer < 0) hitFlashTimer = 0;
+        }
     }
 
     private void calculateMoveDir() {
@@ -128,6 +146,9 @@ public class ComponentEnemy extends Component {
 
         double rotation = Math.sin(rollAngle) * 10;
 
-        spriteHelper.drawSpriteInMap(x, y, sprite[0], sprite[1], rotation);
+        int color = 0xffffffff;
+        if (hitFlashTimer > 0) color = 0xff0000ff;
+
+        spriteHelper.drawSpriteInMap(x, y, sprite[0], sprite[1], rotation, color);
     }
 }

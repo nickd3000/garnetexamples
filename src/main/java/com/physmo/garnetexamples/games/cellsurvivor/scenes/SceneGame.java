@@ -23,7 +23,9 @@ import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentPlayer;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentPlayerCapabilities;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ParticleFactory;
 import com.physmo.garnetexamples.games.cellsurvivor.components.SpriteHelper;
+import com.physmo.garnetexamples.games.cellsurvivor.components.items.CombinedItemStats;
 import com.physmo.garnetexamples.games.cellsurvivor.components.weapons.Bow;
+import com.physmo.garnetexamples.games.cellsurvivor.components.weapons.FireWand;
 import com.physmo.garnetexamples.games.cellsurvivor.components.weapons.GlaveGun;
 import com.physmo.garnetexamples.games.cellsurvivor.components.weapons.Wand;
 
@@ -78,6 +80,8 @@ public class SceneGame extends Scene {
         player.addComponent(new Bow());
         player.addComponent(new Wand());
         player.addComponent(new GlaveGun());
+        player.addComponent(new FireWand());
+        player.addComponent(new CombinedItemStats());
         componentPlayerCapabilities = new ComponentPlayerCapabilities();
         player.addComponent(componentPlayerCapabilities);
         EntityFactory.addColliderToGameObject(collisionSystem, player);
@@ -99,23 +103,23 @@ public class SceneGame extends Scene {
         GameObject hud = new GameObject("hud").addComponent(new ComponentHud());
         context.add(hud);
 
-        // Configure cameras
+        // Configure Viewports
         Viewport viewportOverlay = garnet.getGraphics().getViewportManager().getViewport(Constants.overlayViewportId);
         viewportOverlay.setWidth(garnet.getDisplay().getWindowWidth())
                 .setHeight(garnet.getDisplay().getWindowHeight())
                 .setWindowY(0)
                 .setWindowX(0)
                 .setClipActive(true)
-                .setDrawDebugInfo(true)
+                .setDrawDebugInfo(false)
                 .setZoom(2.0);
 
         Viewport viewport1 = garnet.getGraphics().getViewportManager().getViewport(Constants.tileGridViewportId);
-        viewport1.setWidth(garnet.getDisplay().getWindowWidth() - 20)
-                .setHeight(garnet.getDisplay().getWindowHeight() - 50)
+        viewport1.setWidth(garnet.getDisplay().getWindowWidth())
+                .setHeight(garnet.getDisplay().getWindowHeight() - 40)
                 .setWindowY(40)
-                .setWindowX(10)
+                .setWindowX(0)
                 .setClipActive(true)
-                .setDrawDebugInfo(true)
+                .setDrawDebugInfo(false)
                 .setZoom(2.0);
 
         Viewport viewport2 = garnet.getGraphics().getViewportManager().getViewport(Constants.scorePanelViewportId);
@@ -124,7 +128,7 @@ public class SceneGame extends Scene {
                 .setWindowY(0)
                 .setWindowX(0)
                 .setClipActive(true)
-                .setDrawDebugInfo(true)
+                .setDrawDebugInfo(false)
                 .setZoom(2.0);
 
         garnet.getDebugDrawer().setVisible(false);
@@ -168,7 +172,7 @@ public class SceneGame extends Scene {
     public void initParticleManager() {
         Resources resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
 
-        ParticleManager particleManager = new ParticleManager(1000);
+        ParticleManager particleManager = new ParticleManager(5000);
         particleManager.setParticleDrawer(p -> {
             float pAge = (float) (p.age / p.lifeTime);
             garnet.getGraphics().setColor(p.colorSupplier.getColor(pAge));

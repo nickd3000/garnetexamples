@@ -1,11 +1,15 @@
 package com.physmo.garnetexamples.games.cellsurvivor.gamedata;
 
-public class Enemy {
+import java.util.ArrayList;
+import java.util.List;
+
+public class GDEnemy {
     int id;
     String name;
     double speed;
     int health;
     String sprite;
+    List<GDEnemy> levels = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -47,9 +51,3 @@ public class Enemy {
         this.sprite = sprite;
     }
 }
-
-/*
-    <enemy id="0" name="Mummy" speed="0.8" health="200">
-        <sprite>10,7</sprite>
-    </enemy>
- */

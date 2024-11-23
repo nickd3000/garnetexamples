@@ -15,6 +15,7 @@ public class ComponentCrystal extends Component {
     boolean homing = false;
     double dx = 0, dy = 0;
     GameObject player;
+    double homingForce = 455;
 
     public void setHoming(boolean homing) {
         if (this.homing) return;
@@ -44,10 +45,14 @@ public class ComponentCrystal extends Component {
 
         if (homing) {
             Vector3 directionTo = player.getTransform().getDirectionTo(parent.getTransform());
-            dx += directionTo.x * 255 * t;
-            dy += directionTo.y * 255 * t;
+            dx += directionTo.x * homingForce * t;
+            dy += directionTo.y * homingForce * t;
             parent.getTransform().x += dx * t;
             parent.getTransform().y += dy * t;
+
+            // friction
+            dx -= dx * 0.5 * t;
+            dy -= dy * 0.5 * t;
         }
 
 

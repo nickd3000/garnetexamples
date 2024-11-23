@@ -1,20 +1,254 @@
 <?xml version="1.0"?>
 <gameData>
     <enemies>
-        <enemy id="0" name="Mummy" speed="0.8" health="200">
+        <enemy id="0" name="Mummy" speed="1.0" health="20">
             <sprite>10,7</sprite>
         </enemy>
-        <enemy id="1" name="Snake" speed="0.1" health="20">
+        <enemy id="1" name="Snake" speed="1.1" health="15">
             <sprite>10,3</sprite>
         </enemy>
-        <enemy id="2" name="Goblin" speed="0.1" health="50">
+        <enemy id="2" name="Goblin" speed="0.9" health="25">
             <sprite>1,6</sprite>
         </enemy>
-        <enemy id="3" name="Ogre 1" speed="0.1" health="250">
+        <enemy id="3" name="Ogre 1" speed="0.8" health="30">
             <sprite>1,8</sprite>
         </enemy>
-        <enemy id="4" name="Ogre 2" speed="0.1" health="300">
+        <enemy id="4" name="Ogre 2" speed="0.9" health="35">
             <sprite>2,8</sprite>
         </enemy>
     </enemies>
+    <weapons>
+        <weapon id="0" name="Bow">
+            <damage>10</damage>
+            <speed>150</speed>
+            <cooldown>2.5</cooldown>
+            <count>1</count>
+            <pierce>1</pierce>
+            <interval>0.2</interval>
+            <knock_back>1</knock_back>
+            <duration>1</duration>
+            <levels>
+                <level id="1">
+                    <effect>damage up 5%</effect>
+                </level>
+                <level id="2">
+                    <effect>count up 1</effect>
+                </level>
+                <level id="3">
+                    <effect>speed up 10%</effect>
+                </level>
+                <level id="4">
+                    <effect>pierce up 1</effect>
+                </level>
+                <level id="5">
+                    <effect>knock_back up 5%</effect>
+                </level>
+                <level id="6">
+                    <effect>damage up 5%</effect>
+                </level>
+                <level id="7">
+                    <effect>count up 1</effect>
+                </level>
+                <level id="8">
+                    <effect>cooldown down 10%</effect>
+                </level>
+                <level id="9">
+                    <effect>count up 1</effect>
+                </level>
+                <level id="10">
+                    <effect>damage up 5%</effect>
+                </level>
+                <level id="11">
+                    <effect>pierce up 1</effect>
+                </level>
+                <level id="12">
+                    <effect>knock_back up 5%</effect>
+                </level>
+                <level id="13">
+                    <effect>cooldown down 10%</effect>
+                </level>
+                <level id="14">
+                    <effect>count up 1</effect>
+                </level>
+                <level id="15">
+                    <effect>cooldown down 10%</effect>
+                </level>
+
+            </levels>
+        </weapon>
+        <weapon id="1" name="wand">
+            <damage>15</damage>
+            <speed>80</speed>
+            <cooldown>3.0</cooldown>
+            <count>1</count>
+            <pierce>1</pierce>
+            <interval>0.2</interval>
+            <knock_back>1</knock_back>
+            <duration>1</duration>
+            <levels>
+                <level id="1">
+                    <effect>damage up 5%</effect>
+                </level>
+                <level id="2">
+                    <effect>count up 1</effect>
+                </level>
+                <level id="3">
+                    <effect>speed up 10%</effect>
+                </level>
+                <level id="4">
+                    <effect>pierce up 1</effect>
+                </level>
+                <level id="5">
+                    <effect>knock_back up 5%</effect>
+                </level>
+                <level id="6">
+                    <effect>damage up 5%</effect>
+                </level>
+                <level id="7">
+                    <effect>count up 1</effect>
+                </level>
+                <level id="8">
+                    <effect>cooldown down 10%</effect>
+                </level>
+                <level id="9">
+                    <effect>count up 1</effect>
+                </level>
+                <level id="10">
+                    <effect>damage up 5%</effect>
+                </level>
+                <level id="11">
+                    <effect>pierce up 1</effect>
+                </level>
+                <level id="12">
+                    <effect>knock_back up 5%</effect>
+                </level>
+                <level id="13">
+                    <effect>cooldown down 10%</effect>
+                </level>
+                <level id="14">
+                    <effect>count up 1</effect>
+                </level>
+                <level id="15">
+                    <effect>cooldown down 10%</effect>
+                </level>
+
+            </levels>
+        </weapon>
+        <weapon id="2" name="glave">
+            <damage>5</damage>
+            <speed>3</speed>
+            <cooldown>3.0</cooldown>
+            <count>1</count>
+            <pierce>1</pierce>
+            <interval>0.2</interval>
+            <knock_back>1</knock_back>
+            <duration>1</duration>
+            <levels>
+                <level id="1">
+                    <effect>damage up 5%</effect>
+                </level>
+                <level id="2">
+                    <effect>count up 1</effect>
+                </level>
+                <level id="3">
+                    <effect>speed up 10%</effect>
+                </level>
+                <level id="4">
+                    <effect>pierce up 1</effect>
+                </level>
+                <level id="5">
+                    <effect>knock_back up 5%</effect>
+                </level>
+                <level id="6">
+                    <effect>damage up 5%</effect>
+                </level>
+                <level id="7">
+                    <effect>count up 1</effect>
+                </level>
+                <level id="8">
+                    <effect>cooldown down 10%</effect>
+                </level>
+                <level id="9">
+                    <effect>count up 1</effect>
+                </level>
+                <level id="10">
+                    <effect>damage up 5%</effect>
+                </level>
+                <level id="11">
+                    <effect>pierce up 1</effect>
+                </level>
+                <level id="12">
+                    <effect>knock_back up 5%</effect>
+                </level>
+                <level id="13">
+                    <effect>cooldown down 10%</effect>
+                </level>
+                <level id="14">
+                    <effect>count up 1</effect>
+                </level>
+                <level id="15">
+                    <effect>cooldown down 10%</effect>
+                </level>
+
+            </levels>
+        </weapon>
+        <weapon id="3" name="fire_wand">
+            <damage>15</damage>
+            <speed>80</speed>
+            <cooldown>3.0</cooldown>
+            <count>1</count>
+            <pierce>1</pierce>
+            <interval>0.2</interval>
+            <knock_back>1</knock_back>
+            <duration>1</duration>
+            <levels>
+                <level id="1">
+                    <effect>damage up 5%</effect>
+                </level>
+                <level id="2">
+                    <effect>count up 1</effect>
+                </level>
+                <level id="3">
+                    <effect>speed up 10%</effect>
+                </level>
+                <level id="4">
+                    <effect>pierce up 1</effect>
+                </level>
+                <level id="5">
+                    <effect>knock_back up 5%</effect>
+                </level>
+                <level id="6">
+                    <effect>damage up 5%</effect>
+                </level>
+                <level id="7">
+                    <effect>count up 1</effect>
+                </level>
+                <level id="8">
+                    <effect>cooldown down 10%</effect>
+                </level>
+                <level id="9">
+                    <effect>count up 1</effect>
+                </level>
+                <level id="10">
+                    <effect>damage up 5%</effect>
+                </level>
+                <level id="11">
+                    <effect>pierce up 1</effect>
+                </level>
+                <level id="12">
+                    <effect>knock_back up 5%</effect>
+                </level>
+                <level id="13">
+                    <effect>cooldown down 10%</effect>
+                </level>
+                <level id="14">
+                    <effect>count up 1</effect>
+                </level>
+                <level id="15">
+                    <effect>cooldown down 10%</effect>
+                </level>
+
+            </levels>
+        </weapon>
+    </weapons>
 </gameData>

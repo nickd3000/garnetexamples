@@ -44,7 +44,7 @@ public class ComponentGameLogic extends Component {
             ((SceneLevelUp) scene).setPlayerCapabilities(playerCapabilities);
         });
 
-        SceneManager.pushSubScene("levelup");
+        SceneManager.pushSubScene("levelUp");
     }
 
     public int getXpToLevelUp() {

@@ -2,21 +2,26 @@ package com.physmo.garnetexamples.games.cellsurvivor.components.weapons;
 
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.toolkit.Component;
+import com.physmo.garnet.toolkit.scene.SceneManager;
 import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 import com.physmo.garnetexamples.games.cellsurvivor.EntityFactory;
+import com.physmo.garnetexamples.games.cellsurvivor.Resources;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentPlayerCapabilities;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ProjectileType;
-
-import java.util.Random;
+import com.physmo.garnetexamples.games.cellsurvivor.components.items.CombinedItemStats;
+import com.physmo.garnetexamples.games.cellsurvivor.gamedata.GDWeapon;
 
 public class GlaveGun extends Component implements Weapon {
     double cooldownPeriod = 8.0;
-    double cooldown = cooldownPeriod;
-    Random random = new Random();
+    double cooldown = 0.1;
+
     CollisionSystem collisionSystem;
     ComponentPlayerCapabilities playerCapabilities;
-    double projectileSpeed = 70;
+
     int level = 0;
+    WeaponStats weaponStats = new WeaponStats();
+    Resources resources;
+    GDWeapon gdWeapon;
 
     @Override
     public void init() {
@@ -24,6 +29,12 @@ public class GlaveGun extends Component implements Weapon {
 
         playerCapabilities = parent.getContext().getComponent(ComponentPlayerCapabilities.class);
 
+        resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
+
+        gdWeapon = resources.getGameData().getWeaponByName("glave");
+        CombinedItemStats combinedItemStats = parent.getComponent(CombinedItemStats.class);
+
+        weaponStats.refreshStats(gdWeapon, level, combinedItemStats);
     }
 
     public double getEffectiveCooldownPeriod() {
@@ -34,8 +45,8 @@ public class GlaveGun extends Component implements Weapon {
     public void tick(double t) {
         cooldown -= t;
         if (cooldown < 0) {
-            cooldown += getEffectiveCooldownPeriod();
-            int shotCount = 3 * playerCapabilities.getProjectileMultiplier();
+            cooldown += weaponStats.get(WeaponStatType.COOLDOWN).value;
+            int shotCount = (int) weaponStats.get(WeaponStatType.COUNT).value;
             for (int i = 0; i < shotCount; i++) {
                 fire(i, shotCount);
             }
@@ -43,12 +54,11 @@ public class GlaveGun extends Component implements Weapon {
     }
 
     public void fire(int bulletNumber, int bulletTotal) {
-//        createBullet(parent.getTransform().x, parent.getTransform().y, relativeObject.dx, relativeObject.dy);
-        System.out.println("create orbiter");
-        double lifeTime = getEffectiveCooldownPeriod() * 0.8;
+        double lifeTime = weaponStats.get(WeaponStatType.DURATION).value;
         double radius = 40;
-        double speed = 3;
-        EntityFactory.createOrbitingBullet(parent.getContext(), collisionSystem, parent, radius, speed, bulletNumber, bulletTotal, ProjectileType.GLAVE, lifeTime);
+        double speed = weaponStats.get(WeaponStatType.SPEED).value;
+        double damage = weaponStats.get(WeaponStatType.DAMAGE).value;
+        EntityFactory.createOrbitingBullet(parent.getContext(), collisionSystem, parent, radius, speed, bulletNumber, bulletTotal, ProjectileType.GLAVE, lifeTime, damage);
     }
 
 

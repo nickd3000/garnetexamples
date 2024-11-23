@@ -11,11 +11,13 @@ import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentGameLogi
 import com.physmo.garnetexamples.games.cellsurvivor.components.ProjectileType;
 import com.physmo.garnetexamples.games.cellsurvivor.components.weapons.Bullet;
 import com.physmo.garnetexamples.games.cellsurvivor.components.weapons.OrbitingBullet;
-import com.physmo.garnetexamples.games.cellsurvivor.gamedata.Enemy;
+import com.physmo.garnetexamples.games.cellsurvivor.gamedata.GDEnemy;
 
 import java.util.List;
 
 public class EntityFactory {
+
+    public static double baseEnemySpeed = 10;
 
     public static void addEnemy(Context context, CollisionSystem collisionSystem, int x, int y) {
         ComponentEnemy enemyComponent = new ComponentEnemy();
@@ -63,15 +65,17 @@ public class EntityFactory {
         if (Math.random() > 0.8) type += 1;
         type = type % 5;
 
-        List<Enemy> enemies = resources.getGameData().getEnemies();
-        Enemy enemyData = null;
-        for (Enemy e : enemies) {
+        List<GDEnemy> enemies = resources.getGameData().getEnemies();
+        GDEnemy enemyData = null;
+        for (GDEnemy e : enemies) {
             if (e.getId() == type) {
                 enemyData = e;
             }
         }
 
-        enemy.setDetails(enemyData.getSpeed(), enemyData.getHealth(), 10, 7);
+        int[] coords = convertCoords(enemyData.getSprite());
+
+        enemy.setDetails(enemyData.getSpeed() * baseEnemySpeed, enemyData.getHealth(), coords[0], coords[1]);
 
 //        // Mummy
 //        if (type == 0) {
@@ -99,7 +103,7 @@ public class EntityFactory {
 //        }
     }
 
-    public static void createSimpleBullet(Context context, CollisionSystem collisionSystem, double x, double y, double dx, double dy, double speed, ProjectileType type) {
+    public static void createSimpleBullet(Context context, CollisionSystem collisionSystem, double x, double y, double dx, double dy, double speed, ProjectileType type, int pierce, double damage) {
         Bullet bullet = new Bullet();
         GameObject obj = new GameObject("bullet").addComponent(bullet);
         ColliderComponent collider = new ColliderComponent();
@@ -108,6 +112,8 @@ public class EntityFactory {
         bullet.setDirection(dx, dy);
         bullet.setProjectileType(type);
         bullet.setSpeed(speed);
+        bullet.setPierce(pierce);
+        bullet.setDamage(damage);
 
         obj.addTag(Constants.TAG_BULLET);
         context.add(obj);
@@ -115,11 +121,11 @@ public class EntityFactory {
         collisionSystem.addCollidable(collider);
     }
 
-    public static void createOrbitingBullet(Context context, CollisionSystem collisionSystem, GameObject parent, double radius, double speed, int bulletNumber, int bulletGroupSize, ProjectileType type, double lifeTime) {
+    public static void createOrbitingBullet(Context context, CollisionSystem collisionSystem, GameObject parent, double radius, double speed, int bulletNumber, int bulletGroupSize, ProjectileType type, double lifeTime, double damage) {
 
         GameObject player = parent.getContext().getObjectByTag("player");
 
-        OrbitingBullet orbitingBullet = new OrbitingBullet(player, radius, speed, bulletNumber, bulletGroupSize, type, lifeTime);
+        OrbitingBullet orbitingBullet = new OrbitingBullet(player, radius, speed, bulletNumber, bulletGroupSize, type, lifeTime, damage);
         GameObject obj = new GameObject("bullet").addComponent(orbitingBullet);
         ColliderComponent collider = new ColliderComponent();
         obj.addComponent(collider);
@@ -127,5 +133,14 @@ public class EntityFactory {
         obj.addTag(Constants.TAG_BULLET);
         context.add(obj);
         collisionSystem.addCollidable(collider);
+    }
+
+    public static int[] convertCoords(String coords) {
+        String[] strArray = coords.split(",");
+        int[] intArray = new int[strArray.length];
+        for (int i = 0; i < strArray.length; i++) {
+            intArray[i] = Integer.parseInt(strArray[i]);
+        }
+        return intArray;
     }
 }

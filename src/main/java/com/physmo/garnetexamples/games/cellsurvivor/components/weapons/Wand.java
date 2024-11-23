@@ -3,27 +3,35 @@ package com.physmo.garnetexamples.games.cellsurvivor.components.weapons;
 import com.physmo.garnet.graphics.Graphics;
 import com.physmo.garnet.structure.Array;
 import com.physmo.garnet.toolkit.Component;
+import com.physmo.garnet.toolkit.scene.SceneManager;
 import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 import com.physmo.garnet.toolkit.simplecollision.RelativeObject;
 import com.physmo.garnetexamples.games.cellsurvivor.EntityFactory;
+import com.physmo.garnetexamples.games.cellsurvivor.Resources;
 import com.physmo.garnetexamples.games.cellsurvivor.Upgradable;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentPlayer;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentPlayerCapabilities;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ProjectileType;
+import com.physmo.garnetexamples.games.cellsurvivor.components.items.CombinedItemStats;
+import com.physmo.garnetexamples.games.cellsurvivor.gamedata.GDWeapon;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 
 public class Wand extends Component implements Weapon, Upgradable {
 
     double cooldownPeriod = 0.7;
     double cooldown = cooldownPeriod;
-    Random random = new Random();
+
     CollisionSystem collisionSystem;
     ComponentPlayerCapabilities playerCapabilities;
-    double projectileSpeed = 80;
-    int level = 0;
+
+    int level = 20;
+    WeaponStats weaponStats = new WeaponStats();
+    Resources resources;
+    GDWeapon gdWeapon;
+    double subShotTimer;
+    int pendingShots = 0;
 
     @Override
     public void init() {
@@ -31,19 +39,32 @@ public class Wand extends Component implements Weapon, Upgradable {
         collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
 
         playerCapabilities = parent.getContext().getComponent(ComponentPlayerCapabilities.class);
+        resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
 
+        gdWeapon = resources.getGameData().getWeaponByName("wand");
+        CombinedItemStats combinedItemStats = parent.getComponent(CombinedItemStats.class);
+        weaponStats.refreshStats(gdWeapon, level, combinedItemStats);
     }
 
     @Override
     public void tick(double t) {
         cooldown -= t;
         if (cooldown < 0) {
-            cooldown += cooldownPeriod * playerCapabilities.getProjectileRateAdjuster();
-            int mult = playerCapabilities.getProjectileMultiplier();
-
-            fire(mult);
-
+            //cooldown += cooldownPeriod * playerCapabilities.getProjectileRateAdjuster();
+            cooldown += weaponStats.get(WeaponStatType.COOLDOWN).value;
+            pendingShots += (int) weaponStats.get(WeaponStatType.COUNT).value;
         }
+
+        subShotTimer -= t;
+        if (subShotTimer < 0) {
+            subShotTimer += weaponStats.get(WeaponStatType.INTERVAL).value;
+            if (pendingShots > 0) {
+
+                fire(pendingShots);
+                pendingShots = 0;
+            }
+        }
+
     }
 
     public void fire(int count) {
@@ -65,7 +86,11 @@ public class Wand extends Component implements Weapon, Upgradable {
     }
 
     public void createBullet(double x, double y, double dx, double dy) {
-        EntityFactory.createSimpleBullet(parent.getContext(), collisionSystem, x, y, dx, dy, projectileSpeed, ProjectileType.MAGIC);
+        double bulletSpeed = weaponStats.get(WeaponStatType.SPEED).value;
+        int pierce = (int) weaponStats.get(WeaponStatType.PIERCE).value;
+        double damage = weaponStats.get(WeaponStatType.DAMAGE).value;
+
+        EntityFactory.createSimpleBullet(parent.getContext(), collisionSystem, x, y, dx, dy, bulletSpeed, ProjectileType.MAGIC, pierce, damage);
     }
 
     @Override
