@@ -6,12 +6,13 @@ import com.physmo.garnet.toolkit.scene.SceneManager;
 import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 import com.physmo.garnetexamples.games.cellsurvivor.EntityFactory;
 import com.physmo.garnetexamples.games.cellsurvivor.Resources;
+import com.physmo.garnetexamples.games.cellsurvivor.Upgradable;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentPlayerCapabilities;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ProjectileType;
 import com.physmo.garnetexamples.games.cellsurvivor.components.items.CombinedItemStats;
 import com.physmo.garnetexamples.games.cellsurvivor.gamedata.GDWeapon;
 
-public class GlaveGun extends Component implements Weapon {
+public class GlaveGun extends Component implements Weapon, Upgradable {
     double cooldownPeriod = 8.0;
     double cooldown = 0.1;
 
@@ -22,9 +23,11 @@ public class GlaveGun extends Component implements Weapon {
     WeaponStats weaponStats = new WeaponStats();
     Resources resources;
     GDWeapon gdWeapon;
-
+    int maxLevel = 15;
+    CombinedItemStats combinedItemStats;
     @Override
     public void init() {
+
         collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
 
         playerCapabilities = parent.getContext().getComponent(ComponentPlayerCapabilities.class);
@@ -32,7 +35,7 @@ public class GlaveGun extends Component implements Weapon {
         resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
 
         gdWeapon = resources.getGameData().getWeaponByName("glave");
-        CombinedItemStats combinedItemStats = parent.getComponent(CombinedItemStats.class);
+        combinedItemStats = parent.getComponent(CombinedItemStats.class);
 
         weaponStats.refreshStats(gdWeapon, level, combinedItemStats);
     }
@@ -51,6 +54,8 @@ public class GlaveGun extends Component implements Weapon {
                 fire(i, shotCount);
             }
         }
+
+        weaponStats.refreshStatsOnTimeout(t, gdWeapon, level, combinedItemStats);
     }
 
     public void fire(int bulletNumber, int bulletTotal) {
@@ -69,7 +74,13 @@ public class GlaveGun extends Component implements Weapon {
 
     @Override
     public String getName() {
-        return "";
+        return "Glave Gun";
+    }
+
+
+    @Override
+    public int getMaxLevel() {
+        return maxLevel;
     }
 
     @Override
@@ -80,5 +91,11 @@ public class GlaveGun extends Component implements Weapon {
     @Override
     public void increaseLevel() {
         level++;
+        weaponStats.refreshStats(gdWeapon, level, combinedItemStats);
+    }
+
+    @Override
+    public String getLevelDescription(int level) {
+        return "";
     }
 }

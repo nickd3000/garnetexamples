@@ -67,7 +67,6 @@ public class GridBasedMover extends Component {
                             tileY + destinationDirection.getVDir());
 
             if (movementDirection != destinationDirection && !destDirectionIsBlocked) {
-                System.out.println("yes");
                 movementDirection = destinationDirection;
             }
 

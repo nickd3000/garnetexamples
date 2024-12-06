@@ -42,6 +42,7 @@ public class ComponentGameLogic extends Component {
 
         SceneManager.getSceneByName("levelUp").ifPresent(scene -> {
             ((SceneLevelUp) scene).setPlayerCapabilities(playerCapabilities);
+            ((SceneLevelUp) scene).setPlayer(parent.getContext().getObjectByTag("player"));
         });
 
         SceneManager.pushSubScene("levelUp");

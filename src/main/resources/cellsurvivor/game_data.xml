@@ -195,7 +195,7 @@
         <weapon id="3" name="fire_wand">
             <damage>15</damage>
             <speed>80</speed>
-            <cooldown>3.0</cooldown>
+            <cooldown>2.0</cooldown>
             <count>1</count>
             <pierce>1</pierce>
             <interval>0.2</interval>

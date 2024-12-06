@@ -61,7 +61,7 @@ public class ParticleFactory extends Component {
         });
 
         flame = new ParticleTemplate();
-        flame.setLifeTime(2.2, 3.5);
+        flame.setLifeTime(0.2, 1.5);
         flame.setSpeed(10, 10);
         flame.setPositionJitter(1.1);
         flame.setColorSupplier(new ColorSupplierLinear(new int[]{ColorUtils.asRGBA(1, 1, 1, 0.8f), ColorUtils.asRGBA(1, 0, 0, 0)}));

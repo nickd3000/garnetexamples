@@ -7,6 +7,7 @@ import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 import com.physmo.garnet.toolkit.simplecollision.RelativeObject;
 import com.physmo.garnetexamples.games.cellsurvivor.EntityFactory;
 import com.physmo.garnetexamples.games.cellsurvivor.Resources;
+import com.physmo.garnetexamples.games.cellsurvivor.Upgradable;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentPlayer;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentPlayerCapabilities;
 import com.physmo.garnetexamples.games.cellsurvivor.components.ProjectileType;
@@ -16,18 +17,20 @@ import com.physmo.garnetexamples.games.cellsurvivor.gamedata.GDWeapon;
 import java.util.List;
 import java.util.Random;
 
-public class Bow extends Component implements Weapon {
+public class Bow extends Component implements Weapon, Upgradable {
 
     double cooldown = 1.0;
     Random random = new Random();
     CollisionSystem collisionSystem;
     ComponentPlayerCapabilities playerCapabilities;
-    int level = 20;
+    int level = 0;
     WeaponStats weaponStats = new WeaponStats();
     Resources resources;
     GDWeapon gdWeapon;
     double subShotTimer;
     int pendingShots = 0;
+    int maxLevel = 15;
+    CombinedItemStats combinedItemStats;
 
     @Override
     public void init() {
@@ -40,7 +43,7 @@ public class Bow extends Component implements Weapon {
 
         gdWeapon = resources.getGameData().getWeaponByName("bow");
 
-        CombinedItemStats combinedItemStats = parent.getComponent(CombinedItemStats.class);
+        combinedItemStats = parent.getComponent(CombinedItemStats.class);
 
         weaponStats.refreshStats(gdWeapon, level, combinedItemStats);
     }
@@ -63,6 +66,7 @@ public class Bow extends Component implements Weapon {
             }
         }
 
+        weaponStats.refreshStatsOnTimeout(t, gdWeapon, level, combinedItemStats);
     }
 
     public void fire() {
@@ -90,6 +94,11 @@ public class Bow extends Component implements Weapon {
     }
 
     @Override
+    public int getMaxLevel() {
+        return maxLevel;
+    }
+
+    @Override
     public int getLevel() {
         return level;
     }
@@ -97,5 +106,11 @@ public class Bow extends Component implements Weapon {
     @Override
     public void increaseLevel() {
         level++;
+        weaponStats.refreshStats(gdWeapon, level, combinedItemStats);
+    }
+
+    @Override
+    public String getLevelDescription(int level) {
+        return "";
     }
 }

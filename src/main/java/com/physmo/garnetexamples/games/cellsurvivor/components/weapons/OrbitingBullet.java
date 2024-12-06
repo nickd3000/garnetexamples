@@ -112,7 +112,7 @@ public class OrbitingBullet extends Component implements DamageSupplier {
         if (age > lifeTime) killMe = true;
 
         if (killMe) {
-            System.out.println("kill orbiter");
+            //System.out.println("kill orbiter");
             CollisionSystem collisionSystem = parent.getContext().getObjectByType(CollisionSystem.class);
             Collidable collidable = parent.getComponent(ColliderComponent.class);
             collisionSystem.removeCollidable(collidable);

@@ -24,10 +24,6 @@ import com.physmo.garnetexamples.games.cellsurvivor.components.ComponentPlayerCa
 import com.physmo.garnetexamples.games.cellsurvivor.components.ParticleFactory;
 import com.physmo.garnetexamples.games.cellsurvivor.components.SpriteHelper;
 import com.physmo.garnetexamples.games.cellsurvivor.components.items.CombinedItemStats;
-import com.physmo.garnetexamples.games.cellsurvivor.components.weapons.Bow;
-import com.physmo.garnetexamples.games.cellsurvivor.components.weapons.FireWand;
-import com.physmo.garnetexamples.games.cellsurvivor.components.weapons.GlaveGun;
-import com.physmo.garnetexamples.games.cellsurvivor.components.weapons.Wand;
 
 import java.util.List;
 import java.util.Random;
@@ -77,10 +73,12 @@ public class SceneGame extends Scene {
         context.add(levelMapObject);
 
         player = new GameObject("player").addComponent(new ComponentPlayer());
-        player.addComponent(new Bow());
-        player.addComponent(new Wand());
-        player.addComponent(new GlaveGun());
-        player.addComponent(new FireWand());
+        //player.addComponent(new Bow());
+        //player.addComponent(new Wand());
+        //player.addComponent(new GlaveGun());
+        //player.addComponent(new FireWand());
+        //player.addComponent(new DuplicatorCharm());
+        //player.addComponent(new StrengthCharm());
         player.addComponent(new CombinedItemStats());
         componentPlayerCapabilities = new ComponentPlayerCapabilities();
         player.addComponent(componentPlayerCapabilities);
@@ -164,7 +162,13 @@ public class SceneGame extends Scene {
 
         // Show level up screen
         if (garnet.getInput().getKeyboard().isKeyFirstPress(InputKeys.KEY_L)) {
-            SceneManager.getSceneByName("levelUp").ifPresent(scene -> ((SceneLevelUp) scene).setPlayerCapabilities(componentPlayerCapabilities));
+            SceneManager.getSceneByName("levelUp").ifPresent(
+                    scene -> {
+                        ((SceneLevelUp) scene).setPlayerCapabilities(componentPlayerCapabilities);
+                        ((SceneLevelUp) scene).setPlayer(context.getObjectByTag("player"));
+                    }
+
+            );
             SceneManager.pushSubScene("levelUp");
         }
     }

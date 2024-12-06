@@ -25,13 +25,14 @@ public class Wand extends Component implements Weapon, Upgradable {
 
     CollisionSystem collisionSystem;
     ComponentPlayerCapabilities playerCapabilities;
-
-    int level = 20;
+    int maxLevel = 15;
+    int level = 0;
     WeaponStats weaponStats = new WeaponStats();
     Resources resources;
     GDWeapon gdWeapon;
     double subShotTimer;
     int pendingShots = 0;
+    CombinedItemStats combinedItemStats;
 
     @Override
     public void init() {
@@ -42,7 +43,7 @@ public class Wand extends Component implements Weapon, Upgradable {
         resources = SceneManager.getSharedContext().getObjectByType(Resources.class);
 
         gdWeapon = resources.getGameData().getWeaponByName("wand");
-        CombinedItemStats combinedItemStats = parent.getComponent(CombinedItemStats.class);
+        combinedItemStats = parent.getComponent(CombinedItemStats.class);
         weaponStats.refreshStats(gdWeapon, level, combinedItemStats);
     }
 
@@ -65,6 +66,7 @@ public class Wand extends Component implements Weapon, Upgradable {
             }
         }
 
+        weaponStats.refreshStatsOnTimeout(t, gdWeapon, level, combinedItemStats);
     }
 
     public void fire(int count) {
@@ -111,16 +113,12 @@ public class Wand extends Component implements Weapon, Upgradable {
     @Override
     public void increaseLevel() {
         level++;
-    }
-
-    @Override
-    public int getCurrentLevel() {
-        return 0;
+        weaponStats.refreshStats(gdWeapon, level, combinedItemStats);
     }
 
     @Override
     public int getMaxLevel() {
-        return 0;
+        return maxLevel;
     }
 
     @Override

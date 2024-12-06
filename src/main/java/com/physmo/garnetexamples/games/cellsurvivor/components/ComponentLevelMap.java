@@ -74,8 +74,8 @@ public class ComponentLevelMap extends Component {
         Vector3 playerPos = player.getTransform();
         double scrollX = viewport.getX();
         double scrollY = viewport.getY();
-        double dx = playerPos.x - (scrollX + ((windowWidth / zoom) / 2));
-        double dy = playerPos.y - (scrollY + ((windowHeight / zoom) / 2));
+        double dx = playerPos.x - (scrollX + ((windowWidth / zoom) / 2)) + 8;
+        double dy = playerPos.y - (scrollY + ((windowHeight / zoom) / 2)) + 8;
         double speed = 5.0 * t;
         viewport.scroll(dx * speed, dy * speed);
 //        scrollX += dx * speed;
