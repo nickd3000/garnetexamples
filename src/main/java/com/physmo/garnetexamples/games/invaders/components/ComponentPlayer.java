@@ -71,7 +71,7 @@ public class ComponentPlayer extends Component {
         ColliderComponent colliderComponent = parent.getComponent(ColliderComponent.class);
         colliderComponent.setCallbackEnter(col -> {
             if (col.hasTag(Constants.ENEMY_MISSILE)) {
-                System.out.println("player got hit");
+                broadcastMessage("PLAYER_HIT");
             }
         });
 

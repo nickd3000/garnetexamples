@@ -49,18 +49,7 @@ public class Player extends GameObject {
             if (target.hasTag("pickup")) {
                 Pickup pickup = target.getComponent(Pickup.class);
                 if (pickup != null) {
-                    PickupType pickupType = pickup.getPickupType();
-                    switch (pickupType) {
-                        case fire_rate_up:
-                            fireRateMultiplier += 0.1;
-                            break;
-                        case four_way_gun:
-                            fourWayGun = true;
-                            break;
-                        case backwards_gun:
-                            backwardsWayGun = true;
-                            break;
-                    }
+                    broadcastMessage("PICKUP_COLLECTED", pickup.getPickupType());
                 }
             }
         });
@@ -71,6 +60,24 @@ public class Player extends GameObject {
 
         snapX();
         snapY();
+    }
+
+    @Override
+    public void onMessage(String name, Object data) {
+        if (name.equals("PICKUP_COLLECTED")) {
+            PickupType pickupType = (PickupType) data;
+            switch (pickupType) {
+                case fire_rate_up:
+                    fireRateMultiplier += 0.1;
+                    break;
+                case four_way_gun:
+                    fourWayGun = true;
+                    break;
+                case backwards_gun:
+                    backwardsWayGun = true;
+                    break;
+            }
+        }
     }
 
     @Override

@@ -24,6 +24,7 @@ public class ComponentHud extends Component {
     int textColor = ColorUtils.YELLOW;
     double textFlash = 0;
     double overlayScroll = 0;
+    String currentDisplayState = "";
 
 
     public ComponentHud() {
@@ -63,15 +64,15 @@ public class ComponentHud extends Component {
         String textGetReady = "Get Ready!";
         String textGameOver = "GAME OVER";
 
-        if (gameLogic.showGetReady()) {
+        if (currentDisplayState.equals("1")) {
             drawBanner(textGetReady, 6);
             drawOverlay();
         }
-        if (gameLogic.showGameOver()) {
+        if (currentDisplayState.equals("4")) {
             drawBanner(textGameOver, 6);
             drawOverlay();
         }
-        if (gameLogic.showLevelComplete()) {
+        if (currentDisplayState.equals("5")) {
             drawBanner("Level complete!", 5);
             drawOverlay();
         }
@@ -85,6 +86,16 @@ public class ComponentHud extends Component {
         bitmapFont.setScale(0.7);
         bitmapFont.drawText(garnet.getGraphics(), clock, 10, 220);
 
+    }
+
+    @Override
+    public void onMessage(String name, Object data) {
+        if (name.equals("STATE_CHANGE")) {
+            this.currentDisplayState = (String) data;
+        }
+        if (name.equals("ENEMY_DESTROYED")) {
+            gameData.currentScore += (int) data;
+        }
     }
 
     private void drawBanner(String text, double scale) {

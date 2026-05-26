@@ -144,7 +144,7 @@ public class ComponentEnemy extends Component {
 
         parent.destroy();
 
-        gameData.currentScore++;
+        broadcastMessage("ENEMY_DESTROYED", 1);
 
         Emitter emitter = new Emitter(parent.getTransform(), 0.2, explosionParticleTemplate);
         emitter.setEmitPerSecond(1500);

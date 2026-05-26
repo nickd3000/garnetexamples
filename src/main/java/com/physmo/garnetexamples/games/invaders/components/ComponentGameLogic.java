@@ -46,6 +46,13 @@ public class ComponentGameLogic extends Component {
     }
 
     @Override
+    public void onMessage(String name, Object data) {
+        if (name.equals("PLAYER_HIT")) {
+            playerGotHit();
+        }
+    }
+
+    @Override
     public void draw(Graphics g) {
 
     }
@@ -63,7 +70,7 @@ public class ComponentGameLogic extends Component {
         levelState.addTransition(StateMachine.ANY_STATE, StateMachine.ANY_STATE, t -> {
             // Reset state timer when making any change in state.
             stateTimer = 0;
-            broadcastMessage("STATE_CHANGE", levelState.getNextStateName());
+            broadcastMessage("STATE_CHANGE", levelState.getCurrentStateName());
         });
 
 
