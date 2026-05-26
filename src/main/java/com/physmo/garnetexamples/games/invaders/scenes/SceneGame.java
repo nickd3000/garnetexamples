@@ -12,7 +12,6 @@ import com.physmo.garnet.toolkit.GameObject;
 import com.physmo.garnet.toolkit.particle.ParticleManager;
 import com.physmo.garnet.toolkit.scene.Scene;
 import com.physmo.garnet.toolkit.scene.SceneManager;
-import com.physmo.garnet.toolkit.simplecollision.ColliderComponent;
 import com.physmo.garnet.toolkit.simplecollision.CollisionSystem;
 import com.physmo.garnetexamples.games.invaders.GameData;
 import com.physmo.garnetexamples.games.invaders.InvadersEntityFactory;
@@ -90,9 +89,7 @@ public class SceneGame extends Scene {
         player.setActive(true);
         player.setVisible(true);
 
-        ColliderComponent collider = new ColliderComponent();
-        player.addComponent(collider);
-        collisionSystem.addCollidable(collider);
+        InvadersEntityFactory.addColliderToGameObject(collisionSystem, player);
 
         context.add(player);
 

@@ -19,7 +19,7 @@
     </enemies>
     <weapons>
         <weapon id="0" name="Bow">
-            <damage>10</damage>
+            <damage>12</damage>
             <speed>150</speed>
             <cooldown>2.5</cooldown>
             <count>1</count>
@@ -193,7 +193,7 @@
             </levels>
         </weapon>
         <weapon id="3" name="fire_wand">
-            <damage>15</damage>
+            <damage>20</damage>
             <speed>80</speed>
             <cooldown>2.0</cooldown>
             <count>1</count>

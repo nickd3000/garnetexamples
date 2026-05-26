@@ -63,6 +63,7 @@ public class ComponentGameLogic extends Component {
         levelState.addTransition(StateMachine.ANY_STATE, StateMachine.ANY_STATE, t -> {
             // Reset state timer when making any change in state.
             stateTimer = 0;
+            broadcastMessage("STATE_CHANGE", levelState.getNextStateName());
         });
 
 
@@ -158,12 +159,8 @@ public class ComponentGameLogic extends Component {
     }
 
     public void playerGotHit() {
-
-
         gameData.lives--;
-
         levelState.changeState(levelStatePlayerHit);
-
     }
 
     public boolean showGetReady() {
